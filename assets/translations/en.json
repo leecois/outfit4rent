@@ -1,0 +1,58 @@
+{
+  "app_name": "Outfit4rent",
+
+  "bottom_nav_first": "Home",
+  "bottom_nav_second": "Store",
+  "bottom_nav_third": "Wardrobe",
+  "bottom_nav_fourth": "Wishlist",
+  "bottom_nav_fifth": "Profile",
+
+  "localization_title": "Localization",
+  "localization_content": "Simplified translations with the Easy Translations package.",
+
+  "linting_title": "Linting",
+  "linting_content": "Stricter linting rules with flutter lints recommended by the Dart team.",
+
+  "storage_title": "Storage",
+  "storage_content": "Blazing fast key-value database written in pure Dart with Hive.",
+
+  "dark_mode_title": "Dark Mode",
+  "dark_mode_content": "Smooth transition to dark mode by using the inbuilt theming engine.",
+
+  "state_title": "State",
+  "state_content": "Powerful state management using Cubit & BLOC.",
+
+  "display_title": "Display",
+  "display_content": "Support for high refresh rate displays with flutter displayed.",
+
+  "language_switch_title": "Use Vietnam",
+
+  "github_card_title": "GitHub repository",
+  "website_card_title": "Website",
+  "twitter_card_title": "Twitter",
+  "instagram_card_title": "Instagram",
+  "donate_card_title": "Donate",
+
+  "author_divider_title": "Author",
+  "packages_divider_title": "Packages",
+
+  "flutter_bloc": "Flutter bloc",
+  "bloc": "Bloc",
+  "hydrated_bloc": "Hydrated bloc",
+  "equatable": "Equatable",
+  "lints": "Flutter Lints",
+  "path_provider": "Path provider",
+  "flutter_displaymode": "Displaymode",
+  "easy_localization": "Easy localization",
+  "hive": "Hive",
+  "url_launcher": "Url launcher",
+  "fluentui_system_icons": "FluentUI Icons",
+  "skip": "Skip",
+  "onboarding_subtitle": "Don’t skip design. Learn design and code, by building real apps with React and Swift. Complete courses about the best tools.",
+  "onboarding_title": "Wardrobe package",
+  "onboarding_purchase": "Purchase includes access to 777+ outfit",
+  "onboarding_choose_outfit": "Choose outfit",
+  "home_app_bar_title": "Welcome to",
+  "home_app_bar_sub_title": "Outfit4rent",
+  "search_product": "Search product"
+}
