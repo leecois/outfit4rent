@@ -54,7 +54,6 @@ dependencies:
   flutter_native_splash: ^2.4.0
   smooth_page_indicator: ^1.1.0
   get: ^4.6.6
-  rive: ^0.13.5
   icons_plus: ^5.0.0
   carousel_slider: ^4.2.1
 
@@ -92,7 +91,6 @@ flutter:
     - assets/images/animations/
     - assets/images/backgrounds/
     - assets/images/on_boarding_images/
-    - assets/rive/
 
   fonts:
     - family: Poppins

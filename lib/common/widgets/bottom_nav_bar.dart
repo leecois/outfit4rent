@@ -10,24 +10,17 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.only(top: 1, right: 4, left: 4),
+      margin: const EdgeInsets.only(top: 1),
       elevation: 4,
-      clipBehavior: Clip.hardEdge,
       shadowColor: Theme.of(context).colorScheme.shadow,
       color: Theme.of(context).colorScheme.surfaceContainerHighest,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-      ),
       child: BlocBuilder<BottomNavCubit, int>(builder: (BuildContext context, int state) {
         return BottomNavigationBar(
           currentIndex: state,
           onTap: (int index) => context.read<BottomNavCubit>().updateIndex(index),
           type: BottomNavigationBarType.fixed,
           elevation: 0,
-          backgroundColor: Colors.transparent,
+          backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
           selectedItemColor: Theme.of(context).colorScheme.primary,
           unselectedItemColor: Theme.of(context).textTheme.bodySmall!.color,
           items: <BottomNavigationBarItem>[

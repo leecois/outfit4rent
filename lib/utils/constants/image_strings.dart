@@ -24,14 +24,6 @@ class TImages {
   static const String furnitureIcon = "assets/icons/categories/icons8-dining-chair-64.png";
   static const String jeweleryIcon = "assets/icons/categories/icons8-sparkling-diamond-64.png";
   static const String electronicsIcon = "assets/icons/categories/icons8-smartphone-64.png";
-
-  // Rive assets
-  static const String iconsRiv = 'assets/rive/icons.riv';
-  static const String shapesRiv = 'assets/rive/shapes.riv';
-  static const String buttonRiv = 'assets/rive/button.riv';
-  static const String checkRiv = 'assets/rive/check.riv';
-  static const String confettiRiv = 'assets/rive/confetti.riv';
-  static const String menuButtonRiv = 'assets/rive/menu_button.riv';
   //Social Icons
   static const String logoEmail = 'assets/images/social/logo_email.png';
   static const String logoApple = 'assets/images/social/logo_apple.png';

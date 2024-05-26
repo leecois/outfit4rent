@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:outfit4rent/utils/constants/colors.dart';
 
 class TSettingMenuTitle extends StatelessWidget {
   const TSettingMenuTitle({
@@ -20,7 +19,7 @@ class TSettingMenuTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       onTap: onTap,
-      leading: Icon(icon, size: 28, color: TColors.primary),
+      leading: Icon(icon, size: 28, color: Theme.of(context).colorScheme.primary),
       title: Text(title, style: Theme.of(context).textTheme.titleMedium),
       subtitle: Text(subtitle, style: Theme.of(context).textTheme.labelMedium),
       trailing: trailing,

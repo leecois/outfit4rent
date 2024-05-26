@@ -18,10 +18,7 @@ class StoreScreen extends StatelessWidget {
       length: 5,
       child: Scaffold(
         appBar: TAppBar(
-          title: Text(
-            'Store',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+          title: Text('Store', style: Theme.of(context).textTheme.headlineMedium),
           actions: [TCartCounterIcon(onPressed: () {})],
         ),
         body: NestedScrollView(
@@ -31,7 +28,7 @@ class StoreScreen extends StatelessWidget {
                 automaticallyImplyLeading: false,
                 pinned: true,
                 floating: true,
-                backgroundColor: Theme.of(context).colorScheme.surface,
+                backgroundColor: Theme.of(context).colorScheme.surfaceContainerLowest,
                 expandedHeight: 440,
                 flexibleSpace: Padding(
                   padding: const EdgeInsets.all(TSizes.defaultSpace),

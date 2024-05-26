@@ -4,10 +4,10 @@ import 'package:outfit4rent/common/widgets/custom_shapes/curved_edges/curved_edg
 class TCurvedEdgeWidget extends StatelessWidget {
   const TCurvedEdgeWidget({
     super.key,
-    this.child,
+    required this.child,
   });
 
-  final Widget? child;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {

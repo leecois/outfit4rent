@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:outfit4rent/common/styles/spacing_styles.dart';
+import 'package:outfit4rent/common/styles/shadows.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:outfit4rent/common/widgets/icons/circular_icon.dart';
 import 'package:outfit4rent/common/widgets/images/rounded_image.dart';
 import 'package:outfit4rent/common/widgets/texts/brand_title_with_verified_icon.dart';
 import 'package:outfit4rent/common/widgets/texts/product_price_text.dart';
 import 'package:outfit4rent/common/widgets/texts/product_title_text.dart';
+import 'package:outfit4rent/features/shop/screens/product_details/product_detail_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
@@ -19,7 +21,7 @@ class TProductCardVertical extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     return GestureDetector(
-      onTap: () {},
+      onTap: () => Get.to(() => const ProductDetailScreen()),
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),

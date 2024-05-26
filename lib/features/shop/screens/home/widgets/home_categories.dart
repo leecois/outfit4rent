@@ -19,6 +19,7 @@ class THomeCategories extends StatelessWidget {
             return TVerticalImageText(
               image: TImages.clothIcon,
               title: 'Dress',
+              textColor: Theme.of(context).colorScheme.primary,
               onTap: () {},
             );
           }),

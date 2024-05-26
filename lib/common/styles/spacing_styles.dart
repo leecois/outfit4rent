@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:outfit4rent/utils/constants/colors.dart';
+import 'package:outfit4rent/utils/constants/sizes.dart';
 
-class TShadowStyle {
-  static final verticalProductShadow = BoxShadow(
-    color: TColors.darkGrey.withOpacity(0.1),
-    blurRadius: 50,
-    spreadRadius: 7,
-    offset: const Offset(0, 2),
-  );
-
-  static final horizontalProductShadow = BoxShadow(
-    color: TColors.darkGrey.withOpacity(0.1),
-    blurRadius: 50,
-    spreadRadius: 7,
-    offset: const Offset(2, 0),
+class TSpacingStyle {
+  static const EdgeInsetsGeometry paddingWithAppBarHeight = EdgeInsets.only(
+    top: TSizes.appBarHeight,
+    right: TSizes.defaultSpace,
+    left: TSizes.defaultSpace,
+    bottom: TSizes.defaultSpace,
   );
 }

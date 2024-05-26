@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 
 import '../../cubit/theme_cubit.dart';
 
@@ -15,6 +16,7 @@ class ThemeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = THelperFunctions.isDarkMode(context);
     return BlocBuilder<ThemeCubit, ThemeModeState>(builder: (BuildContext context, ThemeModeState state) {
       return Card(
         elevation: 2,
@@ -29,7 +31,11 @@ class ThemeCard extends StatelessWidget {
           child: Icon(
             icon,
             size: 32,
-            color: state.themeMode != mode ? Theme.of(context).colorScheme.primary : Colors.white,
+            color: state.themeMode != mode
+                ? Theme.of(context).colorScheme.primary
+                : dark
+                    ? Colors.black
+                    : Colors.white,
           ),
         ),
       );

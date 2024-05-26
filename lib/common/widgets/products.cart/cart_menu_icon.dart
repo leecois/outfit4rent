@@ -16,7 +16,7 @@ class TCartCounterIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        IconButton(onPressed: onPressed, icon: const Icon(FluentIcons.shopping_bag_24_regular, color: TColors.white)),
+        IconButton(onPressed: onPressed, icon: Icon(FluentIcons.shopping_bag_24_regular, color: Theme.of(context).colorScheme.primary)),
         Positioned(
           right: 0,
           child: Container(

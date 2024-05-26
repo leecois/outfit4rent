@@ -18,13 +18,13 @@ class THomeAppBar extends StatelessWidget {
             Text(
               tr("home_app_bar_title"),
               style: Theme.of(context).textTheme.labelMedium!.apply(
-                    color: TColors.grey,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
             ),
             Text(
               tr("home_app_bar_sub_title"),
               style: Theme.of(context).textTheme.headlineSmall!.apply(
-                    color: TColors.white,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
             ),
           ],

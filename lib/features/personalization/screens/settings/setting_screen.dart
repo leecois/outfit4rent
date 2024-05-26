@@ -10,7 +10,6 @@ import 'package:outfit4rent/common/widgets/list_title/setting_menu_title.dart';
 import 'package:outfit4rent/common/widgets/list_title/user_profile_title.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/profile_screen.dart';
-import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -27,7 +26,7 @@ class SettingScreen extends StatelessWidget {
               child: Column(
                 children: [
                   //Todo: Appbar
-                  TAppBar(title: Text('Account', style: Theme.of(context).textTheme.headlineMedium!.apply(color: TColors.white))),
+                  TAppBar(title: Text('Account', style: Theme.of(context).textTheme.headlineMedium!.apply(color: Theme.of(context).colorScheme.primary))),
 
                   //Todo: User Profile Card
                   TUserProfileTitle(onTap: () => Get.to(() => const ProfileScreen())),
@@ -65,6 +64,7 @@ class SettingScreen extends StatelessWidget {
                       },
                     ),
                   ),
+                  //Todo: Dark mode Setting
                   GridView.count(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -89,10 +89,20 @@ class SettingScreen extends StatelessWidget {
                     ],
                   ),
                   //Todo: Logout Button
+
                   const SizedBox(height: TSizes.spaceBtwSections),
                   SizedBox(
                     width: double.infinity,
-                    child: OutlinedButton(onPressed: () {}, child: const Text('Logout')),
+                    child: OutlinedButton(
+                      onPressed: () {},
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Theme.of(context).colorScheme.onSurface,
+                        side: BorderSide(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
+                      child: const Text('Logout'),
+                    ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections * 2.5),
                 ],
