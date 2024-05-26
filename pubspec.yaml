@@ -56,6 +56,8 @@ dependencies:
   get: ^4.6.6
   icons_plus: ^5.0.0
   carousel_slider: ^4.2.1
+  readmore: ^3.0.0
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:

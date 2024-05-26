@@ -19,7 +19,7 @@ class TProductImageSlider extends StatelessWidget {
     final dark = THelperFunctions.isDarkMode(context);
     return TCurvedEdgeWidget(
       child: Container(
-        color: dark ? TColors.darkGrey : TColors.light,
+        color: dark ? TColors.darkGrey : TColors.grey,
         child: Stack(
           children: [
             // Todo: Image Large
