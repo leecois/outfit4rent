@@ -49,12 +49,8 @@ class TFirebaseAuthException implements Exception {
         return 'The action code is missing. Please provide a valid action code.';
       case 'user-token-expired':
         return 'The user\'s token has expired, and authentication is required. Please sign in again.';
-      case 'user-not-found':
-        return 'No user found for the given email or UID.';
       case 'invalid-credential':
         return 'The supplied credential is malformed or has expired.';
-      case 'wrong-password':
-        return 'The password is invalid. Please check your password and try again.';
       case 'user-token-revoked':
         return 'The user\'s token has been revoked. Please sign in again.';
       case 'invalid-message-payload':
@@ -83,14 +79,10 @@ class TFirebaseAuthException implements Exception {
         return 'The provided Cordova configuration is invalid.';
       case 'app-deleted':
         return 'This instance of FirebaseApp has been deleted.';
-      case 'user-disabled':
-        return 'The user account has been disabled.';
       case 'user-token-mismatch':
         return 'The provided user\'s token has a mismatch with the authenticated user\'s user ID.';
       case 'web-storage-unsupported':
         return 'Web storage is not supported or is disabled.';
-      case 'invalid-credential':
-        return 'The supplied credential is invalid. Please check the credential and try again.';
       case 'app-not-authorized':
         return 'The app is not authorized to use Firebase Authentication with the provided API key.';
       case 'keychain-error':
