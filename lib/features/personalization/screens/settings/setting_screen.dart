@@ -9,6 +9,7 @@ import 'package:outfit4rent/common/widgets/first_screen/theme_card.dart';
 import 'package:outfit4rent/common/widgets/list_title/setting_menu_title.dart';
 import 'package:outfit4rent/common/widgets/list_title/user_profile_title.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/features/personalization/screens/address/address_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/profile_screen.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
@@ -43,7 +44,8 @@ class SettingScreen extends StatelessWidget {
                   // Todo: Account Settings
                   const TSectionHeading(title: 'Account Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  TSettingMenuTitle(icon: Iconsax.safe_home_outline, title: "My Addresses", subtitle: "Manage your delivery addresses", onTap: () {}),
+                  TSettingMenuTitle(
+                      icon: Iconsax.safe_home_outline, title: "My Addresses", subtitle: "Manage your delivery addresses", onTap: () => Get.to(() => const UserAddressScreen())),
                   TSettingMenuTitle(icon: Iconsax.wallet_2_outline, title: "My Wallet", subtitle: "View your balance and transactions", onTap: () {}),
                   TSettingMenuTitle(icon: Iconsax.shopping_cart_outline, title: "My Orders", subtitle: "Track and manage your orders", onTap: () {}),
                   TSettingMenuTitle(icon: Iconsax.notification_bing_outline, title: "Notifications", subtitle: "Manage your notification preferences", onTap: () {}),
