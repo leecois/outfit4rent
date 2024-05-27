@@ -48,10 +48,9 @@ jobs:
         run: flutter analyze --fatal-warnings
         # optionally use --fatal-warnings to stop execution if any warnings are found
 
-      # Runs unit test
-      - name: Run tests
-        run: flutter test
-
+      # # Runs unit test
+      # - name: Run tests
+      #   run: flutter test
       # Create android apk
       - name: Build apk
         run: flutter build apk

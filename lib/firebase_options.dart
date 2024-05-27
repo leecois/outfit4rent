@@ -65,7 +65,9 @@ class DefaultFirebaseOptions {
     projectId: 'outfit4rent-c7575',
     databaseURL: 'https://outfit4rent-c7575-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'outfit4rent-c7575.appspot.com',
+    androidClientId: '767742131819-2lfudu90sh8ktbc0rp5gnf073vba8vn4.apps.googleusercontent.com',
     iosClientId: '767742131819-nd5kk6e6cppn1rp8jr4qci16ni3vqd9v.apps.googleusercontent.com',
     iosBundleId: 'com.outfit4rent.app',
   );
+
 }

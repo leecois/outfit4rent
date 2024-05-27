@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "767742131819-2lfudu90sh8ktbc0rp5gnf073vba8vn4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.outfit4rent.app",
+            "certificate_hash": "0bb38d847ea3616e88397aceddd7d672a23559d4"
+          }
+        },
+        {
           "client_id": "767742131819-0nd91g9k1qj6d5d0948ar7bakai08lvv.apps.googleusercontent.com",
           "client_type": 3
         }
