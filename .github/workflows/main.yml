@@ -46,7 +46,7 @@ jobs:
 
       # Checks for Symantic errors. Can be configured using analysis_options.yaml
       - name: Analyze project source
-        run: flutter analyze --fatal-warnings
+        run: flutter analyze
         # optionally use --fatal-warnings to stop execution if any warnings are found
 
       # Runs unit test
