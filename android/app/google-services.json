@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "767742131819",
+    "firebase_url": "https://outfit4rent-c7575-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "outfit4rent-c7575",
+    "storage_bucket": "outfit4rent-c7575.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767742131819:android:d4745038ee114d393abb2e",
+        "android_client_info": {
+          "package_name": "com.outfit4rent.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "767742131819-0nd91g9k1qj6d5d0948ar7bakai08lvv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASww7TVV1yb_gMkpNRmTF0AQuN9Jo21Dk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "767742131819-0nd91g9k1qj6d5d0948ar7bakai08lvv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "767742131819-nd5kk6e6cppn1rp8jr4qci16ni3vqd9v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.outfit4rent.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
