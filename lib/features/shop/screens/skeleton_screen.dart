@@ -22,8 +22,8 @@ class _SkeletonScreenState extends State<SkeletonScreen> {
     const List<Widget> pageNavigation = <Widget>[
       HomeScreen(),
       StoreScreen(),
-      WardrobeScreen(),
       FavoriteScreen(),
+      WardrobeScreen(),
       SettingScreen(),
     ];
 

@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
 
                   //!Search
                   TSearchContainer(
-                    text: 'Search in Store',
+                    text: 'Search in Wardrobe',
                     onTap: () {},
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   //!Promo Slider
-                  const TPromoSlider(banners: [TImages.banner1, TImages.banner2, TImages.banner3]),
+                  const TPromoSlider(banners: [TImages.promoBanner1, TImages.promoBanner2, TImages.promoBanner1]),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   //!Heading

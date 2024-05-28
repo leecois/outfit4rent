@@ -1,10 +1,10 @@
 {
   "app_name": "Outfit4rent",
 
-  "bottom_nav_first": "Home",
-  "bottom_nav_second": "Store",
-  "bottom_nav_third": "Wardrobe",
-  "bottom_nav_fourth": "Wishlist",
+  "bottom_nav_first": "O4R",
+  "bottom_nav_second": "Wardrobe",
+  "bottom_nav_third": "Wishlist",
+  "bottom_nav_fourth": "OOTD",
   "bottom_nav_fifth": "Profile",
 
   "localization_title": "Localization",

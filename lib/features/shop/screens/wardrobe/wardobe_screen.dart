@@ -9,7 +9,7 @@ class WardrobeScreen extends StatelessWidget {
     return Scaffold(
       appBar: TAppBar(
         title: Text(
-          'Wardrobe',
+          'Outfit of the day',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),

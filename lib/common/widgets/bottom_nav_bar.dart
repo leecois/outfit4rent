@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/cubit/bottom_nav_cubit.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -29,19 +30,19 @@ class BottomNavBar extends StatelessWidget {
               label: tr('bottom_nav_first'),
             ),
             BottomNavigationBarItem(
-              icon: const Icon(FluentIcons.building_shop_24_regular),
+              icon: const Icon(MingCute.wardrobe_line),
               label: tr('bottom_nav_second'),
             ),
             BottomNavigationBarItem(
-              icon: const Icon(FluentIcons.luggage_24_regular),
+              icon: const Icon(MingCute.love_line),
               label: tr('bottom_nav_third'),
             ),
             BottomNavigationBarItem(
-              icon: const Icon(FluentIcons.heart_24_regular),
+              icon: const Icon(MingCute.camera_line),
               label: tr('bottom_nav_fourth'),
             ),
             BottomNavigationBarItem(
-              icon: const Icon(FluentIcons.person_24_regular),
+              icon: const Icon(MingCute.user_5_line),
               label: tr('bottom_nav_fifth'),
             ),
           ],

@@ -10,12 +10,12 @@ class TTexts {
 
   // -- OnBoarding Texts
   static const String onBoardingTitle1 = "Choose your product";
-  static const String onBoardingTitle2 = "Select Payment Method";
-  static const String onBoardingTitle3 = "Deliver at your door step";
+  static const String onBoardingTitle2 = "TWO";
+  static const String onBoardingTitle3 = "ONE TWO THREE";
 
   static const String onBoardingSubTitle1 = "Welcome to Outfit4rent";
-  static const String onBoardingSubTitle2 = "For Seamless Transactions, Choose Your Payment Path - Your Convenience, Our Priority!";
-  static const String onBoardingSubTitle3 = "From Our Doorstep to Yours - Swift, Secure, and Contactless Delivery!";
+  static const String onBoardingSubTitle2 = "TWO";
+  static const String onBoardingSubTitle3 = "THREE";
 
   // -- Authentication Forms
   static const String firstName = "First Name";

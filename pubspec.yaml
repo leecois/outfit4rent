@@ -92,7 +92,6 @@ flutter:
     - assets/images/reviews/
     - assets/images/social/
     - assets/images/animations/
-    - assets/images/backgrounds/
     - assets/images/on_boarding_images/
 
   fonts:

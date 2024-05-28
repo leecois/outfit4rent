@@ -18,7 +18,7 @@ class StoreScreen extends StatelessWidget {
       length: 5,
       child: Scaffold(
         appBar: TAppBar(
-          title: Text('Store', style: Theme.of(context).textTheme.headlineMedium),
+          title: Text('Wardrobe', style: Theme.of(context).textTheme.headlineMedium),
           actions: [TCartCounterIcon(onPressed: () {})],
         ),
         body: NestedScrollView(
