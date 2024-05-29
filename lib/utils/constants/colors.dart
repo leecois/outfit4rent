@@ -25,7 +25,7 @@ class TColors {
   static const Color buttonDisabled = Colors.grey;
 
   // Border colors
-  static const Color borderPrimary = Colors.black;
+  static const Color borderPrimary = Colors.grey;
   static const Color borderSecondary = Colors.grey;
 
   // Error and validation colors

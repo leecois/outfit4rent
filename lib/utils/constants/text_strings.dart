@@ -26,7 +26,7 @@ class TTexts {
   static const String username = "Username";
   static const String phoneNo = "Phone Number";
   static const String rememberMe = "Remember Me";
-  static const String forgetPassword = "Forget Password?";
+  static const String forgotPassword = "Forgot Password?";
   static const String signIn = "Sign In";
   static const String createAccount = "Create Account";
   static const String orSignInWith = "or sign in with";
@@ -40,10 +40,10 @@ class TTexts {
 
   // -- Authentication Headings
   static const String loginTitle = "Welcome back,";
-  static const String loginSubTitle = "Discover Limitless Choices and Unmatched Convenience.";
+  static const String loginSubTitle = "Discover Limitless Choices";
   static const String signupTitle = "Let’s create your account";
-  static const String forgetPasswordTitle = "Forget password";
-  static const String forgetPasswordSubTitle = "Don’t worry sometimes people can forget too, enter your email and we will send you a password reset link.";
+  static const String forgotPasswordTitle = "Forgot password";
+  static const String forgotPasswordSubTitle = "Don’t worry sometimes people can forget too, enter your email and we will send you a password reset link.";
   static const String changeYourPasswordTitle = "Password Reset Email Sent";
   static const String changeYourPasswordSubTitle =
       "Your Account Security is Our Priority! We've Sent You a Secure Link to Safely Change Your Password and Keep Your Account Protected.";
