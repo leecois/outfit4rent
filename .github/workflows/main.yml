@@ -75,11 +75,22 @@ jobs:
       #     file: build/app/outputs/flutter-apk/app-release.apk
       # build/app/outputs/apk/release/outfit4rent-release.apk
 
-      - name: Push to Releases
+      - name: Push APK to Releases
         uses: svenstaro/upload-release-action@v2
         with:
-          file: build/app/outputs/apk/release/outfit4rent.apk, build/ios/iphoneos/outfit4rent.ipa
+          file: build/app/outputs/apk/release/outfit4rent.apk
           tag: ${{ github.ref }}
           repo_token: ${{ secrets.TOKEN }}
           release_name: v1.0.${{ github.run_number }}
+          prerelease: true
+          overwrite: true
+
+      - name: Push IPA to Releases
+        uses: svenstaro/upload-release-action@v2
+        with:
+          file: build/ios/iphoneos/outfit4rent.ipa
+          tag: ${{ github.ref }}
+          repo_token: ${{ secrets.TOKEN }}
+          release_name: v1.0.${{ github.run_number }}
+          prerelease: true
           overwrite: true
