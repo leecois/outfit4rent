@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,17 +54,6 @@ class SettingScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwSections),
                   const TSectionHeading(title: 'App Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  TSettingMenuTitle(
-                    icon: Iconsax.language_circle_bold,
-                    title: "Language",
-                    subtitle: "Change the app language",
-                    trailing: Switch(
-                      value: context.locale == const Locale('vi'),
-                      onChanged: (bool newValue) {
-                        context.setLocale(newValue ? const Locale('vi') : const Locale('en'));
-                      },
-                    ),
-                  ),
                   //Todo: Dark mode Setting
                   GridView.count(
                     physics: const NeverScrollableScrollPhysics(),

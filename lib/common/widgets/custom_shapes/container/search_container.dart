@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
@@ -47,7 +46,7 @@ class TSearchContainer extends StatelessWidget {
               Icon(icon, color: Theme.of(context).colorScheme.primary),
               const SizedBox(width: TSizes.spaceBtwItems),
               Text(
-                tr("search_product"),
+                "search_product",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],

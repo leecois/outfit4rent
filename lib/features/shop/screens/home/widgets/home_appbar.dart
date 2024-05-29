@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/products.cart/cart_menu_icon.dart';
@@ -16,13 +15,13 @@ class THomeAppBar extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              tr("home_app_bar_title"),
+              "OUTFIT4RENT",
               style: Theme.of(context).textTheme.labelMedium!.apply(
                     color: Theme.of(context).colorScheme.primary,
                   ),
             ),
             Text(
-              tr("home_app_bar_sub_title"),
+              "Welcome? What are you looking for today?",
               style: Theme.of(context).textTheme.headlineSmall!.apply(
                     color: Theme.of(context).colorScheme.primary,
                   ),

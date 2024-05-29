@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:outfit4rent/utils/helpers/helper_functions.dart';
-
-import '../../cubit/theme_cubit.dart';
 
 class ThemeCard extends StatelessWidget {
   const ThemeCard({
@@ -17,21 +15,21 @@ class ThemeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    return BlocBuilder<ThemeCubit, ThemeModeState>(builder: (BuildContext context, ThemeModeState state) {
+    final themeController = Get.put(ThemeController());
+
+    return Obx(() {
       return Card(
         elevation: 2,
         shadowColor: Theme.of(context).colorScheme.shadow,
-        color: state.themeMode == mode ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        color: themeController.themeMode.value == mode ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
         child: InkWell(
-          onTap: () => BlocProvider.of<ThemeCubit>(context).getTheme(
-            ThemeModeState(themeMode: mode),
-          ),
+          onTap: () => themeController.setTheme(mode),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           child: Icon(
             icon,
             size: 32,
-            color: state.themeMode != mode
+            color: themeController.themeMode.value != mode
                 ? Theme.of(context).colorScheme.primary
                 : dark
                     ? Colors.black
@@ -40,5 +38,14 @@ class ThemeCard extends StatelessWidget {
         ),
       );
     });
+  }
+}
+
+class ThemeController extends GetxController {
+  var themeMode = ThemeMode.system.obs;
+
+  void setTheme(ThemeMode mode) {
+    themeMode.value = mode;
+    Get.changeThemeMode(mode);
   }
 }

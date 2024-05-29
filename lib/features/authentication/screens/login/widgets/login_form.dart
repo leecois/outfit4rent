@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/features/authentication/screens/password_configuration/forgot_password_screen.dart';
 import 'package:outfit4rent/features/authentication/screens/signup/signup_screen.dart';
-import 'package:outfit4rent/features/shop/screens/skeleton_screen.dart';
+import 'package:outfit4rent/navigation_menu.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/constants/text_strings.dart';
 
@@ -56,7 +56,7 @@ class TLoginForm extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () => Get.to(() => const SkeletonScreen()),
+                onPressed: () => Get.to(() => const NavigationMenu()),
                 child: const Text(TTexts.signIn),
               ),
             ),

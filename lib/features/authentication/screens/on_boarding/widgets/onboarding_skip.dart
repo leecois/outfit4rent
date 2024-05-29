@@ -1,6 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:outfit4rent/features/authentication/controllers.onboarding/onboarding_controller.dart';
+import 'package:outfit4rent/features/authentication/controllers/onboarding/onboarding_controller.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/device/device_utility.dart';
 
@@ -17,7 +16,7 @@ class OnBoardingSkip extends StatelessWidget {
       child: TextButton(
         onPressed: () => OnBoardingController.instance.skipPage(),
         child: Text(
-          tr('skip'),
+          'skip',
           style: Theme.of(context).textTheme.titleMedium!.apply(fontWeightDelta: 2),
         ),
       ),

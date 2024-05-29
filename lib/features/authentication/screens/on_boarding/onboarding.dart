@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:outfit4rent/features/authentication/controllers.onboarding/onboarding_controller.dart';
+import 'package:outfit4rent/features/authentication/controllers/onboarding/onboarding_controller.dart';
 import 'package:outfit4rent/features/authentication/screens/on_boarding/widgets/onboarding_dot.dart';
 import 'package:outfit4rent/features/authentication/screens/on_boarding/widgets/onboarding_next.dart';
 import 'package:outfit4rent/features/authentication/screens/on_boarding/widgets/onboarding_page.dart';

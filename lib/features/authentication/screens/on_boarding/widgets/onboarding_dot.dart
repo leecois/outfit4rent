@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:outfit4rent/features/authentication/controllers.onboarding/onboarding_controller.dart';
+import 'package:outfit4rent/features/authentication/controllers/onboarding/onboarding_controller.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/device/device_utility.dart';

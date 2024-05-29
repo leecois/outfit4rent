@@ -1,10 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:outfit4rent/features/authentication/screens/on_boarding/onboarding.dart';
+import 'package:outfit4rent/common/widgets/first_screen/theme_card.dart';
+import 'package:outfit4rent/utils/constants/colors.dart';
 
-import 'common/cubit/theme_cubit.dart';
 import 'utils/theme/theme.dart';
 
 class App extends StatelessWidget {
@@ -12,28 +10,13 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThemeCubit>(
-      create: (BuildContext context) => ThemeCubit(),
-      child: BlocBuilder<ThemeCubit, ThemeModeState>(
-        builder: (BuildContext context, ThemeModeState state) {
-          return GetMaterialApp(
-            /// Localization is not available for the title.
-            title: 'Outfit4rent',
-
-            /// Theme stuff
-            theme: TAppTheme.lightTheme,
-            darkTheme: TAppTheme.darkTheme,
-            themeMode: state.themeMode!,
-
-            /// Localization stuff
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            debugShowCheckedModeBanner: false,
-            home: const OnboardingScreen(),
-          );
-        },
-      ),
+    final themeController = Get.put(ThemeController());
+    return GetMaterialApp(
+      theme: TAppTheme.lightTheme,
+      darkTheme: TAppTheme.darkTheme,
+      themeMode: themeController.themeMode.value,
+      debugShowCheckedModeBanner: false,
+      home: const Scaffold(backgroundColor: TColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white))),
     );
   }
 }
