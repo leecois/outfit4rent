@@ -17,26 +17,21 @@ jobs:
 
     steps:
       # Clones the project on the machine
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      # Sets up java 11
       - uses: actions/setup-java@v4
         with:
           distribution: "zulu"
           java-version: "11"
 
-      # Installs flutter and related dependency on this machine
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-          # flutter-version: '3.16.8'
-          # ^ If you want to use a specific version of flutter
 
-      # Fetches proj dependencies from pub
       - name: Install dependencies
         run: flutter pub get
-        # ^ If you want to use a specific version of flutter
 
       # # Verifies if the dart code is formatted well
       # - name: Verify formatting
@@ -44,31 +39,29 @@ jobs:
       #   # --set-exit-if-changed stops execution if the any code is not well formatted
       #   # --output=none prints files which needs to be formatted
       # Checks for Symantic errors. Can be configured using analysis_options.yaml
+
       - name: Analyze project source
         run: flutter analyze --fatal-warnings
-        # optionally use --fatal-warnings to stop execution if any warnings are found
 
-      # # Runs unit test
-      # - name: Run tests
-      #   run: flutter test
-
-      Create android apk
-      - name: Build apk
+      - name: Build Android APK
         run: flutter build apk
 
-      # # Create iOS ipa
-      - run: pod repo update
+      - name: Update CocoaPods
+        run: pod repo update
         working-directory: ios
 
-      - run: flutter build ios --release --no-codesign
+      - name: Build iOS IPA
+        run: flutter build ios --release --no-codesign
 
-      - run: mkdir Payload
+      - name: Create Payload directory
+        run: mkdir Payload
         working-directory: build/ios/iphoneos
 
-      - run: mv Runner.app/ Payload
+      - name: Move Runner.app to Payload
+        run: mv Runner.app/ Payload
         working-directory: build/ios/iphoneos
 
-      - name: Zip output
+      - name: Zip iOS output
         run: zip -qq -r -9 outfit4rent.ipa Payload
         working-directory: build/ios/iphoneos
 
@@ -84,7 +77,9 @@ jobs:
       - name: Push to Releases
         uses: svenstaro/upload-release-action@v2
         with:
-          file: build/app/outputs/apk/release/*, build/ios/iphoneos/outfit4rent.ipa
+          files: |
+            build/app/outputs/apk/release/*
+            build/ios/iphoneos/outfit4rent.ipa
           tag: ${{ github.ref }}
           repo_token: ${{ secrets.TOKEN }}
           overwrite: true
