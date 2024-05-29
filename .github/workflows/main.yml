@@ -73,13 +73,12 @@ jobs:
       #     serviceCredentialsFileContent: ${{ secrets.SERVICE_CREDENTIALS_FILE_CONTENT }}
       #     groups: outfit4rent
       #     file: build/app/outputs/flutter-apk/app-release.apk
+      # build/app/outputs/apk/release/outfit4rent-release.apk
 
       - name: Push to Releases
         uses: svenstaro/upload-release-action@v2
         with:
-          file: |
-            build/app/outputs/apk/release/outfit4rent-release.apk
-            build/ios/iphoneos/outfit4rent.ipa
+          file: build/ios/iphoneos/outfit4rent.ipa
           tag: ${{ github.ref }}
           repo_token: ${{ secrets.TOKEN }}
           overwrite: true
