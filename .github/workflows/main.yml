@@ -77,7 +77,7 @@ jobs:
       - name: Push to Releases
         uses: svenstaro/upload-release-action@v2
         with:
-          files: |
+          file: |
             build/app/outputs/apk/release/*
             build/ios/iphoneos/outfit4rent.ipa
           tag: ${{ github.ref }}
