@@ -51,9 +51,10 @@ jobs:
       # # Runs unit test
       # - name: Run tests
       #   run: flutter test
+
       # Create android apk
-      - name: Build apk
-        run: flutter build apk
+      # - name: Build apk
+      #   run: flutter build apk
 
       # # Create iOS ipa
       - run: pod repo update
@@ -83,7 +84,7 @@ jobs:
       - name: Push to Releases
         uses: svenstaro/upload-release-action@v2
         with:
-          file: "build/app/outputs/apk/release/*, build/ios/iphoneos/app.ipa"
+          file: build/ios/iphoneos/app.ipa
           tag: ${{ github.ref }}
           repo_token: ${{ secrets.TOKEN }}
           overwrite: true
