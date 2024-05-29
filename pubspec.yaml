@@ -72,6 +72,14 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   husky: ^0.1.7
   commitlint_cli: ^0.7.1
+  flutter_launcher_icons: ^0.13.1
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: "AppIcon"
+  image_path: "assets/icons/ic_launcher_round.png"
+  min_sdk_version: 21
+  remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
