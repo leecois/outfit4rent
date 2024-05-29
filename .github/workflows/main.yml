@@ -13,7 +13,7 @@ jobs:
   flutter_job:
     # The machine, we can also use windows-latest or ubuntu-latest
     # We are choosing macos-latest because we will be also building for iOS
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       # Clones the project on the machine
@@ -55,18 +55,36 @@ jobs:
       - name: Build apk
         run: flutter build apk
 
-        # Upload apk to Firebase distribution
-      - name: Upload apk to Firebase distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
-        with:
-          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-          serviceCredentialsFileContent: ${{ secrets.SERVICE_CREDENTIALS_FILE_CONTENT }}
-          groups: outfit4rent
-          file: build/app/outputs/flutter-apk/app-release.apk
+      # # Create iOS ipa
+      - run: pod repo update
+        working-directory: ios
+
+      - run: flutter build ios --release --no-codesign
+
+      - run: mkdir Payload
+        working-directory: build/ios/iphoneos
+
+      - run: mv Runner.app/ Payload
+        working-directory: build/ios/iphoneos
+
+      - name: Zip output
+        run: zip -qq -r -9 app.ipa Payload
+        working-directory: build/ios/iphoneos
+
+      # Upload apk to Firebase distribution
+      # - name: Upload apk to Firebase distribution
+      #   uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+      #   with:
+      #     appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+      #     serviceCredentialsFileContent: ${{ secrets.SERVICE_CREDENTIALS_FILE_CONTENT }}
+      #     groups: outfit4rent
+      #     file: build/app/outputs/flutter-apk/app-release.apk
 
       - name: Push to Releases
-        uses: ncipollo/release-action@v1
+        uses: svenstaro/upload-release-action@v2
         with:
-          artifacts: "build/app/outputs/apk/release/*"
-          tag: v1.0.${{ github.run_number }}
-          token: ${{ secrets.TOKEN }}
+          file: "build/app/outputs/apk/release/*, build/ios/iphoneos/app.ipa"
+          tag: ${{ github.ref }}
+          repo_token: ${{ secrets.TOKEN }}
+          overwrite: true
+          body: "This is my release text"
