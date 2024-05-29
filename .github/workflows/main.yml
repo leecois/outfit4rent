@@ -78,7 +78,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           file: |
-            build/app/outputs/apk/release/outfit4rent-release.apk
+            build/app/outputs/flutter-apk/outfit4rent-release.apk
             build/ios/iphoneos/outfit4rent.ipa
           tag: ${{ github.ref }}
           repo_token: ${{ secrets.TOKEN }}
