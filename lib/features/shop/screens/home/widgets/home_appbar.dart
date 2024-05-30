@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/products.cart/cart_menu_icon.dart';
-import 'package:outfit4rent/common/widgets/shimmer/TShimmerEffect.dart';
+import 'package:outfit4rent/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 
