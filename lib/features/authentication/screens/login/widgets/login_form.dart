@@ -17,6 +17,7 @@ class TLoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(LoginController());
     return Form(
+      key: controller.loginFormKey,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: TSizes.spaceBtwSections),
         child: Column(
@@ -34,7 +35,7 @@ class TLoginForm extends StatelessWidget {
             //Todo: Password
             Obx(
               () => TextFormField(
-                validator: (value) => TValidator.validatePassword(value),
+                validator: (value) => TValidator.validateEmptyText('Password', value),
                 controller: controller.password,
                 obscureText: controller.hidePassword.value,
                 decoration: InputDecoration(

@@ -3,6 +3,7 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/images/circular_image.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/widgets/profile_menu.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
@@ -12,6 +13,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       appBar: const TAppBar(
         showBackArrow: true,
@@ -43,8 +45,8 @@ class ProfileScreen extends StatelessWidget {
               const TSectionHeading(title: 'Profile Information', showActionButton: false),
               const SizedBox(height: TSizes.spaceBtwItems),
 
-              TProfileMenu(title: 'Name', value: 'Ackerman', onPressed: () {}),
-              TProfileMenu(title: 'Username', value: 'ackerman', onPressed: () {}),
+              TProfileMenu(title: 'Name', value: controller.user.value.fullName, onPressed: () {}),
+              TProfileMenu(title: 'Username', value: controller.user.value.username, onPressed: () {}),
 
               const SizedBox(height: TSizes.spaceBtwItems),
               const Divider(),
@@ -54,9 +56,9 @@ class ProfileScreen extends StatelessWidget {
               const TSectionHeading(title: 'Account Information', showActionButton: false),
               const SizedBox(height: TSizes.spaceBtwItems),
 
-              TProfileMenu(title: 'User ID', value: '777', icon: Iconsax.copy_outline, onPressed: () {}),
-              TProfileMenu(title: 'Email', value: 'Ackerman@gmail.com', onPressed: () {}),
-              TProfileMenu(title: 'Phone', value: '+8434567890', onPressed: () {}),
+              TProfileMenu(title: 'User ID', value: controller.user.value.id, icon: Iconsax.copy_outline, onPressed: () {}),
+              TProfileMenu(title: 'Email', value: controller.user.value.email, onPressed: () {}),
+              TProfileMenu(title: 'Phone', value: controller.user.value.phoneNumber, onPressed: () {}),
               TProfileMenu(title: 'Gender', value: 'Female', onPressed: () {}),
               TProfileMenu(title: 'Country', value: 'Vietnam', onPressed: () {}),
               TProfileMenu(title: 'Date of Birth', value: '01/01/2003', onPressed: () {}),

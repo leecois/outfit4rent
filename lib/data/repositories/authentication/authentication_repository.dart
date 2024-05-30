@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,9 @@ class AuthenticationRepository extends GetxController {
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
 
+  //Todo: Get Authenticated User Data
+  User? get authUser => _auth.currentUser;
+
   //? Called from main.dart
   @override
   void onReady() {
@@ -29,7 +33,7 @@ class AuthenticationRepository extends GetxController {
   }
 
   //? Redirects to the appropriate screen
-  screenRedirect() async {
+  void screenRedirect() async {
     final user = _auth.currentUser;
     if (user != null) {
       if (user.emailVerified) {
@@ -136,13 +140,13 @@ class AuthenticationRepository extends GetxController {
 
   //! FEDERATED IDENTITY & SOCIAL SIGN IN AUTHENTICATION
   // Todo: [GoogleAuthentication] - Google
-  Future<UserCredential> signInWithGoogle(String email) async {
+  Future<UserCredential?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? userAccount = await GoogleSignIn().signIn();
 
-      final GoogleSignInAuthentication googleAuth = await userAccount!.authentication;
+      final GoogleSignInAuthentication? googleAuth = await userAccount?.authentication;
 
-      final credentials = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      final credentials = GoogleAuthProvider.credential(accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
 
       return await _auth.signInWithCredential(credentials);
     } on FirebaseAuthException catch (e) {
@@ -154,7 +158,8 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
-      throw 'An error occurred. Please try again later.';
+      if (kDebugMode) print('Something went wrong: $e');
+      return null;
     }
   }
 
@@ -165,6 +170,7 @@ class AuthenticationRepository extends GetxController {
   //Todo: [SignOut] - Valid for any authentication method
   Future<void> signOut() async {
     try {
+      await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
