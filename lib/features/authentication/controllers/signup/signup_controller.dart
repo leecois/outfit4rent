@@ -27,7 +27,7 @@ class SignupController extends GetxController {
   void signUp() async {
     try {
       //Todo: Start Loading
-      TFullScreenLoader.openLoadingDialog("We are ...", TImages.onboarding2);
+      TFullScreenLoader.openLoadingDialog("Mô phật đang kiểm tra đợi xíu...", TImages.animation5);
 
       //Todo: Check Internet Connection
       final isConnected = await NetworkManager.instance.isConnected();

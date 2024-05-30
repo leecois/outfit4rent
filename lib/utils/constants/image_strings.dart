@@ -42,4 +42,18 @@ class TImages {
   static const String banner8 = "assets/images/banners/banner_8.jpg";
   // -- Products
   static const String productImage1 = "assets/images/products/product-jacket.png";
+
+  // -- Animations
+  static const String animation2 = "assets/images/animations/53207-empty-file.json";
+  static const String animation3 = "assets/images/animations/67263-security-icon-transparent.json";
+  static const String animation4 = "assets/images/animations/72462-check-register.json";
+  static const String animation5 = "assets/images/animations/72785-searching.json";
+  static const String animation1 = "assets/images/animations/loader-animation.json";
+  static const String animation6 = "assets/images/animations/110052-paper-plane.json";
+  static const String animation7 = "assets/images/animations/98783-packaging-in-progress.json";
+  static const String animation8 = "assets/images/animations/104368-thank-you.json";
+  static const String animation9 = "assets/images/animations/120978-payment-successful.json";
+  static const String animation10 = "assets/images/animations/136491-animation-lottie-car-rides.json";
+  static const String animation11 = "assets/images/animations/110052-paper-plane.json";
+  static const String animation12 = "assets/images/animations/lady-adding-product-in-cart-animation.json";
 }
