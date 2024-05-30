@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/data/repositories/user/user_repository.dart';
-import 'package:outfit4rent/features/authentication/screens/signup/verify_email.dart';
+import 'package:outfit4rent/features/authentication/screens/signup/verify_email_screen.dart';
 import 'package:outfit4rent/features/personalization/models/user_model.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/helpers/network_manager.dart';
@@ -74,7 +74,7 @@ class SignupController extends GetxController {
       TLoaders.successSnackBar(title: "Welcome!", message: "You have successfully signed up");
 
       //Todo: Move to Verification Screen
-      Get.to(() => const VerifyEmailScreen());
+      Get.to(() => VerifyEmailScreen(email: email.text.trim()));
     } catch (e) {
       //Todo: Handle error
       TFullScreenLoader.stopLoading();

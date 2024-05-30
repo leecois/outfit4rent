@@ -8,6 +8,7 @@ import 'package:outfit4rent/common/widgets/first_screen/theme_card.dart';
 import 'package:outfit4rent/common/widgets/list_title/setting_menu_title.dart';
 import 'package:outfit4rent/common/widgets/list_title/user_profile_title.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/features/personalization/screens/address/address_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/profile_screen.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
@@ -84,7 +85,7 @@ class SettingScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: OutlinedButton(
-                      onPressed: () {},
+                      onPressed: () => AuthenticationRepository.instance.signOut(),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: Theme.of(context).colorScheme.onSurface,
                         side: BorderSide(

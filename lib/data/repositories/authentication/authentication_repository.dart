@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:outfit4rent/features/authentication/screens/login/login_screen.dart';
 import 'package:outfit4rent/features/authentication/screens/on_boarding/onboarding.dart';
+import 'package:outfit4rent/features/authentication/screens/signup/verify_email_screen.dart';
+import 'package:outfit4rent/navigation_menu.dart';
 import 'package:outfit4rent/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/firebase_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/format_exception.dart';
@@ -26,15 +28,24 @@ class AuthenticationRepository extends GetxController {
   }
 
   //? Redirects to the appropriate screen
-  void screenRedirect() async {
-    // Local storage
-    deviceStorage.writeIfNull('NapLanDau', true);
-    deviceStorage.read('NapLanDau') != true ? Get.offAll(() => const LoginScreen()) : Get.offAll(const OnboardingScreen());
+  screenRedirect() async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      if (user.emailVerified) {
+        Get.offAll(() => const NavigationMenu());
+      } else {
+        Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));
+      }
+    } else {
+      // Local storage
+      deviceStorage.writeIfNull('NapLanDau', true);
+      deviceStorage.read('NapLanDau') != true ? Get.offAll(() => const LoginScreen()) : Get.offAll(const OnboardingScreen());
+    }
   }
 
   //! EMAIL & PASSWORD SIGN IN AUTHENTICATION
   //Todo: [EmailAuthentication] - Sign In
-  Future<UserCredential> signInWithEmailAndPassword(String email, String password) async {
+  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
     try {
       return await _auth.signInWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
@@ -91,10 +102,7 @@ class AuthenticationRepository extends GetxController {
   //Todo: [EmailAuthentication] - Mail Verification
   Future<void> sendEmailVerification() async {
     try {
-      User? user = _auth.currentUser;
-      if (user != null && !user.emailVerified) {
-        await user.sendEmailVerification();
-      }
+      await _auth.currentUser?.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -134,7 +142,8 @@ class AuthenticationRepository extends GetxController {
   //Todo: [SignOut] - Valid for any authentication method
   Future<void> signOut() async {
     try {
-      await _auth.signOut();
+      await FirebaseAuth.instance.signOut();
+      Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
