@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:outfit4rent/bindings/general_bindings.dart';
 import 'package:outfit4rent/common/widgets/first_screen/theme_card.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 
@@ -12,9 +13,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeController = Get.put(ThemeController());
     return GetMaterialApp(
-      theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
+      theme: TAppTheme.lightTheme,
       themeMode: themeController.themeMode.value,
+      initialBinding: GeneralBindings(),
       debugShowCheckedModeBanner: false,
       home: const Scaffold(backgroundColor: TColors.primary, body: Center(child: CircularProgressIndicator(color: Colors.white))),
     );
