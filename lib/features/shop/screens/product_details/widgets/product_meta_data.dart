@@ -50,7 +50,7 @@ class TProductMetaData extends StatelessWidget {
         //Todo: Stock status
         Row(
           children: [
-            const TProductTitleText(title: 'Status'),
+            const TProductTitleText(title: 'Status:'),
             const SizedBox(width: TSizes.spaceBtwItems),
             Text('In Stock', style: Theme.of(context).textTheme.titleMedium),
           ],

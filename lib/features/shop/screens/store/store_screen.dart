@@ -4,7 +4,7 @@ import 'package:outfit4rent/common/widgets/appbar/tabbar.dart';
 import 'package:outfit4rent/common/widgets/brands/brand_card.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/search_container.dart';
 import 'package:outfit4rent/common/widgets/layouts/grid_layout.dart';
-import 'package:outfit4rent/common/widgets/products.cart/cart_menu_icon.dart';
+import 'package:outfit4rent/common/widgets/products/cart/cart_menu_icon.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/features/shop/screens/store/widgets/category_tab.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';

@@ -100,6 +100,7 @@ flutter:
     - assets/logos/
     - assets/icons/
     - assets/icons/categories/
+    - assets/icons/payment_methods/
     - assets/images/content/
     - assets/images/banners/
     - assets/images/products/

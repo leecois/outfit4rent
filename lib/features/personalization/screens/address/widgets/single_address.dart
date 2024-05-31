@@ -20,7 +20,7 @@ class TSingleAddress extends StatelessWidget {
       showBorder: true,
       padding: const EdgeInsets.all(TSizes.md),
       width: double.infinity,
-      backgroundColor: selectedAddress ? TColors.primary.withOpacity(0.5) : Colors.transparent,
+      backgroundColor: selectedAddress ? TColors.primary.withOpacity(0.2) : Colors.transparent,
       borderColor: selectedAddress
           ? Colors.transparent
           : dark

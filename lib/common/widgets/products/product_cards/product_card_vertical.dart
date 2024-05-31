@@ -39,13 +39,13 @@ class TProductCardVertical extends StatelessWidget {
               backgroundColor: dark ? TColors.dark : TColors.light,
               child: Stack(
                 children: [
-                  const TRoundedImage(imageUrl: TImages.productImage1, applyImageRadius: true),
+                  const TRoundedImage(width: 200, imageUrl: TImages.productImage1, applyImageRadius: true),
                   //!isUsed Tag
                   Positioned(
-                    top: 12,
+                    top: 9,
                     child: TRoundedContainer(
                       radius: TSizes.sm,
-                      backgroundColor: TColors.secondary.withOpacity(0.8),
+                      backgroundColor: Colors.amber.withOpacity(0.9),
                       padding: const EdgeInsets.symmetric(horizontal: TSizes.sm, vertical: TSizes.xs),
                       child: Text(
                         'used',
@@ -58,7 +58,13 @@ class TProductCardVertical extends StatelessWidget {
                   const Positioned(
                     top: 0,
                     right: 0,
-                    child: TCircularIcon(icon: Iconsax.heart_bold, color: Colors.red),
+                    child: TCircularIcon(
+                      size: TSizes.iconMd,
+                      width: TSizes.iconLg,
+                      height: TSizes.iconLg,
+                      icon: Iconsax.heart_bold,
+                      color: Colors.red,
+                    ),
                   )
                 ],
               ),

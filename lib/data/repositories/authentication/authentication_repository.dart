@@ -44,7 +44,7 @@ class AuthenticationRepository extends GetxController {
     } else {
       // Local storage
       deviceStorage.writeIfNull('NapLanDau', true);
-      deviceStorage.read('NapLanDau') != true ? Get.offAll(() => const LoginScreen()) : Get.offAll(const OnboardingScreen());
+      deviceStorage.read('NapLanDau') != true ? Get.offAll(() => const LoginScreen()) : Get.offAll(() => const OnboardingScreen());
     }
   }
 
@@ -147,6 +147,9 @@ class AuthenticationRepository extends GetxController {
       final GoogleSignInAuthentication? googleAuth = await userAccount?.authentication;
 
       final credentials = GoogleAuthProvider.credential(accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
+      if (kDebugMode) {
+        print('Google Auth: $credentials');
+      }
 
       return await _auth.signInWithCredential(credentials);
     } on FirebaseAuthException catch (e) {
