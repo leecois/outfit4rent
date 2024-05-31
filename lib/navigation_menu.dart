@@ -9,7 +9,6 @@ import 'package:outfit4rent/features/shop/screens/wardrobe/wardobe_screen.dart';
 import 'package:outfit4rent/features/shop/screens/wishlist/wishlist_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
-import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 
 class NavigationMenu extends StatelessWidget {
@@ -24,23 +23,20 @@ class NavigationMenu extends StatelessWidget {
       bottomNavigationBar: Obx(
         () => SnakeNavigationBar.color(
           height: 50,
-          backgroundColor: dark ? TColors.black : TColors.white,
           behaviour: SnakeBarBehaviour.pinned,
           snakeShape: SnakeShape.circle,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-          padding: const EdgeInsets.all(TSizes.sm),
           snakeViewColor: dark ? TColors.white : TColors.black,
           selectedItemColor: dark ? TColors.dark : TColors.white,
           unselectedItemColor: dark ? TColors.white : TColors.black,
+          showUnselectedLabels: true,
+          unselectedLabelStyle: Theme.of(context).textTheme.labelSmall,
           currentIndex: controller.selectedIndex.value,
           onTap: (index) => controller.selectedIndex.value = index,
           items: [
             BottomNavigationBarItem(
               icon: Image.asset(
-                controller.selectedIndex.value == 0 ? (dark ? TImages.lightAppLogo : TImages.darkAppLogo) : (dark ? TImages.darkAppLogo : TImages.lightAppLogo),
-                height: 34,
+                controller.selectedIndex.value == 0 ? (dark ? TImages.logoIconDark : TImages.logoIconLight) : (dark ? TImages.logoIconLight : TImages.logoIconDark),
+                height: 20,
               ),
               label: 'O4R',
             ),

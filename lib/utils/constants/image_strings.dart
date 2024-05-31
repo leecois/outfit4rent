@@ -5,6 +5,9 @@ class TImages {
   // -- App Logos
   static const String darkAppLogo = "assets/logos/logo-mark-darkmode.png";
   static const String lightAppLogo = "assets/logos/logo-mark-lightmode.png";
+  // -- Icons
+  static const String logoIconDark = "assets/icons/logo-icon-dark.png";
+  static const String logoIconLight = "assets/icons/logo-icon-light.png";
 
   // -- Onboarding Images
   static const String onboarding1 = "assets/images/on_boarding_images/funny.gif";
