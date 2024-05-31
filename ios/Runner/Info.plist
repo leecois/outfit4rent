@@ -28,6 +28,19 @@
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
 		<string>Main</string>
+		<key>GIDClientID</key>
+		<string>767742131819-nd5kk6e6cppn1rp8jr4qci16ni3vqd9v.apps.googleusercontent.com</string>
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>com.googleusercontent.apps.767742131819-nd5kk6e6cppn1rp8jr4qci16ni3vqd9v</string>
+				</array>
+			</dict>
+		</array>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
@@ -40,17 +53,6 @@
 			<string>UIInterfaceOrientationPortraitUpsideDown</string>
 			<string>UIInterfaceOrientationLandscapeLeft</string>
 			<string>UIInterfaceOrientationLandscapeRight</string>
-		</array>
-		<key>CFBundleURLTypes</key>
-		<array>
-			<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>com.googleusercontent.apps.767742131819-nd5kk6e6cppn1rp8jr4qci16ni3vqd9v</string>
-				</array>
-			</dict>
 		</array>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true/>
