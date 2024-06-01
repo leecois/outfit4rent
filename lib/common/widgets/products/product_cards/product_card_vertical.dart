@@ -42,7 +42,7 @@ class TProductCardVertical extends StatelessWidget {
                   const TRoundedImage(width: 200, imageUrl: TImages.productImage1, applyImageRadius: true),
                   //!isUsed Tag
                   Positioned(
-                    top: 9,
+                    top: 12,
                     child: TRoundedContainer(
                       radius: TSizes.sm,
                       backgroundColor: Colors.amber.withOpacity(0.9),
@@ -59,9 +59,6 @@ class TProductCardVertical extends StatelessWidget {
                     top: 0,
                     right: 0,
                     child: TCircularIcon(
-                      size: TSizes.iconMd,
-                      width: TSizes.iconLg,
-                      height: TSizes.iconLg,
                       icon: Iconsax.heart_bold,
                       color: Colors.red,
                     ),

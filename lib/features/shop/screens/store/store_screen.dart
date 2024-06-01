@@ -37,16 +37,15 @@ class StoreScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     children: [
                       const SizedBox(height: TSizes.spaceBtwItems),
-                      //Todo: Search
-                      const TSearchContainer(text: 'Search for products', showBorder: true, showBackground: false, padding: EdgeInsets.zero),
+                      const TSearchContainer(
+                        text: 'Search for products',
+                        showBorder: true,
+                        showBackground: false,
+                        padding: EdgeInsets.zero,
+                      ),
                       const SizedBox(height: TSizes.spaceBtwSections),
-
-                      //Todo: Brands Grid
-
                       TSectionHeading(title: 'Featured Brands', onPressed: () {}),
                       const SizedBox(height: TSizes.spaceBtwItems / 1.5),
-
-                      //Todo: Brands
                       TGridLayout(
                         itemCount: 4,
                         mainAxisExtent: 80,

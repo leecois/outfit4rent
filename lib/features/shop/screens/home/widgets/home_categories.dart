@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/image_text_widgets/vertical_image_text.dart';
+import 'package:outfit4rent/features/shop/screens/sub_category/sub_categories_screen.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 
 class THomeCategories extends StatelessWidget {
@@ -20,7 +22,7 @@ class THomeCategories extends StatelessWidget {
               image: TImages.clothIcon,
               title: 'Dress',
               textColor: Theme.of(context).colorScheme.primary,
-              onTap: () {},
+              onTap: () => Get.to(() => const SubCategoriesScreen()),
             );
           }),
     );
