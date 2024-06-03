@@ -112,6 +112,11 @@ class UserController extends GetxController {
           await auth.deleteAccount();
           TFullScreenLoader.stopLoading();
           Get.offAll(() => const LoginScreen());
+        } else if (provider == 'facebook.com') {
+          await auth.signInWithFacebook();
+          await auth.deleteAccount();
+          TFullScreenLoader.stopLoading();
+          Get.offAll(() => const LoginScreen());
         } else if (provider == 'password') {
           TFullScreenLoader.stopLoading();
           Get.to(() => const ReAuthenticateUserLoginForm());

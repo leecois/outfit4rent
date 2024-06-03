@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -175,6 +176,29 @@ class AuthenticationRepository extends GetxController {
   }
 
   // Todo: [FacebookAuthentication] - Facebook
+  Future<UserCredential?> signInWithFacebook() async {
+    try {
+      final LoginResult result = await FacebookAuth.instance.login();
+      if (result.status == LoginStatus.success) {
+        // Create a credential from the access token
+        final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.tokenString);
+        // Once signed in, return the UserCredential
+        return await FirebaseAuth.instance.signInWithCredential(credential);
+      }
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      if (kDebugMode) print('Something went wrong: $e');
+      return null;
+    }
+    return null;
+  }
 
   //! ./end FEDERATED IDENTITY & SOCIAL SIGN IN AUTHENTICATION
 
@@ -183,6 +207,7 @@ class AuthenticationRepository extends GetxController {
     try {
       await GoogleSignIn().signOut();
       await FirebaseAuth.instance.signOut();
+      await FacebookAuth.instance.logOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;

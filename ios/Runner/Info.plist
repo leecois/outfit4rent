@@ -44,8 +44,20 @@
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>com.googleusercontent.apps.767742131819-nd5kk6e6cppn1rp8jr4qci16ni3vqd9v</string>
+					<string>fb817139819982457</string>
 				</array>
 			</dict>
+		</array>
+		<key>FacebookAppID</key>
+		<string>817139819982457</string>
+		<key>FacebookClientToken</key>
+		<string>3eba3411bc0526518b8c6808f2fcf882</string>
+		<key>FacebookDisplayName</key>
+		<string>outfit4rent</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+  			<string>fbapi</string>
+  			<string>fb-messenger-share-api</string>
 		</array>
 		<key>UISupportedInterfaceOrientations</key>
 		<array>

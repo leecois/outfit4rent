@@ -33,7 +33,7 @@ class TSocialButtons extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () => controller.facebookSignIn(),
             icon: const Icon(MingCute.facebook_fill, size: TSizes.iconMd),
           ),
         ),
