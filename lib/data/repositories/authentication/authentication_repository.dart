@@ -52,7 +52,12 @@ class AuthenticationRepository extends GetxController {
   //Todo: [EmailAuthentication] - Sign In
   Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
     try {
-      return await _auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      String? token = await userCredential.user?.getIdToken();
+      if (kDebugMode) {
+        debugPrint('Login Token: $token', wrapWidth: 1024);
+      }
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -151,7 +156,12 @@ class AuthenticationRepository extends GetxController {
         print('Google Auth: $credentials');
       }
 
-      return await _auth.signInWithCredential(credentials);
+      UserCredential userCredential = await _auth.signInWithCredential(credentials);
+      String? token = await userCredential.user?.getIdToken();
+      if (kDebugMode) {
+        debugPrint('Login Token: $token', wrapWidth: 1024);
+      }
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

@@ -48,6 +48,7 @@ class SignupController extends GetxController {
           title: 'Accept Privacy Policy',
           message: 'Please accept the privacy policy to continue',
         );
+        TFullScreenLoader.stopLoading();
         return;
       }
       //Todo: Register User in Firebase
