@@ -5,6 +5,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:outfit4rent/data/repositories/user/user_repository.dart';
 import 'package:outfit4rent/features/authentication/screens/login/login_screen.dart';
 import 'package:outfit4rent/features/authentication/screens/on_boarding/onboarding.dart';
 import 'package:outfit4rent/features/authentication/screens/signup/verify_email_screen.dart';
@@ -89,13 +90,10 @@ class AuthenticationRepository extends GetxController {
   }
 
   //Todo: [ReAuthentication] - Re-authenticate user
-  Future<void> reAuthenticateUser(String email, String password) async {
+  Future<void> reAuthenticateWithEmailAndPassword(String email, String password) async {
     try {
-      User? user = _auth.currentUser;
-      if (user != null) {
-        AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
-        await user.reauthenticateWithCredential(credential);
-      }
+      AuthCredential credential = EmailAuthProvider.credential(email: email, password: password);
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -199,13 +197,11 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  //Todo: [DeleteAccount] - Remove user
-  Future<void> deleteUser() async {
+  //Todo: [DeleteAccount] - Remove user auth and data
+  Future<void> deleteAccount() async {
     try {
-      User? user = _auth.currentUser;
-      if (user != null) {
-        await user.delete();
-      }
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+      await _auth.currentUser?.delete();
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

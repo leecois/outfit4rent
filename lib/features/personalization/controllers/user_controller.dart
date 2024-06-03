@@ -1,9 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
+import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/data/repositories/user/user_repository.dart';
+import 'package:outfit4rent/features/authentication/screens/login/login_screen.dart';
 import 'package:outfit4rent/features/personalization/models/user_model.dart';
+import 'package:outfit4rent/features/personalization/screens/profile/widgets/re_authenticate_user_login_form.dart';
+import 'package:outfit4rent/utils/constants/image_strings.dart';
+import 'package:outfit4rent/utils/constants/sizes.dart';
+import 'package:outfit4rent/utils/helpers/network_manager.dart';
+import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
 
 class UserController extends GetxController {
   static UserController get instance => Get.find();
@@ -12,7 +20,11 @@ class UserController extends GetxController {
   Rx<UserModel> user = UserModel.empty().obs;
 
   final imageUploading = false.obs;
+  final hidePassword = false.obs;
+  final verifyEmail = TextEditingController();
+  final verifyPassword = TextEditingController();
   final useRepository = Get.put(UserRepository());
+  GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
@@ -62,6 +74,84 @@ class UserController extends GetxController {
     } catch (e) {
       TLoaders.warningSnackBar(
         title: 'Data not saved',
+        message: 'An error occurred. Please try again later.',
+      );
+    }
+  }
+
+  //Todo: Delete Account warning
+  void deleteAccountWarningPopup() {
+    Get.defaultDialog(
+      contentPadding: const EdgeInsets.all(TSizes.md),
+      title: 'Delete Account',
+      middleText: 'Are you sure you want to delete your account?',
+      confirm: ElevatedButton(
+        onPressed: () async => deleteUserAccount(),
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.red, side: const BorderSide(color: Colors.red)),
+        child: const Padding(padding: EdgeInsets.symmetric(horizontal: TSizes.lg), child: Text('Delete')),
+      ),
+      cancel: ElevatedButton(
+        onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+        child: const Text('Cancel'),
+      ),
+    );
+  }
+
+  //Todo: Delete Account
+  void deleteUserAccount() async {
+    try {
+      TFullScreenLoader.openLoadingDialog('Processing', TImages.animation5);
+
+      //Todo: First re-authenticate user
+      final auth = AuthenticationRepository.instance;
+      final provider = auth.authUser!.providerData.map((e) => e.providerId).first;
+      if (provider.isNotEmpty) {
+        //Todo: Re-authenticate user
+        if (provider == 'google.com') {
+          await auth.signInWithGoogle();
+          await auth.deleteAccount();
+          TFullScreenLoader.stopLoading();
+          Get.offAll(() => const LoginScreen());
+        } else if (provider == 'password') {
+          TFullScreenLoader.stopLoading();
+          Get.to(() => const ReAuthenticateUserLoginForm());
+        }
+      }
+    } catch (e) {
+      TFullScreenLoader.stopLoading();
+      TLoaders.warningSnackBar(
+        title: 'Account not deleted',
+        message: 'An error occurred. Please try again later.',
+      );
+    }
+  }
+
+  //Todo: Re-authenticate user
+  Future<void> reAuthenticateEmailAndPasswordUser() async {
+    try {
+      TFullScreenLoader.openLoadingDialog('Processing', TImages.animation5);
+
+      //Todo: Check internet
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+
+      //Todo: Validate form
+      if (!reAuthFormKey.currentState!.validate()) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
+
+      await AuthenticationRepository.instance.reAuthenticateWithEmailAndPassword(verifyEmail.text.trim(), verifyPassword.text.trim());
+      await AuthenticationRepository.instance.deleteAccount();
+      TFullScreenLoader.stopLoading();
+      Get.offAll(() => const LoginScreen());
+    } catch (e) {
+      TFullScreenLoader.stopLoading();
+      TLoaders.warningSnackBar(
+        title: 'Re-authentication failed',
         message: 'An error occurred. Please try again later.',
       );
     }

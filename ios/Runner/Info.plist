@@ -30,6 +30,12 @@
 		<string>Main</string>
 		<key>GIDClientID</key>
 		<string>767742131819-nd5kk6e6cppn1rp8jr4qci16ni3vqd9v.apps.googleusercontent.com</string>
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>This app requires access to the photo library.</string>
+		<key>NSCameraUsageDescription</key>
+		<string>This app requires access to the camera.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>This app requires access to the microphone.</string>
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>

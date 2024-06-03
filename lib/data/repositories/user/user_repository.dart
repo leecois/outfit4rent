@@ -81,7 +81,7 @@ class UserRepository extends GetxController {
     }
   }
 
-  //Todo: Remove user from Firestore
+  //Todo: Remove user from Firestore or restApi or any other database
   Future<void> removeUserRecord(String userId) async {
     try {
       await _db.collection('Users').doc(userId).delete();
