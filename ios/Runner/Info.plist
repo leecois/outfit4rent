@@ -44,14 +44,14 @@
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>com.googleusercontent.apps.767742131819-nd5kk6e6cppn1rp8jr4qci16ni3vqd9v</string>
-					<string>fb817139819982457</string>
+					<string>fb1206069457053322</string>
 				</array>
 			</dict>
 		</array>
 		<key>FacebookAppID</key>
-		<string>817139819982457</string>
+		<string>1206069457053322</string>
 		<key>FacebookClientToken</key>
-		<string>3eba3411bc0526518b8c6808f2fcf882</string>
+		<string>77f8b6f3390a31949517aa585c615085</string>
 		<key>FacebookDisplayName</key>
 		<string>outfit4rent</string>
 		<key>LSApplicationQueriesSchemes</key>
