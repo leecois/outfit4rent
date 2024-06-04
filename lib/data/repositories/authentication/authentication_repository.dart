@@ -186,7 +186,7 @@ class AuthenticationRepository extends GetxController {
         if (kDebugMode) {
           debugPrint('Facebook Auth: $credential', wrapWidth: 1024);
         }
-        UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+        UserCredential userCredential = await _auth.signInWithCredential(credential);
         String? token = await userCredential.user?.getIdToken();
         if (kDebugMode) {
           debugPrint('Firebase ID Token: $token', wrapWidth: 1024);
