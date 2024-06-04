@@ -10,12 +10,12 @@ class TCircularImage extends StatelessWidget {
     super.key,
     this.width = 56,
     this.height = 56,
-    this.padding = TSizes.sm,
-    this.fit = BoxFit.cover,
-    required this.image,
-    this.isNetworkImage = false,
     this.overlayColor,
     this.backgroundColor,
+    required this.image,
+    this.fit = BoxFit.cover,
+    this.padding = TSizes.sm,
+    this.isNetworkImage = false,
   });
 
   final BoxFit? fit;
@@ -33,7 +33,7 @@ class TCircularImage extends StatelessWidget {
       height: height,
       padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
-        color: backgroundColor ?? (dark ? TColors.black : TColors.white),
+        color: backgroundColor ?? (dark ? TColors.darkGrey : TColors.grey),
         borderRadius: BorderRadius.circular(100),
       ),
       child: ClipRRect(
@@ -44,11 +44,7 @@ class TCircularImage extends StatelessWidget {
                   fit: fit,
                   color: overlayColor,
                   imageUrl: image,
-                  progressIndicatorBuilder: (context, url, downloadProgress) => const TShimmerEffect(
-                    width: 55,
-                    height: 55,
-                    radius: 55,
-                  ),
+                  progressIndicatorBuilder: (context, url, downloadProgress) => const TShimmerEffect(width: 55, height: 55, radius: 55),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 )
               : Image(

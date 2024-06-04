@@ -83,6 +83,6 @@ jobs:
         uses: ncipollo/release-action@v1.14.0
         with:
           artifacts: "build/app/outputs/apk/release/*,build/ios/iphoneos/outfit4rent.ipa"
-          tag: v1.0.1
+          tag: v1.0.2
           token: ${{ secrets.TOKEN }}
           allowUpdates: true

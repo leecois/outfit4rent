@@ -178,14 +178,13 @@ class AuthenticationRepository extends GetxController {
   // Todo: [FacebookAuthentication] - Facebook
   Future<UserCredential?> signInWithFacebook() async {
     try {
-      final LoginResult result = await FacebookAuth.instance.login();
+      final LoginResult result = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile'],
+        loginBehavior: LoginBehavior.webOnly,
+      );
       if (result.status == LoginStatus.success) {
         // Create a credential from the access token
         final OAuthCredential credential = FacebookAuthProvider.credential(result.accessToken!.tokenString);
-        // Once signed in, return the UserCredential
-        if (kDebugMode) {
-          debugPrint('Facebook Auth: $credential', wrapWidth: 1024);
-        }
         UserCredential userCredential = await _auth.signInWithCredential(credential);
         String? token = await userCredential.user?.getIdToken();
         if (kDebugMode) {

@@ -89,6 +89,7 @@ class LoginController extends GetxController {
       //Todo: Redirect
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
+      TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh no!', message: e.toString());
     }
   }
@@ -118,6 +119,7 @@ class LoginController extends GetxController {
       //Todo: Redirect
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
+      TFullScreenLoader.stopLoading();
       TLoaders.errorSnackBar(title: 'Oh no!', message: e.toString());
     }
   }
