@@ -180,7 +180,6 @@ class AuthenticationRepository extends GetxController {
     try {
       final LoginResult result = await FacebookAuth.instance.login(
         permissions: ['email', 'public_profile'],
-        loginBehavior: LoginBehavior.webOnly,
       );
       if (result.status == LoginStatus.success) {
         // Create a credential from the access token
