@@ -1,6 +1,7 @@
-import Flutter
 import UIKit
-import FacebookCore
+import Flutter
+import Firebase
+import FBSDKCoreKit
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -8,6 +9,7 @@ import FacebookCore
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    FirebaseApp.configure()
     ApplicationDelegate.shared.application(
       application,
       didFinishLaunchingWithOptions: launchOptions
@@ -21,12 +23,11 @@ import FacebookCore
     open url: URL,
     options: [UIApplication.OpenURLOptionsKey : Any] = [:]
   ) -> Bool {
-    ApplicationDelegate.shared.application(
+    return ApplicationDelegate.shared.application(
       app,
       open: url,
       sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
       annotation: options[UIApplication.OpenURLOptionsKey.annotation]
     )
-    return super.application(app, open: url, options: options)
   }
 }
