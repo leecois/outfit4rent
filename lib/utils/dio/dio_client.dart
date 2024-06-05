@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:outfit4rent/utils/constants/api_constants.dart';
 import 'package:outfit4rent/utils/helpers/shared_preferences_helper.dart';
 
 class TDioClient {
-  static const String _baseUrl = 'http://outfit4rent.online';
+  static const String _baseUrl = tSecretAPIKey;
   static final Dio _dio = Dio(BaseOptions(baseUrl: _baseUrl));
 
   TDioClient() {

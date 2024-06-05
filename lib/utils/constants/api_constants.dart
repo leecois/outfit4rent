@@ -1,3 +1,3 @@
 /* -- LIST OF Constants used in APIs -- */
 // Example
-const String tSecretAPIKey = "leecois";
+const String tSecretAPIKey = "http://outfit4rent.online";
