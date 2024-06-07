@@ -11,8 +11,8 @@ import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 class TBrandCard extends StatelessWidget {
   const TBrandCard({
     super.key,
-    required this.showBorder,
     this.onTap,
+    required this.showBorder,
   });
 
   final bool showBorder;

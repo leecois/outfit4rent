@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:outfit4rent/common/widgets/brands/brand_showcase.dart';
+import 'package:outfit4rent/common/widgets/brands/brand_show_case.dart';
 import 'package:outfit4rent/common/widgets/layouts/grid_layout.dart';
 import 'package:outfit4rent/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/primary_header_container.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/search_container.dart';
 import 'package:outfit4rent/common/widgets/layouts/grid_layout.dart';
@@ -7,6 +8,7 @@ import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/promo_slider.dart';
+import 'package:outfit4rent/features/shop/screens/package/package_screen.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
@@ -62,6 +64,8 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
+                  TSectionHeading(title: 'Popular Packages', onPressed: () => Get.to(() => const PackageScreen())),
+                  const SizedBox(height: TSizes.spaceBtwItems),
                   //!Promo Slider
                   const TPromoSlider(banners: [TImages.promoBanner1, TImages.promoBanner2, TImages.promoBanner1]),
                   const SizedBox(height: TSizes.spaceBtwItems),

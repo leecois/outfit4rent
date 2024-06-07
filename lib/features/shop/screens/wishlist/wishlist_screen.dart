@@ -5,7 +5,7 @@ import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/icons/circular_icon.dart';
 import 'package:outfit4rent/common/widgets/layouts/grid_layout.dart';
 import 'package:outfit4rent/common/widgets/products/product_cards/product_card_vertical.dart';
-import 'package:outfit4rent/features/shop/screens/home/home_screen.dart';
+import 'package:outfit4rent/navigation_menu.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class FavoriteScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class FavoriteScreen extends StatelessWidget {
       appBar: TAppBar(
         title: Text('Wishlist', style: Theme.of(context).textTheme.headlineMedium),
         actions: [
-          TCircularIcon(icon: Iconsax.add_bold, onPressed: () => Get.to(const HomeScreen())),
+          TCircularIcon(icon: Iconsax.add_bold, onPressed: () => Get.offAll(const NavigationMenu())),
         ],
       ),
       body: SingleChildScrollView(
