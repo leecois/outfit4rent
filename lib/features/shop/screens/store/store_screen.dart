@@ -59,7 +59,7 @@ class StoreScreen extends StatelessWidget {
                           showBorder: true,
                           onTap: () => Get.to(() => const BrandProductsScreen()),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),

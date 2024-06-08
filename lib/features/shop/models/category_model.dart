@@ -1,48 +1,32 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class CategoryModel {
-  String id;
-  String name;
-  String image;
-  String parentId;
-  bool isFeatured;
+  final int id;
+  final String name;
+  final String description;
+  final int status;
 
   CategoryModel({
     required this.id,
     required this.name,
-    required this.image,
-    required this.isFeatured,
-    this.parentId = '',
+    required this.description,
+    required this.status,
   });
 
-  //Todo: Empty Helper Function
-  static CategoryModel empty() => CategoryModel(id: '', image: '', name: '', isFeatured: false);
-
-  //Todo: Convert model to JSON structure
+  // Convert CategoryModel to JSON
   Map<String, dynamic> toJson() {
     return {
-      'Name': name,
-      'Image': image,
-      'IsFeatured': isFeatured,
-      'ParentId': parentId,
+      'id': id,
+      'name': name,
+      'description': description,
+      'status': status,
     };
   }
 
-  //Todo: Map JSON structure to User model
-  factory CategoryModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      final data = document.data()!;
-
-      //Todo: Map JSON structure to User model
-      return CategoryModel(
-        id: document.id,
-        name: data['Name'] ?? '',
-        image: data['Image'] ?? '',
-        parentId: data['ParentId'] ?? '',
-        isFeatured: data['IsFeatured'] ?? false,
-      );
-    } else {
-      return CategoryModel.empty();
-    }
+  factory CategoryModel.fromJson(Map<String, dynamic> json) {
+    return CategoryModel(
+      id: json['id'],
+      name: json['name'] ?? '',
+      description: json['description'] ?? '',
+      status: json['status'] ?? 0,
+    );
   }
 }

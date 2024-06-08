@@ -3,19 +3,17 @@ import 'package:get/get.dart';
 import 'package:outfit4rent/features/shop/models/category_model.dart';
 import 'package:outfit4rent/utils/exceptions/firebase_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/platform_exceptions.dart';
+import 'package:outfit4rent/utils/http/http_client.dart';
 
 class CategoryRepository extends GetxController {
   static CategoryRepository get instance => Get.find();
 
-  //? Variables
-  final _db = FirebaseFirestore.instance;
-
   //Todo: Get all categories
   Future<List<CategoryModel>> getAllCategories() async {
     try {
-      final snapshot = await _db.collection('Categories').get();
-      final list = snapshot.docs.map((document) => CategoryModel.fromSnapshot(document)).toList();
-      return list;
+      final response = await THttpHelper.get('categories');
+      final List<dynamic> data = response as List<dynamic>;
+      return data.map((json) => CategoryModel.fromJson(json)).toList();
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on TPlatformException catch (e) {

@@ -13,24 +13,22 @@ class CategoryController extends GetxController {
 
   @override
   void onInit() {
-    fetchCategories();
     super.onInit();
+    fetchCategories();
   }
 
-  //Todo: Load category data
+  // Load category data
   Future<void> fetchCategories() async {
     try {
-      //Todo: Show loading indicator
+      // Show loading indicator
       isLoading.value = true;
 
-      //Todo: Fetch categories from data source (API, Database, etc)
       final categories = await _categoryRepository.getAllCategories();
-
-      //Todo: Update the categories list
+      // Update the categories list
       allCategories.assignAll(categories);
 
-      //Todo: Filter featured categories
-      featuredCategories.assignAll(allCategories.where((category) => category.isFeatured && category.parentId.isEmpty).take(8).toList());
+      // Filter featured categories (if needed)
+      featuredCategories.assignAll(allCategories.where((category) => category.status == 0).toList());
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Error', message: e.toString());
     } finally {
@@ -38,7 +36,7 @@ class CategoryController extends GetxController {
     }
   }
 
-  //Todo: Load selected category data
+  // Load selected category data
 
-  //Todo: Get Category or Subcategory
+  // Get Category or Subcategory
 }

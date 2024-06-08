@@ -76,7 +76,14 @@ class AuthenticationRepository extends GetxController {
   //Todo: [EmailAuthentication] - Register
   Future<UserCredential> registerWithEmailAndPassword(String email, String password) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+
+      String? token = await userCredential.user?.getIdToken();
+      if (kDebugMode) {
+        debugPrint('Signup Token: $token', wrapWidth: 1024);
+      }
+
+      return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
@@ -151,15 +158,14 @@ class AuthenticationRepository extends GetxController {
       final GoogleSignInAuthentication? googleAuth = await userAccount?.authentication;
 
       final credentials = GoogleAuthProvider.credential(accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
-      if (kDebugMode) {
-        print('Google Auth: $credentials');
-      }
 
       UserCredential userCredential = await _auth.signInWithCredential(credentials);
       String? token = await userCredential.user?.getIdToken();
       if (kDebugMode) {
+        debugPrint('user info: ${userCredential.user}', wrapWidth: 1024);
         debugPrint('Login Token: $token', wrapWidth: 1024);
       }
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
@@ -190,6 +196,7 @@ class AuthenticationRepository extends GetxController {
         if (kDebugMode) {
           debugPrint('Firebase ID Token: $token', wrapWidth: 1024);
         }
+
         return userCredential;
       }
     } on FirebaseAuthException catch (e) {
@@ -212,9 +219,7 @@ class AuthenticationRepository extends GetxController {
   //Todo: [SignOut] - Valid for any authentication method
   Future<void> signOut() async {
     try {
-      await GoogleSignIn().signOut();
-      await FirebaseAuth.instance.signOut();
-      await FacebookAuth.instance.logOut();
+      await _auth.signOut();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
