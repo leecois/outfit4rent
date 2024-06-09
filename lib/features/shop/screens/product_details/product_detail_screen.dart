@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/features/shop/controllers/product/images_controller.dart';
+import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
+import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/features/shop/screens/product_details/widgets/bottom_add_to_cart_widget.dart';
 import 'package:outfit4rent/features/shop/screens/product_details/widgets/product_attributes.dart';
 import 'package:outfit4rent/features/shop/screens/product_details/widgets/product_image_slider.dart';
@@ -12,17 +15,31 @@ import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key});
+  const ProductDetailScreen({super.key, required this.productId, required this.product});
+
+  final int productId;
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
+    final productController = Get.put(ProductController());
+    final imagesController = Get.put(ImagesController());
+    //Todo Fetch product details when this screen is loaded
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      productController.fetchProductDetail(productId).then((_) {
+        final productDetail = productController.productDetail.value;
+        if (productDetail != null) {
+          imagesController.getAllProductDetailImages(productDetail);
+        }
+      });
+    });
     return Scaffold(
-      bottomNavigationBar: const TBottomAddToCart(),
-      body: SingleChildScrollView(
-        child: Column(
+        bottomNavigationBar: const TBottomAddToCart(),
+        body: SingleChildScrollView(
+            child: Column(
           children: [
             // Todo: Product Image Slider
-            const TProductImageSlider(),
+            TProductImageSlider(product: product),
             // Todo: Product Detail
             Padding(
               padding: const EdgeInsets.only(right: TSizes.defaultSpace, left: TSizes.defaultSpace, bottom: TSizes.defaultSpace),
@@ -45,14 +62,14 @@ class ProductDetailScreen extends StatelessWidget {
                   //Todo: Description
                   const TSectionHeading(title: 'Description', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  const ReadMoreText(
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel erat sed mi finibus luctus. Quisque ultrices, turpis sed malesuada gravida, mi risus finibus felis, in lacinia mi nunc sit amet dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nullam vel erat sed mi finibus luctus. Quisque ultrices, turpis sed malesuada gravida, mi risus finibus felis, in lacinia mi nunc sit amet dui.',
+                  ReadMoreText(
+                    product.description,
                     trimLines: 2,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: 'Show more',
                     trimExpandedText: 'Show less',
-                    moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
-                    lessStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                    moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                    lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                   ),
 
                   //Todo: Review
@@ -77,8 +94,6 @@ class ProductDetailScreen extends StatelessWidget {
               ),
             )
           ],
-        ),
-      ),
-    );
+        )));
   }
 }

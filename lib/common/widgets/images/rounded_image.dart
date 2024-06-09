@@ -22,7 +22,7 @@ class TRoundedImage extends StatelessWidget {
   final bool applyImageRadius;
   final BoxBorder? border;
   final Color? backgroundColor;
-  final BoxFit? fit;
+  final BoxFit fit;
   final EdgeInsetsGeometry? padding;
   final bool isNetworkImage;
   final VoidCallback? onPressed;
@@ -36,7 +36,11 @@ class TRoundedImage extends StatelessWidget {
         width: width,
         height: height,
         padding: padding,
-        decoration: BoxDecoration(border: border, color: backgroundColor, borderRadius: BorderRadius.circular(borderRadius)),
+        decoration: BoxDecoration(
+          border: border,
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
         child: ClipRRect(
           borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
           child: Image(

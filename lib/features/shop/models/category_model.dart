@@ -11,6 +11,9 @@ class CategoryModel {
     required this.status,
   });
 
+  //Todo: Empty Helper Function
+  static CategoryModel empty() => CategoryModel(id: 0, name: '', description: '', status: 0);
+
   // Convert CategoryModel to JSON
   Map<String, dynamic> toJson() {
     return {

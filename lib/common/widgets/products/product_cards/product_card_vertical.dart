@@ -8,6 +8,8 @@ import 'package:outfit4rent/common/widgets/images/rounded_image.dart';
 import 'package:outfit4rent/common/widgets/texts/brand_title_with_verified_icon.dart';
 import 'package:outfit4rent/common/widgets/texts/product_price_text.dart';
 import 'package:outfit4rent/common/widgets/texts/product_title_text.dart';
+import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
+import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/features/shop/screens/product_details/product_detail_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
@@ -15,13 +17,18 @@ import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 
 class TProductCardVertical extends StatelessWidget {
-  const TProductCardVertical({super.key});
+  const TProductCardVertical({super.key, required this.product});
+
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    final controller = ProductController.instance;
     return GestureDetector(
-      onTap: () => Get.to(() => const ProductDetailScreen()),
+      onTap: () {
+        Get.to(() => ProductDetailScreen(productId: product.id, product: product));
+      },
       child: Container(
         width: 180,
         padding: const EdgeInsets.all(1),
@@ -39,7 +46,19 @@ class TProductCardVertical extends StatelessWidget {
               backgroundColor: dark ? TColors.dark : TColors.light,
               child: Stack(
                 children: [
-                  const TRoundedImage(width: 200, imageUrl: TImages.productImage1, applyImageRadius: true),
+                  Obx(() {
+                    final productFromController = controller.allProducts.firstWhereOrNull((element) => element.id == product.id);
+                    final networkImage = productFromController?.imgUrl ?? '';
+                    final image = networkImage.isNotEmpty ? networkImage : TImages.productImage1;
+
+                    return TRoundedImage(
+                      width: double.infinity,
+                      height: double.infinity,
+                      imageUrl: image,
+                      applyImageRadius: true,
+                      isNetworkImage: networkImage.isNotEmpty,
+                    );
+                  }),
                   //!isUsed Tag
                   Positioned(
                     top: 12,
@@ -69,33 +88,36 @@ class TProductCardVertical extends StatelessWidget {
             const SizedBox(height: TSizes.spaceBtwItems / 2),
 
             //!Details
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: TSizes.sm),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: TSizes.sm),
               child: SizedBox(
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TProductTitleText(title: 'Dress Coat', smallSize: true),
-                    SizedBox(height: TSizes.spaceBtwItems / 2),
-                    TBrandTitleWithVerifiedIcon(title: 'Gucci'),
+                    TProductTitleText(title: product.name, smallSize: true),
+                    const SizedBox(height: TSizes.spaceBtwItems / 2),
+                    TBrandTitleWithVerifiedIcon(title: product.brand.toString()),
                   ],
                 ),
               ),
             ),
 
-            //Todo: Add Spacer
             const Spacer(),
             //!Price
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: TSizes.sm),
-                  child: TProductPriceText(price: '21'),
+                Flexible(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: TSizes.sm),
+                        child: TProductPriceText(price: product.deposit.toString()),
+                      ),
+                    ],
+                  ),
                 ),
-
-                //Todo: Add To Cart Button
                 Container(
                   decoration: const BoxDecoration(
                     color: TColors.dark,

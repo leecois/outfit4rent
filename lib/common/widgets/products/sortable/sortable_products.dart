@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/layouts/grid_layout.dart';
 import 'package:outfit4rent/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class TSortableProducts extends StatelessWidget {
@@ -11,6 +13,7 @@ class TSortableProducts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productController = Get.put(ProductController());
     return Column(
       children: [
         //Todo Dropdown
@@ -22,7 +25,7 @@ class TSortableProducts extends StatelessWidget {
         const SizedBox(height: TSizes.spaceBtwSections),
 
         //Todo: Products
-        TGridLayout(itemCount: 8, itemBuilder: (_, index) => const TProductCardVertical())
+        TGridLayout(itemCount: productController.allProducts.length, itemBuilder: (_, index) => TProductCardVertical(product: productController.allProducts[index]))
       ],
     );
   }

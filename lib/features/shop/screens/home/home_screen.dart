@@ -4,7 +4,9 @@ import 'package:outfit4rent/common/widgets/custom_shapes/container/primary_heade
 import 'package:outfit4rent/common/widgets/custom_shapes/container/search_container.dart';
 import 'package:outfit4rent/common/widgets/layouts/grid_layout.dart';
 import 'package:outfit4rent/common/widgets/products/product_cards/product_card_vertical.dart';
+import 'package:outfit4rent/common/widgets/shimmer/vertical_product_shimmer.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/promo_slider.dart';
@@ -17,6 +19,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productController = Get.put(ProductController());
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
@@ -75,7 +78,16 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   //!Popular products
-                  TGridLayout(itemCount: 2, itemBuilder: (_, index) => const TProductCardVertical()),
+                  Obx(() {
+                    if (productController.isLoading.value) return const TVerticalProductShimmer();
+                    if (productController.allProducts.isEmpty) {
+                      return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium));
+                    }
+                    return TGridLayout(
+                      itemCount: productController.allProducts.length,
+                      itemBuilder: (_, index) => TProductCardVertical(product: productController.allProducts[index]),
+                    );
+                  })
                 ],
               ),
             ),

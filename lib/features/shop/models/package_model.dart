@@ -1,10 +1,12 @@
+import 'package:outfit4rent/features/shop/models/category_package_model.dart';
+
 class PackageModel {
   int id;
   int price;
   String name;
   String description;
   int status;
-  List<CategoryPackage> categoryPackages;
+  List<CategoryPackageModel> categoryPackages;
 
   PackageModel({
     required this.id,
@@ -21,7 +23,7 @@ class PackageModel {
         name: json["name"],
         description: json["description"],
         status: json["status"],
-        categoryPackages: List<CategoryPackage>.from(json["categoryPackages"].map((x) => CategoryPackage.fromJson(x))),
+        categoryPackages: List<CategoryPackageModel>.from(json["categoryPackages"].map((x) => CategoryPackageModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,29 +33,5 @@ class PackageModel {
         "description": description,
         "status": status,
         "categoryPackages": List<dynamic>.from(categoryPackages.map((x) => x.toJson())),
-      };
-}
-
-class CategoryPackage {
-  int categoryId;
-  String categoryName;
-  int maxAvailableQuantity;
-
-  CategoryPackage({
-    required this.categoryId,
-    required this.categoryName,
-    required this.maxAvailableQuantity,
-  });
-
-  factory CategoryPackage.fromJson(Map<String, dynamic> json) => CategoryPackage(
-        categoryId: json["categoryId"],
-        categoryName: json["categoryName"],
-        maxAvailableQuantity: json["maxAvailableQuantity"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "categoryId": categoryId,
-        "categoryName": categoryName,
-        "maxAvailableQuantity": maxAvailableQuantity,
       };
 }

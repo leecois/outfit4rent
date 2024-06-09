@@ -5,6 +5,7 @@ import 'package:outfit4rent/features/shop/models/package_model.dart';
 import 'package:outfit4rent/features/shop/screens/package/widgets/package_category.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
+import 'package:readmore/readmore.dart';
 
 class TPackageItem extends StatelessWidget {
   final PackageModel package;
@@ -59,7 +60,15 @@ class TPackageItem extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
-                Text(package.description, style: const TextStyle(fontSize: 16, color: Colors.grey)),
+                ReadMoreText(
+                  package.description,
+                  trimLines: 2,
+                  trimMode: TrimMode.Line,
+                  trimCollapsedText: 'Show more',
+                  trimExpandedText: 'Show less',
+                  moreStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                  lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                ),
                 const SizedBox(height: TSizes.spaceBtwItems),
                 ListView.builder(
                   shrinkWrap: true,
