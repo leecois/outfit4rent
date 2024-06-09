@@ -162,7 +162,6 @@ class AuthenticationRepository extends GetxController {
       UserCredential userCredential = await _auth.signInWithCredential(credentials);
       String? token = await userCredential.user?.getIdToken();
       if (kDebugMode) {
-        debugPrint('user info: ${userCredential.user}', wrapWidth: 1024);
         debugPrint('Login Token: $token', wrapWidth: 1024);
       }
 

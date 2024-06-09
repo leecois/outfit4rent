@@ -8,10 +8,12 @@ class TSectionHeading extends StatelessWidget {
     required this.title,
     this.buttonTitle = 'View All',
     this.showActionButton = true,
+    this.bigSize = false,
   });
 
   final Color? textColor;
   final bool showActionButton;
+  final bool bigSize;
   final String title, buttonTitle;
   final void Function()? onPressed;
 
@@ -22,7 +24,9 @@ class TSectionHeading extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headlineSmall!.apply(fontWeightDelta: 2, color: textColor),
+          style: bigSize
+              ? Theme.of(context).textTheme.headlineMedium!.apply(fontWeightDelta: 2, color: textColor)
+              : Theme.of(context).textTheme.headlineSmall!.apply(fontWeightDelta: 2, color: textColor),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),

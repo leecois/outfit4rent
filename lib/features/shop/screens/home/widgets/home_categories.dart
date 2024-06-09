@@ -31,7 +31,7 @@ class THomeCategories extends StatelessWidget {
           itemBuilder: (_, index) {
             final category = categoryController.featuredCategories[index];
             return TVerticalImageText(
-              image: TImages.jeweleryIcon,
+              image: TImages.clothIcon,
               title: category.name,
               textColor: dark ? Colors.white : Colors.black,
               onTap: () => Get.to(() => const SubCategoriesScreen()),

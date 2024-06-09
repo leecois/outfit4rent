@@ -64,7 +64,7 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
-                  TSectionHeading(title: 'Popular Packages', onPressed: () => Get.to(() => const PackageScreen())),
+                  TSectionHeading(title: 'Featured Packages', onPressed: () => Get.to(() => const PackageScreen())),
                   const SizedBox(height: TSizes.spaceBtwItems),
                   //!Promo Slider
                   const TPromoSlider(banners: [TImages.promoBanner1, TImages.promoBanner2, TImages.promoBanner1]),
