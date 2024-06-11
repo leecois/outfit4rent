@@ -54,8 +54,14 @@ class ProfileScreen extends StatelessWidget {
               const TSectionHeading(title: 'Profile Information', showActionButton: false),
               const SizedBox(height: TSizes.spaceBtwItems),
 
-              TProfileMenu(title: 'Name', value: controller.user.value.fullName, onPressed: () => Get.to(() => const ChangeName())),
-              TProfileMenu(title: 'Username', value: controller.user.value.username, onPressed: () {}),
+              Obx(() {
+                return Column(
+                  children: [
+                    TProfileMenu(title: 'Name', value: controller.user.value.name, onPressed: () => Get.to(() => const ChangeName())),
+                    TProfileMenu(title: 'Username', value: controller.user.value.name, onPressed: () {}),
+                  ],
+                );
+              }),
 
               const SizedBox(height: TSizes.spaceBtwItems),
               const Divider(),
@@ -65,12 +71,19 @@ class ProfileScreen extends StatelessWidget {
               const TSectionHeading(title: 'Account Information', showActionButton: false),
               const SizedBox(height: TSizes.spaceBtwItems),
 
-              TProfileMenu(title: 'User ID', value: controller.user.value.id, icon: Iconsax.copy_outline, onPressed: () {}),
-              TProfileMenu(title: 'Email', value: controller.user.value.email, onPressed: () {}),
-              TProfileMenu(title: 'Phone', value: controller.user.value.phoneNumber, onPressed: () {}),
-              TProfileMenu(title: 'Gender', value: 'Female', onPressed: () {}),
-              TProfileMenu(title: 'Country', value: 'Vietnam', onPressed: () {}),
-              TProfileMenu(title: 'Date of Birth', value: '01/01/2003', onPressed: () {}),
+              Obx(() {
+                return Column(
+                  children: [
+                    TProfileMenu(title: 'User ID', value: controller.user.value.id.toString(), icon: Iconsax.copy_outline, onPressed: () {}),
+                    TProfileMenu(title: 'Email', value: controller.user.value.email, onPressed: () {}),
+                    TProfileMenu(title: 'Phone', value: controller.user.value.phone, onPressed: () {}),
+                    TProfileMenu(title: 'Gender', value: 'Female', onPressed: () {}),
+                    TProfileMenu(title: 'Country', value: 'Vietnam', onPressed: () {}),
+                    TProfileMenu(title: 'Date of Birth', value: '01/01/2003', onPressed: () {}),
+                  ],
+                );
+              }),
+
               const Divider(),
               const SizedBox(height: TSizes.spaceBtwItems),
 

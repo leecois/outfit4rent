@@ -3,10 +3,9 @@ class ProductDetailModel {
   String name;
   int price;
   String size;
-  String color;
   int deposit;
   String description;
-  String status;
+  int status;
   bool isUsed;
   Category category;
   Brand brand;
@@ -20,7 +19,6 @@ class ProductDetailModel {
     required this.name,
     required this.price,
     required this.size,
-    required this.color,
     required this.deposit,
     required this.description,
     required this.status,
@@ -38,7 +36,6 @@ class ProductDetailModel {
         name: json["name"],
         price: json["price"],
         size: json["size"],
-        color: json["color"],
         deposit: json["deposit"],
         description: json["description"],
         status: json["status"],
@@ -56,7 +53,6 @@ class ProductDetailModel {
         "name": name,
         "price": price,
         "size": size,
-        "color": color,
         "deposit": deposit,
         "description": description,
         "status": status,

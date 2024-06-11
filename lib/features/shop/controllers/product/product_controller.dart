@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
 import 'package:outfit4rent/data/repositories/products/product_repository.dart';
@@ -35,6 +36,9 @@ class ProductController extends GetxController {
     try {
       isLoading.value = true;
       final detail = await _productRepository.getProductDetails(productId);
+      if (kDebugMode) {
+        print(detail);
+      }
       productDetail.value = detail;
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Ops?', message: e.toString());

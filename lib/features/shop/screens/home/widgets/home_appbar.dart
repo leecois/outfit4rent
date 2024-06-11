@@ -31,7 +31,7 @@ class THomeAppBar extends StatelessWidget {
                 return const TShimmerEffect(width: 80, height: 15);
               } else {
                 return Text(
-                  controller.user.value.fullName,
+                  controller.user.value.name,
                   style: Theme.of(context).textTheme.headlineSmall!.apply(color: Theme.of(context).colorScheme.primary),
                 );
               }

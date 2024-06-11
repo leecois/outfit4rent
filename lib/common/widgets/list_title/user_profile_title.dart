@@ -16,7 +16,7 @@ class TUserProfileTitle extends StatelessWidget {
     return ListTile(
       onTap: onTap,
       leading: const TCircularImage(image: TImages.user, width: 50, height: 50, padding: 0),
-      title: Text(controller.user.value.fullName, style: Theme.of(context).textTheme.headlineSmall!.apply(color: Theme.of(context).colorScheme.primary)),
+      title: Text(controller.user.value.name, style: Theme.of(context).textTheme.headlineSmall!.apply(color: Theme.of(context).colorScheme.primary)),
       subtitle: Text(controller.user.value.email, style: Theme.of(context).textTheme.bodyMedium!.apply(color: Theme.of(context).colorScheme.primary)),
       trailing: IconButton(onPressed: onTap, icon: Icon(Iconsax.user_edit_outline, color: Theme.of(context).colorScheme.primary)),
     );

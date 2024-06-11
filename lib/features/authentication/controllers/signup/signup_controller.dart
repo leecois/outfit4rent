@@ -7,6 +7,7 @@ import 'package:outfit4rent/features/authentication/screens/signup/verify_email_
 import 'package:outfit4rent/features/personalization/models/user_model.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/helpers/network_manager.dart';
+import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
 
 class SignupController extends GetxController {
@@ -16,11 +17,10 @@ class SignupController extends GetxController {
   final hidePassword = true.obs;
   final privacyPolicy = true.obs;
   final email = TextEditingController();
-  final lastName = TextEditingController();
-  final firstName = TextEditingController();
-  final username = TextEditingController();
+  final fullName = TextEditingController();
   final password = TextEditingController();
   final phoneNumber = TextEditingController();
+  TLocalStorage localStorage = TLocalStorage();
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
   //Todo: SIGNUP
@@ -54,15 +54,22 @@ class SignupController extends GetxController {
       //Todo: Register User in Firebase
       final userCredential = await AuthenticationRepository.instance.registerWithEmailAndPassword(email.text.trim(), password.text.trim());
 
-      //Todo: Save Auth Token in Fire store
+      //Todo: Verify token with REST API
+      final token = await userCredential.user?.getIdToken();
+      final response = await AuthenticationRepository.instance.verifyToken(token!);
+
+      await localStorage.saveData('currentUser', response);
+
+      //Todo: Save User Record
       final newUser = UserModel(
-        id: userCredential.user!.uid,
+        id: response,
         email: email.text.trim(),
-        username: username.text.trim(),
-        firstName: firstName.text.trim(),
-        lastName: lastName.text.trim(),
-        phoneNumber: phoneNumber.text.trim(),
+        name: fullName.text.trim(),
+        phone: phoneNumber.text.trim(),
         profilePicture: '',
+        status: 0,
+        address: null,
+        moneyInWallet: null,
       );
 
       //Todo: Save User Record

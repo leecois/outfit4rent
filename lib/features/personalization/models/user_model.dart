@@ -1,75 +1,57 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:outfit4rent/utils/formatters/formatter.dart';
-
 class UserModel {
-  final String id;
+  final int id;
   final String email;
-  final String username;
-  String firstName;
-  String lastName;
-  String phoneNumber;
+  String name;
+  String phone;
   String profilePicture;
+  final String? address;
+  final int? moneyInWallet;
+  final int status;
 
   UserModel({
     required this.id,
     required this.email,
-    required this.username,
-    required this.firstName,
-    required this.lastName,
-    required this.phoneNumber,
+    required this.name,
+    required this.phone,
     required this.profilePicture,
+    this.address,
+    this.moneyInWallet,
+    required this.status,
   });
 
-  //Todo: Helper Function to convert user to JSON
-  String get fullName => '$firstName $lastName';
-
-  //Todo: Helper Function to format phone number
-  String get formattedPhoneNo => TFormatter.formatPhoneNumber(phoneNumber);
-
-  //Todo: Slit Full Name
-  static List<String> nameParts(fullName) => fullName.split(' ');
-
-  //Todo: generate username from the full name
-  static String generateUsername(fullName) {
-    List<String> nameParts = fullName.split(" ");
-    String firstName = nameParts[0].toLowerCase();
-    String lastName = nameParts.length > 1 ? nameParts[1].toLowerCase() : '';
-
-    String camelCaseUsername = "$firstName$lastName";
-    String usernameWithPrefix = "o4r_$camelCaseUsername";
-    return usernameWithPrefix;
-  }
-
-  //Todo: Function create empty user model
-  static UserModel empty() => UserModel(id: '', email: '', username: '', firstName: '', lastName: '', phoneNumber: '', profilePicture: '');
-
-  //Todo: Convert JSON to User Model
-  Map<String, dynamic> toJson() {
-    return {
-      'FirstName': firstName,
-      'LastName': lastName,
-      'Email': email,
-      'Username': username,
-      'PhoneNumber': phoneNumber,
-      'ProfilePicture': profilePicture,
-    };
-  }
-
-  //Todo: Factory Function to create user model from JSON firebase snapshot
-  factory UserModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
-    if (document.data() != null) {
-      final data = document.data()!;
-      return UserModel(
-        id: document.id,
-        firstName: data['FirstName'] ?? '',
-        email: data['Email'] ?? '',
-        username: data['Username'] ?? '',
-        lastName: data['LastName'] ?? '',
-        phoneNumber: data['PhoneNumber'] ?? '',
-        profilePicture: data['ProfilePicture'] ?? '',
+  // Function to create an empty user model
+  static UserModel empty() => UserModel(
+        id: 0,
+        email: '',
+        name: '',
+        phone: '',
+        profilePicture: '',
+        address: null,
+        moneyInWallet: null,
+        status: 0,
       );
-    } else {
-      throw Exception('User not found');
-    }
-  }
+
+  // Convert JSON to User Model
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        id: json["id"],
+        email: json["email"] ?? '',
+        name: json["name"] ?? '',
+        phone: json["phone"] ?? '',
+        profilePicture: json["profilePicture"] ?? '',
+        address: json["address"] ?? '',
+        moneyInWallet: json["moneyInWallet"] ?? 0,
+        status: json["status"] ?? 0,
+      );
+
+  // Convert User Model to JSON
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'email': email,
+        'name': name,
+        'phone': phone,
+        'profilePicture': profilePicture,
+        'address': address,
+        'moneyInWallet': moneyInWallet,
+        'status': status,
+      };
 }

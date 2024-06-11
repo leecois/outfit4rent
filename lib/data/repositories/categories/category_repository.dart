@@ -12,7 +12,7 @@ class CategoryRepository extends GetxController {
   Future<List<CategoryModel>> getAllCategories() async {
     try {
       final response = await THttpHelper.get('categories');
-      final List<dynamic> data = response as List<dynamic>;
+      final List<dynamic> data = response['data'] as List<dynamic>;
       return data.map((json) => CategoryModel.fromJson(json)).toList();
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;

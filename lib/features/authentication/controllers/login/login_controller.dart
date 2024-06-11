@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/helpers/network_manager.dart';
+import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
 
 class LoginController extends GetxController {
@@ -13,7 +13,8 @@ class LoginController extends GetxController {
   //? Variables
   final rememberMe = false.obs;
   final hidePassword = true.obs;
-  final localStorage = GetStorage();
+  TLocalStorage localStorage = TLocalStorage();
+
   final email = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
@@ -22,8 +23,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    email.text = localStorage.read('REMEMBER_ME_EMAIL') ?? '';
-    password.text = localStorage.read('REMEMBER_ME_PASSWORD') ?? '';
+    email.text = localStorage.readData('REMEMBER_ME_EMAIL') ?? '';
+    password.text = localStorage.readData('REMEMBER_ME_PASSWORD') ?? '';
     super.onInit();
   }
 
@@ -47,11 +48,17 @@ class LoginController extends GetxController {
 
       //Todo: Save data if remember me is checked
       if (rememberMe.value) {
-        localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
-        localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
+        localStorage.saveData('REMEMBER_ME_EMAIL', email.text.trim());
+        localStorage.saveData('REMEMBER_ME_PASSWORD', password.text.trim());
       }
 
-      await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+      final userCredential = await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
+
+      //Todo: Verify token with REST API
+      final token = await userCredential.user?.getIdToken();
+      final response = await AuthenticationRepository.instance.verifyToken(token!);
+
+      await localStorage.saveData('currentUser', response);
 
       //Todo: Remove loading
       TFullScreenLoader.stopLoading();
@@ -79,6 +86,12 @@ class LoginController extends GetxController {
 
       //Todo: Sign in with google
       final userCredentials = await AuthenticationRepository.instance.signInWithGoogle();
+
+      //Todo: Verify token with REST API
+      final token = await userCredentials?.user?.getIdToken();
+      final response = await AuthenticationRepository.instance.verifyToken(token!);
+
+      await localStorage.saveData('currentUser', response);
 
       //Todo: Save user record
       await userController.saveUserRecord(userCredentials);
@@ -109,6 +122,12 @@ class LoginController extends GetxController {
 
       //Todo: Sign in with facebook
       final userCredentials = await AuthenticationRepository.instance.signInWithFacebook();
+
+      //Todo: Verify token with REST API
+      final token = await userCredentials?.user?.getIdToken();
+      final response = await AuthenticationRepository.instance.verifyToken(token!);
+
+      await localStorage.saveData('currentUser', response);
 
       //Todo: Save user record
       await userController.saveUserRecord(userCredentials);

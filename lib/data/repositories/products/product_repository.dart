@@ -13,7 +13,7 @@ class ProductRepository extends GetxController {
   Future<List<ProductModel>> getAllProduct() async {
     try {
       final response = await THttpHelper.get('products');
-      final List<dynamic> data = response as List<dynamic>;
+      final List<dynamic> data = response['data'] as List<dynamic>;
       return data.map((json) => ProductModel.fromJson(json)).toList();
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
@@ -29,7 +29,9 @@ class ProductRepository extends GetxController {
   Future<ProductDetailModel> getProductDetails(int productId) async {
     try {
       final response = await THttpHelper.get('product/$productId');
-      return ProductDetailModel.fromJson(response as Map<String, dynamic>);
+      final Map<String, dynamic> data = response['data'] as Map<String, dynamic>;
+
+      return ProductDetailModel.fromJson(data);
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on TPlatformException catch (e) {

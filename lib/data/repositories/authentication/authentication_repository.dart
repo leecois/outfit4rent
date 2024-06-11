@@ -15,6 +15,7 @@ import 'package:outfit4rent/utils/exceptions/firebase_auth_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/firebase_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/format_exception.dart';
 import 'package:outfit4rent/utils/exceptions/platform_exceptions.dart';
+import 'package:outfit4rent/utils/http/http_client.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -50,15 +51,28 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
+  //!VERIFY TOKEN WITH REST API
+  //Todo: Verify token with REST API
+  Future<int> verifyToken(String token) async {
+    try {
+      final response = await THttpHelper.get('auth/firebase/verify-token?accessToken=$token');
+      return response['customerId'];
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Token verification failed: $e';
+    }
+  }
+
   //! EMAIL & PASSWORD SIGN IN AUTHENTICATION
   //Todo: [EmailAuthentication] - Sign In
   Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      String? token = await userCredential.user?.getIdToken();
-      if (kDebugMode) {
-        debugPrint('Login Token: $token', wrapWidth: 1024);
-      }
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
@@ -77,12 +91,6 @@ class AuthenticationRepository extends GetxController {
   Future<UserCredential> registerWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-
-      String? token = await userCredential.user?.getIdToken();
-      if (kDebugMode) {
-        debugPrint('Signup Token: $token', wrapWidth: 1024);
-      }
-
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;

@@ -19,39 +19,12 @@ class TSignupForm extends StatelessWidget {
       key: controller.signupFormKey,
       child: Column(
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: controller.firstName,
-                  validator: (value) => TValidator.validateEmptyText("FirstName", value),
-                  expands: false,
-                  decoration: const InputDecoration(labelText: TTexts.firstName, prefixIcon: Icon(MingCute.user_3_line)),
-                ),
-              ),
-              const SizedBox(width: TSizes.spaceBtwInputFields),
-              Expanded(
-                child: TextFormField(
-                  controller: controller.lastName,
-                  validator: (value) => TValidator.validateEmptyText("LastName", value),
-                  expands: false,
-                  decoration: const InputDecoration(labelText: TTexts.lastName, prefixIcon: Icon(MingCute.user_3_line)),
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: TSizes.spaceBtwInputFields),
-
-          //Todo: Username
           TextFormField(
-            controller: controller.username,
-            validator: (value) => TValidator.validateEmptyText("Username", value),
-            expands: false,
-            decoration: const InputDecoration(
-              labelText: TTexts.username,
-              prefixIcon: Icon(MingCute.user_3_line),
-            ),
+            controller: controller.fullName,
+            validator: (value) => TValidator.validateEmptyText("FullName", value),
+            decoration: const InputDecoration(labelText: TTexts.fullName, prefixIcon: Icon(MingCute.user_3_line)),
           ),
+
           const SizedBox(height: TSizes.spaceBtwInputFields),
 
           //Todo: Email

@@ -10,6 +10,7 @@ import 'package:outfit4rent/features/personalization/models/user_model.dart';
 import 'package:outfit4rent/utils/exceptions/firebase_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/format_exception.dart';
 import 'package:outfit4rent/utils/exceptions/platform_exceptions.dart';
+import 'package:outfit4rent/utils/http/http_client.dart';
 
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
@@ -19,27 +20,19 @@ class UserRepository extends GetxController {
   // Todo: Function to save user to Firebase
   Future<void> saveUserRecord(UserModel user) async {
     try {
-      await _db.collection('Users').doc(user.id).set(user.toJson());
-    } on FirebaseException catch (e) {
-      throw TFirebaseException(e.code).message;
-    } on FormatException catch (_) {
-      throw const TFormatException();
-    } on PlatformException catch (e) {
-      throw TPlatformException(e.code).message;
+      final response = await THttpHelper.put('customers', user.toJson());
+      return response;
     } catch (e) {
-      throw 'An error occurred. Please try again later.';
+      throw Exception('An error occurred: $e');
     }
   }
 
   //Todo: Function to fetch user from Firebase
-  Future<UserModel> fetchUserDetail() async {
+  Future<UserModel> fetchUserDetail(int userId) async {
     try {
-      final userDoc = await _db.collection('Users').doc(AuthenticationRepository.instance.authUser?.uid).get();
-      if (userDoc.exists) {
-        return UserModel.fromSnapshot(userDoc);
-      } else {
-        return UserModel.empty();
-      }
+      final response = await THttpHelper.get('customers/$userId');
+
+      return UserModel.fromJson(response['data'] as Map<String, dynamic>);
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -52,17 +45,12 @@ class UserRepository extends GetxController {
   }
 
   //Todo: Function to update user in Firebase
-  Future<void> updateUserDetail(UserModel updateUser) async {
+  Future<void> updateUserDetail(UserModel user) async {
     try {
-      await _db.collection('Users').doc(updateUser.id).update(updateUser.toJson());
-    } on FirebaseException catch (e) {
-      throw TFirebaseException(e.code).message;
-    } on FormatException catch (_) {
-      throw const TFormatException();
-    } on PlatformException catch (e) {
-      throw TPlatformException(e.code).message;
+      final response = await THttpHelper.put('customers/${user.id}', user.toJson());
+      return response;
     } catch (e) {
-      throw 'An error occurred. Please try again later.';
+      throw Exception('An error occurred: $e');
     }
   }
 

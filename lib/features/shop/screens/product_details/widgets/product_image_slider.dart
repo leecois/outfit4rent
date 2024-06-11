@@ -8,6 +8,7 @@ import 'package:outfit4rent/common/widgets/icons/circular_icon.dart';
 import 'package:outfit4rent/common/widgets/images/rounded_image.dart';
 import 'package:outfit4rent/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:outfit4rent/features/shop/controllers/product/images_controller.dart';
+import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
@@ -22,6 +23,7 @@ class TProductImageSlider extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     final controller = Get.put(ImagesController());
+    final productController = ProductController.instance;
 
     // Set the initial images for the product
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -70,6 +72,16 @@ class TProductImageSlider extends StatelessWidget {
               child: SizedBox(
                 height: 80,
                 child: Obx(() {
+                  if (productController.isLoading.value) {
+                    return ListView.separated(
+                      itemCount: 5,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      separatorBuilder: (_, __) => const SizedBox(width: TSizes.spaceBtwItems),
+                      itemBuilder: (_, index) => const TShimmerEffect(width: 80, height: 80),
+                    );
+                  }
                   return ListView.separated(
                     itemCount: controller.productImages.length,
                     shrinkWrap: true,
@@ -89,7 +101,6 @@ class TProductImageSlider extends StatelessWidget {
                           border: Border.all(
                             color: isSelected ? Colors.pink : (dark ? TColors.primary : TColors.lightGrey),
                           ),
-                          padding: const EdgeInsets.all(TSizes.sm),
                           imageUrl: imageUrl,
                         );
                       },

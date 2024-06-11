@@ -18,6 +18,7 @@ class TTexts {
   static const String onBoardingSubTitle3 = "THREE";
 
   // -- Authentication Forms
+  static const String fullName = "Full Name";
   static const String firstName = "First Name";
   static const String lastName = "Last Name";
   static const String email = "E-Mail";

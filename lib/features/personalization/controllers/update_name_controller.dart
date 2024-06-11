@@ -11,8 +11,7 @@ import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
 class UpdateNameController extends GetxController {
   static UpdateNameController get instance => Get.find();
 
-  final firstName = TextEditingController();
-  final lastName = TextEditingController();
+  final fullName = TextEditingController();
   final userController = UserController.instance;
   final userRepository = Get.put(UserRepository());
   GlobalKey<FormState> updateUserNameFormKey = GlobalKey<FormState>();
@@ -25,8 +24,7 @@ class UpdateNameController extends GetxController {
 
   //Todo: Initialize names
   Future<void> initializeNames() async {
-    firstName.text = userController.user.value.firstName;
-    lastName.text = userController.user.value.lastName;
+    fullName.text = userController.user.value.name;
   }
 
   Future<void> updateUserName() async {
@@ -45,13 +43,12 @@ class UpdateNameController extends GetxController {
         return;
       }
 
-      //Todo: Update first and lastName
-      Map<String, dynamic> name = {'FirstName': firstName.text.trim(), 'LastName': lastName.text.trim()};
+      //Todo: Update Full Name
+      Map<String, dynamic> name = {'FullName': fullName.text.trim()};
       await userRepository.updateSingleField(name);
 
       //Todo: Update Rx value
-      userController.user.value.firstName = firstName.text.trim();
-      userController.user.value.lastName = lastName.text.trim();
+      userController.user.value.name = fullName.text.trim();
 
       //Todo: Stop loading
       TFullScreenLoader.stopLoading();

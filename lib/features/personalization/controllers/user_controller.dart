@@ -11,6 +11,7 @@ import 'package:outfit4rent/features/personalization/screens/profile/widgets/re_
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/helpers/network_manager.dart';
+import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
 
 class UserController extends GetxController {
@@ -23,21 +24,24 @@ class UserController extends GetxController {
   final hidePassword = false.obs;
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
-  final useRepository = Get.put(UserRepository());
-  GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
+  final localStorage = TLocalStorage();
+  final _userRepository = Get.put(UserRepository());
+  final GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
     super.onInit();
-    fetchUserRecord();
+    WidgetsBinding.instance.addPostFrameCallback((_) => fetchUserRecord());
   }
 
-  //Todo: Fetch user record
+  // Fetch user record
   Future<void> fetchUserRecord() async {
     try {
       profileLoading.value = true;
-      final user = await useRepository.fetchUserDetail();
-      this.user(user);
+      final userId = localStorage.readData<int>('currentUser');
+      final userDetail = await _userRepository.fetchUserDetail(userId!);
+
+      user(userDetail);
     } catch (e) {
       user(UserModel.empty());
     } finally {
@@ -45,30 +49,28 @@ class UserController extends GetxController {
     }
   }
 
-  //Save user Record from any registration provider
+  // Save user Record from any registration provider
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
+    final userId = localStorage.readData<int>('currentUser');
     try {
-      //Refresher user record
+      // Refresher user record
       await fetchUserRecord();
-      if (user.value.id.isEmpty) {
+      if (user.value.name.isEmpty) {
         if (userCredentials != null) {
-          //Todo: convert name to first name and last name
-          final nameParts = UserModel.nameParts(userCredentials.user!.displayName ?? '');
-          final username = UserModel.generateUsername(userCredentials.user!.displayName ?? '');
-
-          //Todo: Map user data
-          final user = UserModel(
-            id: userCredentials.user!.uid,
-            username: username,
-            firstName: nameParts[0],
-            lastName: nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+          // Map user data
+          final newUser = UserModel(
+            id: userId!,
+            name: userCredentials.user!.displayName ?? '',
             email: userCredentials.user!.email ?? '',
-            phoneNumber: userCredentials.user!.phoneNumber ?? '',
+            phone: userCredentials.user!.phoneNumber ?? '',
             profilePicture: userCredentials.user!.photoURL ?? '',
+            address: '',
+            status: 0,
+            moneyInWallet: 0,
           );
 
-          //Todo: Save user record
-          await useRepository.saveUserRecord(user);
+          // Save user record
+          await _userRepository.saveUserRecord(newUser);
         }
       }
     } catch (e) {
@@ -79,7 +81,7 @@ class UserController extends GetxController {
     }
   }
 
-  //Todo: Delete Account warning
+  // Delete Account warning
   void deleteAccountWarningPopup() {
     Get.defaultDialog(
       contentPadding: const EdgeInsets.all(TSizes.md),
@@ -97,16 +99,16 @@ class UserController extends GetxController {
     );
   }
 
-  //Todo: Delete Account
+  // Delete Account
   void deleteUserAccount() async {
     try {
       TFullScreenLoader.openLoadingDialog('Processing', TImages.animation5);
 
-      //Todo: First re-authenticate user
+      // First re-authenticate user
       final auth = AuthenticationRepository.instance;
       final provider = auth.authUser!.providerData.map((e) => e.providerId).first;
       if (provider.isNotEmpty) {
-        //Todo: Re-authenticate user
+        // Re-authenticate user
         if (provider == 'google.com') {
           await auth.signInWithGoogle();
           await auth.deleteAccount();
@@ -131,19 +133,19 @@ class UserController extends GetxController {
     }
   }
 
-  //Todo: Re-authenticate user
+  // Re-authenticate user
   Future<void> reAuthenticateEmailAndPasswordUser() async {
     try {
       TFullScreenLoader.openLoadingDialog('Processing', TImages.animation5);
 
-      //Todo: Check internet
+      // Check internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TFullScreenLoader.stopLoading();
         return;
       }
 
-      //Todo: Validate form
+      // Validate form
       if (!reAuthFormKey.currentState!.validate()) {
         TFullScreenLoader.stopLoading();
         return;
@@ -162,17 +164,17 @@ class UserController extends GetxController {
     }
   }
 
-  //Todo: Upload profile picture
+  // Upload profile picture
   uploadUserProfilePicture() async {
     try {
       final image = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 70, maxHeight: 512, maxWidth: 512);
       if (image != null) {
         imageUploading.value = true;
-        //Todo: Upload image
-        final imageUrl = await useRepository.uploadImage('Users/Images/Profile/', image);
-        //Todo: Update user profile picture
+        // Upload image
+        final imageUrl = await _userRepository.uploadImage('Users/Images/Profile/', image);
+        // Update user profile picture
         Map<String, dynamic> json = {'ProfilePicture': imageUrl};
-        await useRepository.updateSingleField(json);
+        await _userRepository.updateSingleField(json);
 
         user.value.profilePicture = imageUrl;
         user.refresh();
