@@ -56,7 +56,7 @@ class AuthenticationRepository extends GetxController {
   Future<int> verifyToken(String token) async {
     try {
       final response = await THttpHelper.get('auth/firebase/verify-token?accessToken=$token');
-      return response['customerId'];
+      return response['id'];
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {

@@ -3,12 +3,14 @@ class CategoryModel {
   final String name;
   final String description;
   final int status;
+  final bool isFeatured;
 
   CategoryModel({
     required this.id,
     required this.name,
     required this.description,
     required this.status,
+    this.isFeatured = false,
   });
 
   //Todo: Empty Helper Function
@@ -16,12 +18,7 @@ class CategoryModel {
 
   // Convert CategoryModel to JSON
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'description': description,
-      'status': status,
-    };
+    return {'id': id, 'name': name, 'description': description, 'status': status, 'isFeatured': isFeatured};
   }
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
@@ -30,6 +27,7 @@ class CategoryModel {
       name: json['name'] ?? '',
       description: json['description'] ?? '',
       status: json['status'] ?? 0,
+      isFeatured: json['isFeatured'] ?? false,
     );
   }
 }

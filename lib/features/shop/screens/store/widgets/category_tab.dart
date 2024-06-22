@@ -23,7 +23,7 @@ class TCategoryTab extends StatelessWidget {
     final productController = Get.put(ProductController());
 
     // Filter products by category
-    final filteredProducts = productController.allProducts.where((product) => product.category == category.name).toList();
+    final filteredProducts = productController.allProducts.where((product) => product.idCategory == category.id).toList();
 
     return ListView(
       shrinkWrap: true,

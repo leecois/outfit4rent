@@ -48,7 +48,7 @@ class TProductCardVertical extends StatelessWidget {
                 children: [
                   Obx(() {
                     final productFromController = controller.allProducts.firstWhereOrNull((element) => element.id == product.id);
-                    final networkImage = productFromController?.imgUrl ?? '';
+                    final networkImage = (productFromController != null && productFromController.images.isNotEmpty) ? productFromController.images[0].link : '';
                     final image = networkImage.isNotEmpty ? networkImage : TImages.productImage1;
 
                     return TRoundedImage(
@@ -67,7 +67,7 @@ class TProductCardVertical extends StatelessWidget {
                       backgroundColor: Colors.amber.withOpacity(0.9),
                       padding: const EdgeInsets.symmetric(horizontal: TSizes.sm, vertical: TSizes.xs),
                       child: Text(
-                        'used',
+                        product.isUsed == 'False' ? 'new' : 'used',
                         style: Theme.of(context).textTheme.labelLarge!.apply(color: TColors.black),
                       ),
                     ),
@@ -97,7 +97,7 @@ class TProductCardVertical extends StatelessWidget {
                   children: [
                     TProductTitleText(title: product.name, smallSize: true),
                     const SizedBox(height: TSizes.spaceBtwItems / 2),
-                    TBrandTitleWithVerifiedIcon(title: product.brand.toString()),
+                    TBrandTitleWithVerifiedIcon(title: product.idBrand.toString()),
                   ],
                 ),
               ),

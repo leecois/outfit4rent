@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:outfit4rent/features/shop/models/product_detail_model.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/utils/exceptions/firebase_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/platform_exceptions.dart';
@@ -12,7 +11,7 @@ class ProductRepository extends GetxController {
   //Todo: Get all products
   Future<List<ProductModel>> getAllProduct() async {
     try {
-      final response = await THttpHelper.get('products');
+      final response = await THttpHelper.get('customers/products');
       final List<dynamic> data = response['data'] as List<dynamic>;
       return data.map((json) => ProductModel.fromJson(json)).toList();
     } on FirebaseException catch (e) {
@@ -26,12 +25,12 @@ class ProductRepository extends GetxController {
 
   //Todo: Get featured product
   //Todo: Get details of a product
-  Future<ProductDetailModel> getProductDetails(int productId) async {
+  Future<ProductModel> getProductDetails(int productId) async {
     try {
-      final response = await THttpHelper.get('product/$productId');
+      final response = await THttpHelper.get('products/$productId');
       final Map<String, dynamic> data = response['data'] as Map<String, dynamic>;
 
-      return ProductDetailModel.fromJson(data);
+      return ProductModel.fromJson(data);
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on TPlatformException catch (e) {

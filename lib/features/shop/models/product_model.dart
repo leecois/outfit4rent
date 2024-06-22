@@ -1,3 +1,27 @@
+class ImageModel {
+  int id;
+  String link;
+  int idProduct;
+
+  ImageModel({
+    required this.id,
+    required this.link,
+    required this.idProduct,
+  });
+
+  factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
+        id: json["id"],
+        link: json["link"] ?? '',
+        idProduct: json["idProduct"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "link": link,
+        "idProduct": idProduct,
+      };
+}
+
 class ProductModel {
   int id;
   String name;
@@ -5,11 +29,15 @@ class ProductModel {
   String size;
   int deposit;
   String description;
-  String status;
-  String category;
-  String brand;
+  int status;
+  String isUsed;
+  int idCategory;
+  int quantity;
+  int availableQuantity;
+  int idBrand;
   String type;
-  String imgUrl;
+  bool isFeatured;
+  List<ImageModel> images;
 
   ProductModel({
     required this.id,
@@ -19,13 +47,33 @@ class ProductModel {
     required this.deposit,
     required this.description,
     required this.status,
-    required this.category,
-    required this.brand,
+    required this.isUsed,
+    required this.idCategory,
+    required this.quantity,
+    required this.availableQuantity,
+    required this.idBrand,
     required this.type,
-    required this.imgUrl,
+    required this.isFeatured,
+    required this.images,
   });
 
-  static ProductModel empty() => ProductModel(id: 0, name: '', price: 0, size: '', deposit: 0, description: '', status: '', category: '', brand: '', type: '', imgUrl: '');
+  static ProductModel empty() => ProductModel(
+        id: 0,
+        name: '',
+        price: 0,
+        size: '',
+        deposit: 0,
+        description: '',
+        status: 0,
+        isUsed: '',
+        idCategory: 0,
+        quantity: 0,
+        availableQuantity: 0,
+        idBrand: 0,
+        type: '',
+        isFeatured: false,
+        images: [],
+      );
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["id"],
@@ -34,11 +82,15 @@ class ProductModel {
         size: json["size"] ?? '',
         deposit: json["deposit"] ?? 0,
         description: json["description"] ?? '',
-        status: json["status"] ?? '',
-        category: json["category"] ?? '',
-        brand: json["brand"] ?? '',
+        status: json["status"] ?? 0,
+        isUsed: json["isUsed"] ?? '',
+        idCategory: json["idCategory"] ?? 0,
+        quantity: json["quantity"] ?? 0,
+        availableQuantity: json["availableQuantity"] ?? 0,
+        idBrand: json["idBrand"] ?? 0,
         type: json["type"] ?? '',
-        imgUrl: json["imgUrl"] ?? '',
+        isFeatured: json["isFeatured"] ?? false,
+        images: (json["images"] as List).map((e) => ImageModel.fromJson(e)).toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,9 +101,13 @@ class ProductModel {
         "deposit": deposit,
         "description": description,
         "status": status,
-        "category": category,
-        "brand": brand,
+        "isUsed": isUsed,
+        "idCategory": idCategory,
+        "quantity": quantity,
+        "availableQuantity": availableQuantity,
+        "idBrand": idBrand,
         "type": type,
-        "imgUrl": imgUrl,
+        "isFeatured": isFeatured,
+        "images": images.map((e) => e.toJson()).toList(),
       };
 }

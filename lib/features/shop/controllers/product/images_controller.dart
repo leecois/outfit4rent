@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:outfit4rent/features/shop/models/product_detail_model.dart';
+import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
@@ -18,8 +18,8 @@ class ImagesController extends GetxController {
     }
   }
 
-  List<String> getAllProductDetailImages(ProductDetailModel productDetail) {
-    List<String> images = productDetail.images.map((image) => image.link).toList();
+  List<String> getAllProductImages(ProductModel product) {
+    List<String> images = product.images.map((image) => image.link).toList();
     // Validate URLs
     images = images.where((url) => Uri.tryParse(url)?.hasAbsolutePath ?? false).toList();
     setProductImages(images);

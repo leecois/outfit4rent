@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
 import 'package:outfit4rent/data/repositories/products/product_repository.dart';
-import 'package:outfit4rent/features/shop/models/product_detail_model.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 
 class ProductController extends GetxController {
@@ -11,7 +10,7 @@ class ProductController extends GetxController {
   final isLoading = false.obs;
   final _productRepository = Get.put(ProductRepository());
   RxList<ProductModel> allProducts = <ProductModel>[].obs;
-  Rx<ProductDetailModel?> productDetail = Rx<ProductDetailModel?>(null);
+  Rx<ProductModel?> productDetail = Rx<ProductModel?>(null);
 
   @override
   void onInit() {

@@ -29,7 +29,7 @@ class ProductDetailScreen extends StatelessWidget {
       productController.fetchProductDetail(productId).then((_) {
         final productDetail = productController.productDetail.value;
         if (productDetail != null) {
-          imagesController.getAllProductDetailImages(productDetail);
+          imagesController.getAllProductImages(productDetail);
         }
       });
     });

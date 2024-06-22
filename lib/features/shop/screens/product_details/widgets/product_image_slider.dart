@@ -11,6 +11,7 @@ import 'package:outfit4rent/features/shop/controllers/product/images_controller.
 import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
+import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 
@@ -28,7 +29,8 @@ class TProductImageSlider extends StatelessWidget {
     // Set the initial images for the product
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.productImages.isEmpty) {
-        controller.setProductImages([product.imgUrl]);
+        final initialImages = product.images.isNotEmpty ? product.images.map((img) => img.link).toList() : [TImages.productImage1];
+        controller.setProductImages(initialImages);
       }
     });
 
