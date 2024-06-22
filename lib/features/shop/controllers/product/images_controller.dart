@@ -20,45 +20,17 @@ class ImagesController extends GetxController {
 
   List<String> getAllProductImages(ProductModel product) {
     List<String> images = product.images.map((image) => image.link).toList();
-    // Validate URLs
-    images = images.where((url) => Uri.tryParse(url)?.hasAbsolutePath ?? false).toList();
+    images = _validateImageUrls(images);
     setProductImages(images);
     return images;
   }
 
   void showEnlargedImage(String image) {
-    if (Uri.tryParse(image)?.hasAbsolutePath ?? false) {
+    if (_isValidUrl(image)) {
       Get.to(
         fullscreenDialog: true,
         () => Dialog.fullscreen(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: TSizes.defaultSpace * 2, horizontal: TSizes.defaultSpace),
-                child: CachedNetworkImage(
-                  imageUrl: image,
-                  errorWidget: (context, url, error) => const Center(
-                    child: CircularProgressIndicator(color: TColors.primary),
-                  ),
-                  fit: BoxFit.contain,
-                ),
-              ),
-              const SizedBox(height: TSizes.spaceBtwSections),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  width: 150,
-                  child: OutlinedButton(
-                    onPressed: () => Get.back(),
-                    child: const Text('Close'),
-                  ),
-                ),
-              ),
-            ],
-          ),
+          child: _buildEnlargedImageDialog(image),
         ),
       );
     } else {
@@ -68,5 +40,53 @@ class ImagesController extends GetxController {
 
   void updateSelectedImage(String image) {
     selectedProductImage.value = image;
+  }
+
+  List<String> _validateImageUrls(List<String> urls) {
+    return urls.where((url) => Uri.tryParse(url)?.hasAbsolutePath ?? false).toList();
+  }
+
+  bool _isValidUrl(String url) {
+    return Uri.tryParse(url)?.hasAbsolutePath ?? false;
+  }
+
+  Widget _buildEnlargedImageDialog(String image) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: TSizes.defaultSpace * 2,
+                  horizontal: TSizes.defaultSpace,
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  errorWidget: (context, url, error) => const Center(
+                    child: CircularProgressIndicator(color: TColors.primary),
+                  ),
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            const SizedBox(height: TSizes.spaceBtwSections),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: 150,
+                child: OutlinedButton(
+                  onPressed: () => Get.back(),
+                  child: const Text('Close'),
+                ),
+              ),
+            ),
+            const SizedBox(height: TSizes.spaceBtwSections),
+          ],
+        ),
+      ),
+    );
   }
 }
