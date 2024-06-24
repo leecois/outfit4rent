@@ -168,10 +168,6 @@ class AuthenticationRepository extends GetxController {
       final credentials = GoogleAuthProvider.credential(accessToken: googleAuth?.accessToken, idToken: googleAuth?.idToken);
 
       UserCredential userCredential = await _auth.signInWithCredential(credentials);
-      String? token = await userCredential.user?.getIdToken();
-      if (kDebugMode) {
-        debugPrint('Login Token: $token', wrapWidth: 1024);
-      }
 
       return userCredential;
     } on FirebaseAuthException catch (e) {

@@ -10,23 +10,36 @@ class ProductController extends GetxController {
   final isLoading = false.obs;
   final _productRepository = Get.put(ProductRepository());
   RxList<ProductModel> allProducts = <ProductModel>[].obs;
+  RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
   Rx<ProductModel?> productDetail = Rx<ProductModel?>(null);
 
   @override
   void onInit() {
     super.onInit();
-    fetchProducts();
+    fetchFeaturedProducts();
   }
 
-  Future<void> fetchProducts() async {
+  void fetchFeaturedProducts() async {
     try {
+      //Todo: Show loader here
       isLoading.value = true;
-      final products = await _productRepository.getAllProduct();
-      allProducts.assignAll(products);
+      //Todo: Fetch featured products
+      final products = await _productRepository.getFeaturedProducts();
+      featuredProducts.assignAll(products);
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Ops?', message: e.toString());
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  Future<List<ProductModel>> fetchAllFeaturedProducts() async {
+    try {
+      final products = await _productRepository.getFeaturedProducts();
+      return products;
+    } catch (e) {
+      TLoaders.errorSnackBar(title: 'Ops?', message: e.toString());
+      return [];
     }
   }
 

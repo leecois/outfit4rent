@@ -7,6 +7,7 @@ import 'package:outfit4rent/common/widgets/products/product_cards/product_card_v
 import 'package:outfit4rent/common/widgets/shimmer/vertical_product_shimmer.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
+import 'package:outfit4rent/features/shop/screens/all_products/all_products_screen.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/home_appbar.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/home_categories.dart';
 import 'package:outfit4rent/features/shop/screens/home/widgets/promo_slider.dart';
@@ -74,18 +75,26 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   //!Heading
-                  TSectionHeading(title: 'Popular Products', onPressed: () {}),
+                  TSectionHeading(
+                    title: 'Popular Products',
+                    onPressed: () => Get.to(
+                      () => AllProductsScreen(
+                        title: ' Popular Products',
+                        futureMethod: productController.fetchAllFeaturedProducts(),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   //!Popular products
                   Obx(() {
                     if (productController.isLoading.value) return const TVerticalProductShimmer();
-                    if (productController.allProducts.isEmpty) {
+                    if (productController.featuredProducts.isEmpty) {
                       return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium));
                     }
                     return TGridLayout(
-                      itemCount: productController.allProducts.length,
-                      itemBuilder: (_, index) => TProductCardVertical(product: productController.allProducts[index]),
+                      itemCount: productController.featuredProducts.length,
+                      itemBuilder: (_, index) => TProductCardVertical(product: productController.featuredProducts[index]),
                     );
                   })
                 ],

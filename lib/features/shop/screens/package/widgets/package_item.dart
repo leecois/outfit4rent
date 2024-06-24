@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/data/repositories/package/package_repository.dart';
+import 'package:outfit4rent/features/shop/controllers/category_controller.dart';
+import 'package:outfit4rent/features/shop/models/category_package_model.dart';
 import 'package:outfit4rent/features/shop/models/package_model.dart';
 import 'package:outfit4rent/features/shop/screens/package/widgets/package_category.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
@@ -23,6 +27,8 @@ class TPackageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoryController = Get.put(CategoryController());
+
     return Padding(
       padding: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
       child: Stack(
@@ -35,6 +41,18 @@ class TPackageItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
+                // Package Image
+                if (package.imageUrl.isNotEmpty)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      package.imageUrl,
+                      height: 150,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                const SizedBox(height: TSizes.spaceBtwItems),
                 TSectionHeading(
                   title: package.name,
                   showActionButton: false,
@@ -70,15 +88,32 @@ class TPackageItem extends StatelessWidget {
                   lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                 ),
                 const SizedBox(height: TSizes.spaceBtwItems),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: package.categoryPackages.length,
-                  itemBuilder: (context, catIndex) {
-                    final category = package.categoryPackages[catIndex];
-                    return TPackageCategory(
-                      categoryName: category.categoryName,
-                      maxAvailableQuantity: category.maxAvailableQuantity,
+                FutureBuilder<List<CategoryPackageModel>>(
+                  future: PackageRepository.instance.getCategoryPackages(package.id),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(child: Text('No categories available.'));
+                    }
+
+                    final categoryPackages = snapshot.data!;
+
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: categoryPackages.length,
+                      itemBuilder: (context, catIndex) {
+                        final categoryPackage = categoryPackages[catIndex];
+                        final categoryName = categoryController.getCategoryNameById(categoryPackage.categoryId);
+
+                        return TPackageCategory(
+                          categoryName: categoryName,
+                          maxAvailableQuantity: categoryPackage.maxAvailableQuantity,
+                        );
+                      },
                     );
                   },
                 ),
@@ -88,7 +123,7 @@ class TPackageItem extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: onPressed,
                     child: const Text('Get Started'),
                   ),
                 ),

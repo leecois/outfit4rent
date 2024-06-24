@@ -10,6 +10,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:outfit4rent/app.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/data/services/notification_service.dart';
+import 'package:outfit4rent/features/authentication/screens/on_boarding/onboarding.dart';
 import 'package:outfit4rent/firebase_options.dart';
 
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
@@ -51,6 +52,14 @@ void main() async {
       PushNotifications.showSimpleNotification(title: message.notification!.title!, body: message.notification!.body!, payload: payloadData);
     }
   });
+  final RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
+
+  if (message != null) {
+    print("Launched from terminated state");
+    Future.delayed(const Duration(seconds: 1), () {
+      Get.offAll(() => const OnboardingScreen());
+    });
+  }
 
   runApp(const App());
 }

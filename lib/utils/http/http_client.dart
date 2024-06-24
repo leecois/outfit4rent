@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 class THttpHelper {
   static const String baseUrl = 'https://api.outfit4rent.online';
 
-  static Future<dynamic> get(String endpoint) async {
-    return _request('GET', endpoint);
+  static Future<dynamic> get(String endpoint, {Map<String, dynamic>? queryParameters}) async {
+    return _request('GET', endpoint, queryParameters: queryParameters);
   }
 
   static Future<dynamic> post(String endpoint, dynamic data) async {
@@ -27,11 +27,11 @@ class THttpHelper {
     return _request('DELETE', endpoint);
   }
 
-  static Future<dynamic> _request(String method, String endpoint, {dynamic data}) async {
+  static Future<dynamic> _request(String method, String endpoint, {dynamic data, Map<String, dynamic>? queryParameters}) async {
     try {
       final token = await _getToken();
       final headers = _buildHeaders(token);
-      final url = Uri.parse('$baseUrl/$endpoint');
+      final url = Uri.parse('$baseUrl/$endpoint').replace(queryParameters: queryParameters);
 
       http.Response response;
 

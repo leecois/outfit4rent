@@ -11,6 +11,7 @@ import 'package:outfit4rent/features/shop/controllers/category_controller.dart';
 import 'package:outfit4rent/features/shop/screens/brand/all_brands_screen.dart';
 import 'package:outfit4rent/features/shop/screens/brand/brand_products_screen.dart';
 import 'package:outfit4rent/features/shop/screens/store/widgets/category_tab.dart';
+import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class StoreScreen extends StatelessWidget {
@@ -18,14 +19,14 @@ class StoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categories = CategoryController.instance.featuredCategories;
+    final categories = CategoryController.instance.allCategories;
 
     return DefaultTabController(
       length: categories.length,
       child: Scaffold(
         appBar: TAppBar(
           title: Text('Wardrobe', style: Theme.of(context).textTheme.headlineMedium),
-          actions: [TCartCounterIcon(onPressed: () {})],
+          actions: [TCartCounterIcon(onPressed: () {}, iconColor: TColors.white)],
         ),
         body: NestedScrollView(
           headerSliverBuilder: (_, innerBoxIsScrolled) {

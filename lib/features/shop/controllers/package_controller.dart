@@ -19,7 +19,7 @@ class PackageController extends GetxController {
   Future<void> fetchPackages() async {
     try {
       isLoading.value = true;
-      final packages = await _packageRepository.getAllPackage();
+      final packages = await _packageRepository.getAllPackages();
       allPackages.assignAll(packages);
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Error', message: e.toString());

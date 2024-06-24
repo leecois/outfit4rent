@@ -4,6 +4,7 @@ import 'package:outfit4rent/common/widgets/images/circular_image.dart';
 import 'package:outfit4rent/common/widgets/texts/brand_title_with_verified_icon.dart';
 import 'package:outfit4rent/common/widgets/texts/product_price_text.dart';
 import 'package:outfit4rent/common/widgets/texts/product_title_text.dart';
+import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/enums.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
@@ -13,7 +14,9 @@ import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 class TProductMetaData extends StatelessWidget {
   const TProductMetaData({
     super.key,
+    required this.product,
   });
+  final ProductModel product;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class TProductMetaData extends StatelessWidget {
               radius: TSizes.sm,
               backgroundColor: TColors.primary.withOpacity(0.8),
               padding: const EdgeInsets.symmetric(horizontal: TSizes.sm, vertical: TSizes.xs),
-              child: Text('used', style: Theme.of(context).textTheme.labelLarge!.apply(color: TColors.white)),
+              child: Text(product.type, style: Theme.of(context).textTheme.labelLarge!.apply(color: TColors.white)),
             ),
             const SizedBox(width: TSizes.spaceBtwItems),
 
@@ -44,7 +47,7 @@ class TProductMetaData extends StatelessWidget {
         const SizedBox(height: TSizes.spaceBtwItems / 1.5),
 
         //Todo: Title
-        const TProductTitleText(title: 'Ackerman Leather Jacket'),
+        TProductTitleText(title: product.name),
         const SizedBox(height: TSizes.spaceBtwItems / 1.5),
 
         //Todo: Stock status
@@ -52,7 +55,7 @@ class TProductMetaData extends StatelessWidget {
           children: [
             const TProductTitleText(title: 'Status:'),
             const SizedBox(width: TSizes.spaceBtwItems),
-            Text('In Stock', style: Theme.of(context).textTheme.titleMedium),
+            Text(product.quantity.toString(), style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
         const SizedBox(height: TSizes.spaceBtwItems / 1.5),

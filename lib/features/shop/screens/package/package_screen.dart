@@ -37,6 +37,7 @@ class PackageScreen extends StatelessWidget {
                   (context, index) {
                     final package = packageController.allPackages[index];
                     return TPackageItem(
+                      onPressed: () {},
                       package: package,
                       isPopular: index == 1,
                       darkMode: dark,

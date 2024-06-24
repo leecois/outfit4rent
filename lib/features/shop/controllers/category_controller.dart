@@ -28,12 +28,18 @@ class CategoryController extends GetxController {
       allCategories.assignAll(categories);
 
       // Filter featured categories (if needed)
-      featuredCategories.assignAll(allCategories.where((category) => category.status == 0).toList());
+      featuredCategories.assignAll(allCategories.where((category) => category.isFeatured == true).toList());
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Error', message: e.toString());
     } finally {
       isLoading.value = false;
     }
+  }
+
+  // Get category name by ID
+  String getCategoryNameById(int id) {
+    final category = allCategories.firstWhere((category) => category.id == id, orElse: () => CategoryModel.empty());
+    return category.name;
   }
 
   // Load selected category data
