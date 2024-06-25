@@ -55,7 +55,6 @@ void main() async {
   final RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
 
   if (message != null) {
-    print("Launched from terminated state");
     Future.delayed(const Duration(seconds: 1), () {
       Get.offAll(() => const OnboardingScreen());
     });
