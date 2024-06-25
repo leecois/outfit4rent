@@ -15,9 +15,8 @@ import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  const ProductDetailScreen({super.key, required this.productId, required this.product});
+  const ProductDetailScreen({super.key, required this.product});
 
-  final int productId;
   final ProductModel product;
 
   @override
@@ -26,7 +25,7 @@ class ProductDetailScreen extends StatelessWidget {
     final imagesController = Get.put(ImagesController());
     //Todo Fetch product details when this screen is loaded
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      productController.fetchProductDetail(productId).then((_) {
+      productController.fetchProductDetail(product.id).then((_) {
         final productDetail = productController.productDetail.value;
         if (productDetail != null) {
           imagesController.getAllProductImages(productDetail);

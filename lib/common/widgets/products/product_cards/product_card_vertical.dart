@@ -25,9 +25,10 @@ class TProductCardVertical extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
     final controller = ProductController.instance;
+
     return GestureDetector(
       onTap: () {
-        Get.to(() => ProductDetailScreen(productId: product.id, product: product));
+        Get.to(() => ProductDetailScreen(product: product));
       },
       child: Container(
         width: 180,
@@ -48,7 +49,9 @@ class TProductCardVertical extends StatelessWidget {
                 children: [
                   Obx(() {
                     final productFromController = controller.allProducts.firstWhereOrNull((element) => element.id == product.id);
-                    final networkImage = (productFromController != null && productFromController.images.isNotEmpty) ? productFromController.images[0].link : '';
+                    final networkImage = (productFromController != null && productFromController.images.isNotEmpty && productFromController.images[0].url.isNotEmpty)
+                        ? productFromController.images[0].url
+                        : '';
                     final image = networkImage.isNotEmpty ? networkImage : TImages.productImage1;
 
                     return TRoundedImage(

@@ -29,7 +29,7 @@ class TProductImageSlider extends StatelessWidget {
     // Set the initial images for the product
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (controller.productImages.isEmpty) {
-        final initialImages = product.images.isNotEmpty ? product.images.map((img) => img.link).toList() : [TImages.productImage1];
+        final initialImages = product.images.isNotEmpty ? product.images.map((img) => img.url).toList() : [TImages.productImage1];
         controller.setProductImages(initialImages);
       }
     });

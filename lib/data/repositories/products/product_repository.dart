@@ -10,7 +10,7 @@ class ProductRepository extends GetxController {
   Future<List<ProductModel>> getFeaturedProducts() async {
     try {
       final response = await THttpHelper.get('customers/products', queryParameters: {
-        '_sort': 'isFeatured',
+        'is_featured': 'true',
       });
       final List<dynamic> data = response['data'] as List<dynamic>;
       return data.map((json) => ProductModel.fromJson(json)).toList();

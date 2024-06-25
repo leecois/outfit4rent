@@ -19,7 +19,7 @@ class ImagesController extends GetxController {
   }
 
   List<String> getAllProductImages(ProductModel product) {
-    List<String> images = product.images.map((image) => image.link).toList();
+    List<String> images = product.images.map((image) => image.url).toList();
     images = _validateImageUrls(images);
     setProductImages(images);
     return images;

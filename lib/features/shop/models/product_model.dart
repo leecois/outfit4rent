@@ -1,23 +1,23 @@
 class ImageModel {
   int id;
-  String link;
+  String url;
   int idProduct;
 
   ImageModel({
     required this.id,
-    required this.link,
+    required this.url,
     required this.idProduct,
   });
 
   factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
         id: json["id"],
-        link: json["link"] ?? '',
+        url: json["url"] ?? '',
         idProduct: json["idProduct"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "link": link,
+        "url": url,
         "idProduct": idProduct,
       };
 }

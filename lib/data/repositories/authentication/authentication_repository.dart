@@ -55,7 +55,7 @@ class AuthenticationRepository extends GetxController {
   //Todo: Verify token with REST API
   Future<int> verifyToken(String token) async {
     try {
-      final response = await THttpHelper.get('auth/firebase/verify-token?accessToken=$token');
+      final response = await THttpHelper.get('auth/firebase/verified-token?accessToken=$token');
       return response['id'];
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
