@@ -17,13 +17,12 @@ class ProductController extends GetxController {
   void onInit() {
     super.onInit();
     fetchFeaturedProducts();
+    fetchAllFeaturedProducts();
   }
 
   void fetchFeaturedProducts() async {
     try {
-      //Todo: Show loader here
       isLoading.value = true;
-      //Todo: Fetch featured products
       final products = await _productRepository.getFeaturedProducts();
       featuredProducts.assignAll(products);
     } catch (e) {
@@ -44,7 +43,6 @@ class ProductController extends GetxController {
     }
   }
 
-  //Todo: Get product by id
   Future<void> fetchProductDetail(int productId) async {
     try {
       isLoading.value = true;

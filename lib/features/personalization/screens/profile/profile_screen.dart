@@ -34,7 +34,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Obx(() {
-                      final networkImage = controller.user.value.profilePicture;
+                      final networkImage = controller.user.value.picture;
                       final image = networkImage.isNotEmpty ? networkImage : TImages.user;
                       return controller.imageUploading.value
                           ? const TShimmerEffect(width: 80, height: 80, radius: 80)

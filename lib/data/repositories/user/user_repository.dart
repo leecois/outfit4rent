@@ -20,7 +20,7 @@ class UserRepository extends GetxController {
   // Todo: Function to save user to Firebase
   Future<void> saveUserRecord(UserModel user) async {
     try {
-      final response = await THttpHelper.put('customers', user.toJson());
+      final response = await THttpHelper.patch('customers/${user.id}', user.toJson());
       return response;
     } catch (e) {
       throw Exception('An error occurred: $e');

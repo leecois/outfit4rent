@@ -3,7 +3,7 @@ class UserModel {
   final String email;
   String name;
   String phone;
-  String profilePicture;
+  String picture;
   final String? address;
   final int? moneyInWallet;
   final int status;
@@ -13,7 +13,7 @@ class UserModel {
     required this.email,
     required this.name,
     required this.phone,
-    required this.profilePicture,
+    required this.picture,
     this.address,
     this.moneyInWallet,
     required this.status,
@@ -25,7 +25,7 @@ class UserModel {
         email: '',
         name: '',
         phone: '',
-        profilePicture: '',
+        picture: '',
         address: null,
         moneyInWallet: null,
         status: 0,
@@ -37,7 +37,7 @@ class UserModel {
         email: json["email"] ?? '',
         name: json["name"] ?? '',
         phone: json["phone"] ?? '',
-        profilePicture: json["profilePicture"] ?? '',
+        picture: json["picture"] ?? '',
         address: json["address"] ?? '',
         moneyInWallet: json["moneyInWallet"] ?? 0,
         status: json["status"] ?? 0,
@@ -49,7 +49,7 @@ class UserModel {
         'email': email,
         'name': name,
         'phone': phone,
-        'profilePicture': profilePicture,
+        'picture': picture,
         'address': address,
         'moneyInWallet': moneyInWallet,
         'status': status,

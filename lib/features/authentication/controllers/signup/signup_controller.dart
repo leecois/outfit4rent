@@ -66,7 +66,7 @@ class SignupController extends GetxController {
         email: email.text.trim(),
         name: fullName.text.trim(),
         phone: phoneNumber.text.trim(),
-        profilePicture: '',
+        picture: '',
         status: 0,
         address: null,
         moneyInWallet: null,
@@ -86,7 +86,7 @@ class SignupController extends GetxController {
     } catch (e) {
       //Todo: Handle error
       TFullScreenLoader.stopLoading();
-      TLoaders.errorSnackBar(title: "Oh shit!", message: e.toString());
+      TLoaders.errorSnackBar(title: "OMG!", message: e.toString());
     }
   }
 }

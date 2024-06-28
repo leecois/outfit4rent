@@ -63,7 +63,7 @@ class UserController extends GetxController {
             name: userCredentials.user!.displayName ?? '',
             email: userCredentials.user!.email ?? '',
             phone: userCredentials.user!.phoneNumber ?? '',
-            profilePicture: userCredentials.user!.photoURL ?? '',
+            picture: userCredentials.user!.photoURL ?? '',
             address: '',
             status: 0,
             moneyInWallet: 0,
@@ -173,10 +173,10 @@ class UserController extends GetxController {
         // Upload image
         final imageUrl = await _userRepository.uploadImage('Users/Images/Profile/', image);
         // Update user profile picture
-        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
+        Map<String, dynamic> json = {'picture': imageUrl};
         await _userRepository.updateSingleField(json);
 
-        user.value.profilePicture = imageUrl;
+        user.value.picture = imageUrl;
         user.refresh();
         TLoaders.successSnackBar(title: 'Profile Picture Updated', message: 'Your profile picture has been updated successfully');
       }

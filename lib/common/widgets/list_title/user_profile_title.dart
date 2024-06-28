@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/images/circular_image.dart';
 import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
@@ -9,16 +10,44 @@ class TUserProfileTitle extends StatelessWidget {
     super.key,
     required this.onTap,
   });
+
   final VoidCallback onTap;
+
   @override
   Widget build(BuildContext context) {
     final controller = UserController.instance;
     return ListTile(
       onTap: onTap,
-      leading: const TCircularImage(image: TImages.user, width: 50, height: 50, padding: 0),
-      title: Text(controller.user.value.name, style: Theme.of(context).textTheme.headlineSmall!.apply(color: Theme.of(context).colorScheme.primary)),
-      subtitle: Text(controller.user.value.email, style: Theme.of(context).textTheme.bodyMedium!.apply(color: Theme.of(context).colorScheme.primary)),
-      trailing: IconButton(onPressed: onTap, icon: Icon(Iconsax.user_edit_outline, color: Theme.of(context).colorScheme.primary)),
+      leading: Obx(() {
+        final networkImage = controller.user.value.picture;
+        final image = networkImage.isNotEmpty ? networkImage : TImages.user;
+        return TCircularImage(
+          image: image,
+          isNetworkImage: networkImage.isNotEmpty,
+          width: 50,
+          height: 50,
+          padding: 0,
+        );
+      }),
+      title: Text(
+        controller.user.value.name,
+        style: Theme.of(context).textTheme.headlineSmall!.apply(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      ),
+      subtitle: Text(
+        controller.user.value.email,
+        style: Theme.of(context).textTheme.bodyMedium!.apply(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+      ),
+      trailing: IconButton(
+        onPressed: onTap,
+        icon: Icon(
+          Iconsax.user_edit_outline,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
     );
   }
 }

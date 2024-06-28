@@ -8,7 +8,6 @@ import 'package:outfit4rent/common/widgets/images/rounded_image.dart';
 import 'package:outfit4rent/common/widgets/texts/brand_title_with_verified_icon.dart';
 import 'package:outfit4rent/common/widgets/texts/product_price_text.dart';
 import 'package:outfit4rent/common/widgets/texts/product_title_text.dart';
-import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/features/shop/screens/product_details/product_detail_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
@@ -24,7 +23,10 @@ class TProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
-    final controller = ProductController.instance;
+
+    // Move this logic outside of the build method
+    final networkImage = (product.images.isNotEmpty && product.images[0].url.isNotEmpty) ? product.images[0].url : '';
+    final image = networkImage.isNotEmpty ? networkImage : TImages.productImage1;
 
     return GestureDetector(
       onTap: () {
@@ -47,21 +49,13 @@ class TProductCardVertical extends StatelessWidget {
               backgroundColor: dark ? TColors.dark : TColors.light,
               child: Stack(
                 children: [
-                  Obx(() {
-                    final productFromController = controller.allProducts.firstWhereOrNull((element) => element.id == product.id);
-                    final networkImage = (productFromController != null && productFromController.images.isNotEmpty && productFromController.images[0].url.isNotEmpty)
-                        ? productFromController.images[0].url
-                        : '';
-                    final image = networkImage.isNotEmpty ? networkImage : TImages.productImage1;
-
-                    return TRoundedImage(
-                      width: double.infinity,
-                      height: double.infinity,
-                      imageUrl: image,
-                      applyImageRadius: true,
-                      isNetworkImage: networkImage.isNotEmpty,
-                    );
-                  }),
+                  TRoundedImage(
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageUrl: image,
+                    applyImageRadius: true,
+                    isNetworkImage: networkImage.isNotEmpty,
+                  ),
                   //!isUsed Tag
                   Positioned(
                     top: 12,
