@@ -6,7 +6,7 @@ import 'package:outfit4rent/features/shop/models/package_model.dart';
 class PackageController extends GetxController {
   static PackageController get instance => Get.find();
 
-  final isLoading = false.obs;
+  RxBool isLoading = false.obs;
   final _packageRepository = Get.put(PackageRepository());
   RxList<PackageModel> allPackages = <PackageModel>[].obs;
 

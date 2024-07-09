@@ -1,7 +1,7 @@
 class ImageModel {
-  int id;
-  String url;
-  int idProduct;
+  final int id;
+  final String url;
+  final int idProduct;
 
   ImageModel({
     required this.id,
@@ -23,21 +23,21 @@ class ImageModel {
 }
 
 class ProductModel {
-  int id;
-  String name;
-  int price;
-  String size;
-  int deposit;
-  String description;
-  int status;
-  String isUsed;
-  int idCategory;
-  int quantity;
-  int availableQuantity;
-  int idBrand;
-  String type;
-  bool isFeatured;
-  List<ImageModel> images;
+  final int id;
+  final String name;
+  final int price;
+  final String size;
+  final double deposit;
+  final String description;
+  final int status;
+  final String isUsed;
+  final int idCategory;
+  final int quantity;
+  final int availableQuantity;
+  final int idBrand;
+  final String type;
+  final bool isFeatured;
+  final List<ImageModel> images;
 
   ProductModel({
     required this.id,

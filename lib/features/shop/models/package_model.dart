@@ -1,16 +1,16 @@
 import 'package:outfit4rent/features/shop/models/category_package_model.dart';
 
 class PackageModel {
-  int id;
-  int price;
-  String imageUrl;
-  int availableRentDays;
-  String name;
-  String description;
-  int status;
-  int numOfProduct;
-  bool isFeatured;
-  List<CategoryPackageModel>? categoryPackages;
+  final int id;
+  final int price;
+  final String imageUrl;
+  final int availableRentDays;
+  final String name;
+  final String description;
+  final int status;
+  final int numOfProduct;
+  final bool isFeatured;
+  final List<CategoryPackageModel>? categoryPackages;
 
   PackageModel({
     required this.id,

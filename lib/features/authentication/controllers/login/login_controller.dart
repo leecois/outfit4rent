@@ -13,7 +13,6 @@ class LoginController extends GetxController {
   //? Variables
   final rememberMe = false.obs;
   final hidePassword = true.obs;
-  TLocalStorage localStorage = TLocalStorage();
 
   final email = TextEditingController();
   final password = TextEditingController();
@@ -23,8 +22,8 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
-    email.text = localStorage.readData('REMEMBER_ME_EMAIL') ?? '';
-    password.text = localStorage.readData('REMEMBER_ME_PASSWORD') ?? '';
+    email.text = TLocalStorage.instance().readData('REMEMBER_ME_EMAIL') ?? '';
+    password.text = TLocalStorage.instance().readData('REMEMBER_ME_PASSWORD') ?? '';
     super.onInit();
   }
 
@@ -48,8 +47,8 @@ class LoginController extends GetxController {
 
       //Todo: Save data if remember me is checked
       if (rememberMe.value) {
-        localStorage.saveData('REMEMBER_ME_EMAIL', email.text.trim());
-        localStorage.saveData('REMEMBER_ME_PASSWORD', password.text.trim());
+        TLocalStorage.instance().saveData('REMEMBER_ME_EMAIL', email.text.trim());
+        TLocalStorage.instance().saveData('REMEMBER_ME_PASSWORD', password.text.trim());
       }
 
       final userCredential = await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
@@ -58,7 +57,7 @@ class LoginController extends GetxController {
       final token = await userCredential.user?.getIdToken();
       final response = await AuthenticationRepository.instance.verifyToken(token!);
 
-      await localStorage.saveData('currentUser', response);
+      await TLocalStorage.instance().saveData('currentUser', response);
 
       //Todo: Remove loading
       TFullScreenLoader.stopLoading();
@@ -91,7 +90,7 @@ class LoginController extends GetxController {
       final token = await userCredentials?.user?.getIdToken();
       final response = await AuthenticationRepository.instance.verifyToken(token!);
 
-      await localStorage.saveData('currentUser', response);
+      await TLocalStorage.instance().saveData('currentUser', response);
 
       //Todo: Save user record
       await userController.saveUserRecord(userCredentials);
@@ -127,7 +126,7 @@ class LoginController extends GetxController {
       final token = await userCredentials?.user?.getIdToken();
       final response = await AuthenticationRepository.instance.verifyToken(token!);
 
-      await localStorage.saveData('currentUser', response);
+      await TLocalStorage.instance().saveData('currentUser', response);
 
       //Todo: Save user record
       await userController.saveUserRecord(userCredentials);

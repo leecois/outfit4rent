@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
+import 'package:outfit4rent/common/widgets/shimmer/vertical_product_shimmer.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/data/repositories/package/package_repository.dart';
 import 'package:outfit4rent/features/shop/controllers/category_controller.dart';
@@ -9,6 +10,7 @@ import 'package:outfit4rent/features/shop/models/package_model.dart';
 import 'package:outfit4rent/features/shop/screens/package/widgets/package_category.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
+import 'package:outfit4rent/utils/helpers/cloud_helper_functions.dart';
 import 'package:readmore/readmore.dart';
 
 class TPackageItem extends StatelessWidget {
@@ -91,13 +93,10 @@ class TPackageItem extends StatelessWidget {
                 FutureBuilder<List<CategoryPackageModel>>(
                   future: PackageRepository.instance.getCategoryPackages(package.id),
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    } else if (snapshot.hasError) {
-                      return Center(child: Text('Error: ${snapshot.error}'));
-                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                      return const Center(child: Text('No categories available.'));
-                    }
+                    const loader = TVerticalProductShimmer();
+                    final widget = TCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
+
+                    if (widget != null) return widget;
 
                     final categoryPackages = snapshot.data!;
 

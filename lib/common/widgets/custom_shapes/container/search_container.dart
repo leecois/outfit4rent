@@ -46,7 +46,7 @@ class TSearchContainer extends StatelessWidget {
               Icon(icon, color: Theme.of(context).colorScheme.primary),
               const SizedBox(width: TSizes.spaceBtwItems),
               Text(
-                "search_product",
+                "Search in Wardrobe",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],

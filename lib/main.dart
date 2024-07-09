@@ -12,6 +12,7 @@ import 'package:outfit4rent/data/repositories/authentication/authentication_repo
 import 'package:outfit4rent/data/services/notification_service.dart';
 import 'package:outfit4rent/features/authentication/screens/on_boarding/onboarding.dart';
 import 'package:outfit4rent/firebase_options.dart';
+import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 
 Future _firebaseBackgroundMessage(RemoteMessage message) async {
   if (message.notification != null) {
@@ -28,6 +29,8 @@ void main() async {
 
   // Todo: Getx Local Storage
   await GetStorage.init();
+
+  await TLocalStorage.init('defaultBucket');
 
   // Todo: Await Native Splash
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

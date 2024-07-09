@@ -6,7 +6,7 @@ import 'package:outfit4rent/features/shop/models/category_model.dart';
 class CategoryController extends GetxController {
   static CategoryController get instance => Get.find();
 
-  final isLoading = false.obs;
+  RxBool isLoading = false.obs;
   final _categoryRepository = Get.put(CategoryRepository());
   RxList<CategoryModel> allCategories = <CategoryModel>[].obs;
   RxList<CategoryModel> featuredCategories = <CategoryModel>[].obs;
@@ -41,8 +41,4 @@ class CategoryController extends GetxController {
     final category = allCategories.firstWhere((category) => category.id == id, orElse: () => CategoryModel.empty());
     return category.name;
   }
-
-  // Load selected category data
-
-  // Get Category or Subcategory
 }

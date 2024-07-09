@@ -1,9 +1,9 @@
 class CategoryPackageModel {
-  int id;
-  int maxAvailableQuantity;
-  int categoryId;
-  int packageId;
-  int status;
+  final int id;
+  final int maxAvailableQuantity;
+  final int categoryId;
+  final int packageId;
+  final int status;
 
   CategoryPackageModel({
     required this.id,

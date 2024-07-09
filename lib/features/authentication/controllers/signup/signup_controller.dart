@@ -20,7 +20,6 @@ class SignupController extends GetxController {
   final fullName = TextEditingController();
   final password = TextEditingController();
   final phoneNumber = TextEditingController();
-  TLocalStorage localStorage = TLocalStorage();
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
 
   //Todo: SIGNUP
@@ -58,7 +57,7 @@ class SignupController extends GetxController {
       final token = await userCredential.user?.getIdToken();
       final response = await AuthenticationRepository.instance.verifyToken(token!);
 
-      await localStorage.saveData('currentUser', response);
+      await TLocalStorage.instance().saveData('currentUser', response);
 
       //Todo: Save User Record
       final newUser = UserModel(

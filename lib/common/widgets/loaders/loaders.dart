@@ -13,7 +13,7 @@ class TLoaders {
       duration: const Duration(seconds: 3),
       backgroundColor: Colors.transparent,
       content: Container(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12.0),
         margin: const EdgeInsets.symmetric(horizontal: 30),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),

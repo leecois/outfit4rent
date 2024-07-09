@@ -24,7 +24,6 @@ class UserController extends GetxController {
   final hidePassword = false.obs;
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
-  final localStorage = TLocalStorage();
   final _userRepository = Get.put(UserRepository());
   final GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
 
@@ -38,7 +37,7 @@ class UserController extends GetxController {
   Future<void> fetchUserRecord() async {
     try {
       profileLoading.value = true;
-      final userId = localStorage.readData<int>('currentUser');
+      final userId = TLocalStorage.instance().readData<int>('currentUser');
       final userDetail = await _userRepository.fetchUserDetail(userId!);
 
       user(userDetail);
@@ -51,7 +50,7 @@ class UserController extends GetxController {
 
   // Save user Record from any registration provider
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
-    final userId = localStorage.readData<int>('currentUser');
+    final userId = TLocalStorage.instance().readData<int>('currentUser');
     try {
       // Refresher user record
       await fetchUserRecord();

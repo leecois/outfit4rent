@@ -4,7 +4,6 @@ import 'package:outfit4rent/common/widgets/image_text_widgets/vertical_image_tex
 import 'package:outfit4rent/common/widgets/shimmer/category_shimmer.dart';
 import 'package:outfit4rent/features/shop/controllers/category_controller.dart';
 import 'package:outfit4rent/features/shop/screens/sub_category/sub_categories_screen.dart';
-import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 
 class THomeCategories extends StatelessWidget {
@@ -31,7 +30,7 @@ class THomeCategories extends StatelessWidget {
           itemBuilder: (_, index) {
             final category = categoryController.featuredCategories[index];
             return TVerticalImageText(
-              image: TImages.clothIcon,
+              image: category.url,
               title: category.name,
               textColor: dark ? Colors.white : Colors.black,
               onTap: () => Get.to(() => const SubCategoriesScreen()),

@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/styles/shadows.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
-import 'package:outfit4rent/common/widgets/icons/circular_icon.dart';
 import 'package:outfit4rent/common/widgets/images/rounded_image.dart';
+import 'package:outfit4rent/common/widgets/products/favorite_icon/favorite_icon.dart';
 import 'package:outfit4rent/common/widgets/texts/brand_title_with_verified_icon.dart';
 import 'package:outfit4rent/common/widgets/texts/product_price_text.dart';
 import 'package:outfit4rent/common/widgets/texts/product_title_text.dart';
@@ -45,6 +45,7 @@ class TProductCardVertical extends StatelessWidget {
             //!Thumbnail
             TRoundedContainer(
               height: 180,
+              width: 180,
               padding: const EdgeInsets.all(TSizes.sm),
               backgroundColor: dark ? TColors.dark : TColors.light,
               child: Stack(
@@ -71,12 +72,11 @@ class TProductCardVertical extends StatelessWidget {
                   ),
 
                   //!Favorite Icon Button
-                  const Positioned(
+                  Positioned(
                     top: 0,
                     right: 0,
-                    child: TCircularIcon(
-                      icon: Iconsax.heart_bold,
-                      color: Colors.red,
+                    child: TFavoriteIcon(
+                      productId: product.id,
                     ),
                   )
                 ],

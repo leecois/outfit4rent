@@ -16,6 +16,7 @@ import 'package:outfit4rent/utils/exceptions/firebase_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/format_exception.dart';
 import 'package:outfit4rent/utils/exceptions/platform_exceptions.dart';
 import 'package:outfit4rent/utils/http/http_client.dart';
+import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -40,6 +41,9 @@ class AuthenticationRepository extends GetxController {
     final user = _auth.currentUser;
     if (user != null) {
       if (user.emailVerified) {
+        // Init user-specific storage
+        await TLocalStorage.init(user.uid);
+        // If user is logged in and email verified, redirect to navigation menu
         Get.offAll(() => const NavigationMenu());
       } else {
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));

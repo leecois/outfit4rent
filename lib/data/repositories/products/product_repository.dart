@@ -63,4 +63,18 @@ class ProductRepository extends GetxController {
       throw 'An error occurred. Please try again later.';
     }
   }
+
+  // Fetch products with query parameters
+  Future<List<ProductModel>> getFavoriteProducts(List<String> productIds) async {
+    try {
+      final response = await THttpHelper.get('customers/products', queryParameters: {'id': productIds});
+      final List<dynamic> data = response['data'] as List<dynamic>;
+      return data.map((json) => ProductModel.fromJson(json)).toList();
+    } catch (e) {
+      if (e is TPlatformException) {
+        throw TPlatformException(e.code).message;
+      }
+      throw 'An error occurred. Please try again later.';
+    }
+  }
 }

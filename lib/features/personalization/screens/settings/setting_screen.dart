@@ -42,14 +42,29 @@ class SettingScreen extends StatelessWidget {
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
+                  TSettingMenuTitle(
+                      icon: Iconsax.ghost_outline, title: "My Destiny", subtitle: "Manage your delivery addresses", onTap: () => Get.to(() => const UserAddressScreen())),
+                  TSettingMenuTitle(icon: Iconsax.wallet_2_outline, title: "Wallet", subtitle: "\$999.00", onTap: () => Get.to(() => const UserAddressScreen())),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+
+                  //Todo: My Orders
+                  const TSectionHeading(title: 'My Orders', showActionButton: false),
+                  const SizedBox(height: TSizes.spaceBtwItems),
+
+                  TSettingMenuTitle(
+                      icon: Iconsax.empty_wallet_remove_outline, title: "Unpaid", subtitle: "Manage your delivery addresses", onTap: () => Get.to(() => const UserAddressScreen())),
+                  TSettingMenuTitle(icon: Iconsax.wallet_2_outline, title: "Processing", subtitle: "View your balance and transactions", onTap: () {}),
+                  TSettingMenuTitle(
+                      icon: Iconsax.shopping_cart_outline, title: "Shipped", subtitle: "Track and manage your orders", onTap: () => Get.to(() => const OrderScreen())),
+                  TSettingMenuTitle(icon: Iconsax.notification_bing_outline, title: "Review", subtitle: "Manage your notification preferences", onTap: () {}),
+                  TSettingMenuTitle(icon: Iconsax.lock_1_outline, title: "Returns", subtitle: "Manage your privacy settings", onTap: () {}),
+
                   // Todo: Account Settings
+                  const SizedBox(height: TSizes.spaceBtwSections),
                   const TSectionHeading(title: 'Account Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
                   TSettingMenuTitle(
                       icon: Iconsax.safe_home_outline, title: "My Addresses", subtitle: "Manage your delivery addresses", onTap: () => Get.to(() => const UserAddressScreen())),
-                  TSettingMenuTitle(icon: Iconsax.wallet_2_outline, title: "My Wallet", subtitle: "View your balance and transactions", onTap: () {}),
-                  TSettingMenuTitle(
-                      icon: Iconsax.shopping_cart_outline, title: "My Orders", subtitle: "Track and manage your orders", onTap: () => Get.to(() => const OrderScreen())),
                   TSettingMenuTitle(icon: Iconsax.notification_bing_outline, title: "Notifications", subtitle: "Manage your notification preferences", onTap: () {}),
                   TSettingMenuTitle(icon: Iconsax.lock_1_outline, title: "Account Privacy", subtitle: "Manage your privacy settings", onTap: () {}),
 
