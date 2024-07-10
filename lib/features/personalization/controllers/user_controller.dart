@@ -30,7 +30,7 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchUserRecord());
+    fetchUserRecord();
   }
 
   // Fetch user record
@@ -38,9 +38,11 @@ class UserController extends GetxController {
     try {
       profileLoading.value = true;
       final userId = TLocalStorage.instance().readData<int>('currentUser');
-      final userDetail = await _userRepository.fetchUserDetail(userId!);
-
-      user(userDetail);
+      if (userId != null) {
+        final userDetail = await _userRepository.fetchUserDetail(userId);
+        user.value = userDetail;
+        user.refresh(); // Ensure the UI updates
+      }
     } catch (e) {
       user(UserModel.empty());
     } finally {
@@ -69,7 +71,9 @@ class UserController extends GetxController {
           );
 
           // Save user record
-          await _userRepository.saveUserRecord(newUser);
+          await _userRepository.updateUserDetail(newUser);
+          user.value = newUser;
+          user.refresh(); // Ensure the UI updates
         }
       }
     } catch (e) {
@@ -172,11 +176,9 @@ class UserController extends GetxController {
         // Upload image
         final imageUrl = await _userRepository.uploadImage('Users/Images/Profile/', image);
         // Update user profile picture
-        Map<String, dynamic> json = {'picture': imageUrl};
-        await _userRepository.updateSingleField(json);
-
-        user.value.picture = imageUrl;
-        user.refresh();
+        user.update((val) {
+          val?.picture = imageUrl;
+        });
         TLoaders.successSnackBar(title: 'Profile Picture Updated', message: 'Your profile picture has been updated successfully');
       }
     } catch (e) {

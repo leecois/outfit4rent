@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
-import 'package:outfit4rent/common/widgets/shimmer/vertical_product_shimmer.dart';
+import 'package:outfit4rent/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/data/repositories/package/package_repository.dart';
 import 'package:outfit4rent/features/shop/controllers/product/cart_controller.dart';
-import 'package:outfit4rent/features/shop/controllers/category_controller.dart';
 import 'package:outfit4rent/features/shop/models/category_package_model.dart';
 import 'package:outfit4rent/features/shop/models/package_model.dart';
 import 'package:outfit4rent/features/shop/screens/package/widgets/package_category.dart';
@@ -30,7 +28,6 @@ class TPackageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categoryController = Get.put(CategoryController());
     final cartController = CartController.instance;
 
     return Padding(
@@ -95,7 +92,7 @@ class TPackageItem extends StatelessWidget {
                 FutureBuilder<List<CategoryPackageModel>>(
                   future: PackageRepository.instance.getCategoryPackages(package.id),
                   builder: (context, snapshot) {
-                    const loader = TVerticalProductShimmer();
+                    const loader = TShimmerEffect(width: double.infinity, height: 20);
                     final widget = TCloudHelperFunctions.checkMultiRecordState(snapshot: snapshot, loader: loader);
 
                     if (widget != null) return widget;
@@ -108,11 +105,9 @@ class TPackageItem extends StatelessWidget {
                       itemCount: categoryPackages.length,
                       itemBuilder: (context, catIndex) {
                         final categoryPackage = categoryPackages[catIndex];
-                        final categoryName = categoryController.getCategoryNameById(categoryPackage.categoryId);
 
                         return TPackageCategory(
-                          categoryName: categoryName,
-                          maxAvailableQuantity: categoryPackage.maxAvailableQuantity,
+                          categoryPackageModel: categoryPackage,
                         );
                       },
                     );

@@ -29,7 +29,7 @@ class TBillingPaymentSection extends StatelessWidget {
                 child: Image(image: AssetImage(controller.selectedPaymentMethod.value.image), fit: BoxFit.contain),
               ),
               const SizedBox(width: TSizes.spaceBtwItems / 2),
-              Text(controller.selectedPaymentMethod.value.name, style: Theme.of(context).textTheme.bodyLarge),
+              Text(controller.selectedPaymentMethod.value.walletName, style: Theme.of(context).textTheme.bodyLarge),
             ],
           ),
         ),

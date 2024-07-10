@@ -4,8 +4,8 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:outfit4rent/common/widgets/products/product_cards/product_card_horizontal.dart';
-import 'package:outfit4rent/features/personalization/screens/address/add_new_address_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/my_wardrobe/widgets/my_wardrobe_card.dart';
+import 'package:outfit4rent/features/shop/screens/package/package_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
@@ -16,7 +16,7 @@ class MyWardrobeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.to(() => const AddNewAddressScreen()),
+        onPressed: () => Get.to(() => const PackageScreen()),
         backgroundColor: TColors.primary,
         child: const Icon(Iconsax.add_outline, color: TColors.white),
       ),

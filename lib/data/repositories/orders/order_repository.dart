@@ -17,14 +17,12 @@ class OrderRepository extends GetxController {
 
   Future<void> saveOrder(int customerId, int packageId, OrderRequestModel order) async {
     try {
-      final response = await THttpHelper.post(
+      await THttpHelper.post(
         'orders/customers/$customerId/packages/$packageId',
         order.toJson(),
       );
-      print('Order save response: $response');
     } catch (e) {
-      print('Failed to save order: $e');
-      throw Exception('Failed to save order: $e');
+      throw Exception('Failed to save order');
     }
   }
 }

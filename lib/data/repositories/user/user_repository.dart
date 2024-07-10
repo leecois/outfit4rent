@@ -18,7 +18,7 @@ class UserRepository extends GetxController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // Todo: Function to save user to Firebase
-  Future<void> saveUserRecord(UserModel user) async {
+  Future<void> updateUserDetail(UserModel user) async {
     try {
       final response = await THttpHelper.patch('customers/${user.id}', user.toJson());
       return response;
@@ -27,30 +27,17 @@ class UserRepository extends GetxController {
     }
   }
 
+  //Todo: Update Single Field
+
   //Todo: Function to fetch user from Firebase
   Future<UserModel> fetchUserDetail(int userId) async {
     try {
       final response = await THttpHelper.get('customers/$userId');
-
       return UserModel.fromJson(response['data'] as Map<String, dynamic>);
-    } on FirebaseException catch (e) {
-      throw TFirebaseException(e.code).message;
-    } on FormatException catch (_) {
-      throw const TFormatException();
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
       throw 'An error occurred. Please try again later.';
-    }
-  }
-
-  //Todo: Function to update user in Firebase
-  Future<void> updateUserDetail(UserModel user) async {
-    try {
-      final response = await THttpHelper.put('customers/${user.id}', user.toJson());
-      return response;
-    } catch (e) {
-      throw Exception('An error occurred: $e');
     }
   }
 

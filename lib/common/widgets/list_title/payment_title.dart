@@ -29,7 +29,7 @@ class TPaymentTitle extends StatelessWidget {
         padding: const EdgeInsets.all(TSizes.sm),
         child: Image(image: AssetImage(paymentMethod.image), fit: BoxFit.contain),
       ),
-      title: Text(paymentMethod.name),
+      title: Text(paymentMethod.walletName),
       trailing: const Icon(Iconsax.arrow_right_2_outline),
     );
   }

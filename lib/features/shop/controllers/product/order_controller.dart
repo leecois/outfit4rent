@@ -62,7 +62,7 @@ class OrderController extends GetxController {
           ));
     } catch (e) {
       // Log the error message
-      print('Order processing failed: $e');
+
       throw Exception('Failed to place order: $e');
     } finally {
       TFullScreenLoader.stopLoading();

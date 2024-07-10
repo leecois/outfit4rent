@@ -1,12 +1,47 @@
 class PaymentMethodModel {
-  String name;
-  String image;
+  final int? id;
+  final String image;
+  final String? walletCode;
+  final String walletName;
+  final int? status;
+  final int? customerId;
 
   PaymentMethodModel({
-    required this.name,
+    this.id,
+    this.walletCode,
+    required this.walletName,
     required this.image,
+    this.status,
+    this.customerId,
   });
   static PaymentMethodModel empty() {
-    return PaymentMethodModel(name: '', image: '');
+    return PaymentMethodModel(
+      id: 0,
+      walletCode: '',
+      walletName: '',
+      status: 0,
+      image: '',
+      customerId: 0,
+    );
   }
+
+  factory PaymentMethodModel.fromJson(Map<String, dynamic> json) {
+    return PaymentMethodModel(
+      id: json['id'],
+      walletCode: json['walletCode'],
+      walletName: json['walletName'],
+      status: json['status'],
+      image: json['image'],
+      customerId: json['customerId'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'walletCode': walletCode,
+        'walletName': walletName,
+        'status': status,
+        'image': image,
+        'customerId': customerId,
+      };
 }

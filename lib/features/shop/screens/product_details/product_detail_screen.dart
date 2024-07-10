@@ -51,11 +51,7 @@ class ProductDetailScreen extends StatelessWidget {
                   TProductMetaData(product: product),
 
                   //Todo: Product Attributes
-                  const TProductAttributes(),
-                  const SizedBox(height: TSizes.spaceBtwSections),
-
-                  //Todo: Add to Cart
-                  SizedBox(width: double.infinity, child: ElevatedButton(onPressed: () {}, child: const Text('Add to Cart'))),
+                  TProductAttributes(product: product),
                   const SizedBox(height: TSizes.spaceBtwSections),
 
                   //Todo: Description

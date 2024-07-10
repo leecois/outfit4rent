@@ -4,7 +4,7 @@ class UserModel {
   String name;
   String phone;
   String picture;
-  final String? address;
+  String? address;
   final int? moneyInWallet;
   final int status;
 

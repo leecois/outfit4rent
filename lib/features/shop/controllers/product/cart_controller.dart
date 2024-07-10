@@ -13,11 +13,12 @@ class CartController extends GetxController {
   // Variables
   final RxInt noOfCartItems = 0.obs;
   final RxDouble totalCartPrice = 0.0.obs;
+  final RxDouble totalProductDeposit = 0.0.obs;
+  final RxDouble totalPackagePrice = 0.0.obs;
   final RxInt productQuantityInCart = 0.obs;
   final RxList<CartItemModel> cartItems = <CartItemModel>[].obs;
   final RxBool isLoading = false.obs;
   final Rx<CartItemModel?> selectedPackage = Rx<CartItemModel?>(null);
-  final dark = THelperFunctions.isDarkMode(Get.context!);
 
   CartController() {
     loadCartItems();
@@ -125,15 +126,24 @@ class CartController extends GetxController {
   }
 
   void updateCartTotals() {
-    double calculatedTotalPrice = 0.0;
+    double calculatedTotalDeposit = 0.0;
+    double calculatedPackagePrice = 0.0;
     int calculatedNoOfItems = 0;
 
     for (var item in cartItems) {
-      calculatedTotalPrice += (item.price) * item.createItems.fold(0, (sum, createItem) => sum + createItem.quantity);
+      // Calculate total deposit for products
+      calculatedTotalDeposit += item.createItems.fold(0.0, (sum, createItem) => sum + (createItem.deposit! * createItem.quantity));
+
+      // Add package price if it's a package item
+      if (item.packageId.isNotEmpty) {
+        calculatedPackagePrice += item.price;
+      }
+
       calculatedNoOfItems += item.createItems.fold(0, (sum, createItem) => sum + createItem.quantity);
     }
 
-    totalCartPrice.value = calculatedTotalPrice;
+    // Sum up total deposit and package price
+    totalCartPrice.value = calculatedTotalDeposit + calculatedPackagePrice;
     noOfCartItems.value = calculatedNoOfItems;
   }
 

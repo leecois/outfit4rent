@@ -38,8 +38,8 @@ class TProductMetaData extends StatelessWidget {
             //Price
             Text('\$ 100', style: Theme.of(context).textTheme.titleSmall!.apply(color: dark ? TColors.white : TColors.dark, decoration: TextDecoration.lineThrough)),
             const SizedBox(width: TSizes.spaceBtwItems),
-            const TProductPriceText(
-              price: '150',
+            TProductPriceText(
+              price: product.price.toString(),
               isLarge: true,
             )
           ],
@@ -53,9 +53,12 @@ class TProductMetaData extends StatelessWidget {
         //Todo: Stock status
         Row(
           children: [
-            const TProductTitleText(title: 'Status:'),
+            const TProductTitleText(
+              title: 'Status:',
+              smallSize: true,
+            ),
             const SizedBox(width: TSizes.spaceBtwItems),
-            Text(product.quantity.toString(), style: Theme.of(context).textTheme.titleMedium),
+            Text(product.name, style: Theme.of(context).textTheme.labelLarge),
           ],
         ),
         const SizedBox(height: TSizes.spaceBtwItems / 1.5),
@@ -69,12 +72,13 @@ class TProductMetaData extends StatelessWidget {
               height: 32,
               overlayColor: dark ? TColors.white : TColors.black,
             ),
-            const TBrandTitleWithVerifiedIcon(
-              title: 'Ackerman',
+            TBrandTitleWithVerifiedIcon(
+              title: product.idBrand.toString(),
               brandTextSize: TextSizes.medium,
             ),
           ],
         ),
+        const SizedBox(height: TSizes.spaceBtwItems / 1.5),
       ],
     );
   }
