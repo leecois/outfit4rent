@@ -20,7 +20,7 @@ class ProductController extends GetxController {
     fetchAllFeaturedProducts();
   }
 
-  void fetchFeaturedProducts() async {
+  Future<void> fetchFeaturedProducts() async {
     try {
       isLoading.value = true;
       final products = await _productRepository.getFeaturedProducts();
@@ -35,9 +35,6 @@ class ProductController extends GetxController {
   Future<List<ProductModel>> fetchAllFeaturedProducts() async {
     try {
       final products = await _productRepository.getAllProducts();
-      if (kDebugMode) {
-        print(products);
-      }
       allProducts.assignAll(products);
       return products;
     } catch (e) {

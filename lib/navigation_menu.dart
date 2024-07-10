@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/features/personalization/screens/settings/setting_screen.dart';
 import 'package:outfit4rent/features/shop/screens/home/home_screen.dart';
+import 'package:outfit4rent/features/shop/screens/outfit_of_the_day/outfit_of_the_day_screen.dart';
 import 'package:outfit4rent/features/shop/screens/store/store_screen.dart';
-import 'package:outfit4rent/features/shop/screens/wardrobe/wardobe_screen.dart';
 import 'package:outfit4rent/features/shop/screens/wishlist/wishlist_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
@@ -71,7 +71,7 @@ class NavigationController extends GetxController {
     const HomeScreen(),
     const StoreScreen(),
     const FavoriteScreen(),
-    const WardrobeScreen(),
+    const OutfitOfTheDayScreen(),
     const SettingScreen(),
   ];
 }

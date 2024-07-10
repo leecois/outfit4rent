@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 
-class WardrobeScreen extends StatelessWidget {
-  const WardrobeScreen({super.key});
+class OutfitOfTheDayScreen extends StatelessWidget {
+  const OutfitOfTheDayScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

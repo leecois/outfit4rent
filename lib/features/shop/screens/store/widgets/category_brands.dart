@@ -11,5 +11,6 @@ class CategoryBrands extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const TBrandShowcase(images: [TImages.productImage1, TImages.productImage1, TImages.productImage1]);
+    
   }
 }

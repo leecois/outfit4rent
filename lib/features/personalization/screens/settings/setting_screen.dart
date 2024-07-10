@@ -10,8 +10,8 @@ import 'package:outfit4rent/common/widgets/list_title/user_profile_title.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/features/personalization/screens/address/address_screen.dart';
+import 'package:outfit4rent/features/personalization/screens/my_wardrobe/my_wardrobe_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/profile_screen.dart';
-import 'package:outfit4rent/features/shop/screens/order/order_screen.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -42,8 +42,7 @@ class SettingScreen extends StatelessWidget {
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
-                  TSettingMenuTitle(
-                      icon: Iconsax.ghost_outline, title: "My Destiny", subtitle: "Manage your delivery addresses", onTap: () => Get.to(() => const UserAddressScreen())),
+                  TSettingMenuTitle(icon: Iconsax.ghost_outline, title: "My Wardrobe", subtitle: "Manage your wardrobe", onTap: () => Get.to(() => const MyWardrobeScreen())),
                   TSettingMenuTitle(icon: Iconsax.wallet_2_outline, title: "Wallet", subtitle: "\$999.00", onTap: () => Get.to(() => const UserAddressScreen())),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
@@ -54,8 +53,7 @@ class SettingScreen extends StatelessWidget {
                   TSettingMenuTitle(
                       icon: Iconsax.empty_wallet_remove_outline, title: "Unpaid", subtitle: "Manage your delivery addresses", onTap: () => Get.to(() => const UserAddressScreen())),
                   TSettingMenuTitle(icon: Iconsax.wallet_2_outline, title: "Processing", subtitle: "View your balance and transactions", onTap: () {}),
-                  TSettingMenuTitle(
-                      icon: Iconsax.shopping_cart_outline, title: "Shipped", subtitle: "Track and manage your orders", onTap: () => Get.to(() => const OrderScreen())),
+
                   TSettingMenuTitle(icon: Iconsax.notification_bing_outline, title: "Review", subtitle: "Manage your notification preferences", onTap: () {}),
                   TSettingMenuTitle(icon: Iconsax.lock_1_outline, title: "Returns", subtitle: "Manage your privacy settings", onTap: () {}),
 

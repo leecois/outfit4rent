@@ -4,8 +4,8 @@ import 'package:outfit4rent/data/repositories/favorites/favorite_repository.dart
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 
-class FavoritesController extends GetxController {
-  static FavoritesController get instance => Get.find();
+class MyWardrobeController extends GetxController {
+  static MyWardrobeController get instance => Get.find();
 
   final FavoriteRepository _favoriteRepository = Get.put(FavoriteRepository());
   final RxMap<int, bool> favorites = <int, bool>{}.obs;

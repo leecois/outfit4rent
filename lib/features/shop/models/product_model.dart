@@ -9,6 +9,8 @@ class ImageModel {
     required this.idProduct,
   });
 
+  static ImageModel empty() => ImageModel(id: 0, url: '', idProduct: 0);
+
   factory ImageModel.fromJson(Map<String, dynamic> json) => ImageModel(
         id: json["id"],
         url: json["url"] ?? '',

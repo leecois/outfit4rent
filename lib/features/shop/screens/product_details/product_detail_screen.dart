@@ -33,7 +33,7 @@ class ProductDetailScreen extends StatelessWidget {
       });
     });
     return Scaffold(
-        bottomNavigationBar: const TBottomAddToCart(),
+        bottomNavigationBar: TBottomAddToCart(product: product),
         body: SingleChildScrollView(
             child: Column(
           children: [

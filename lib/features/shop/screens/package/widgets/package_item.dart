@@ -4,6 +4,7 @@ import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_conta
 import 'package:outfit4rent/common/widgets/shimmer/vertical_product_shimmer.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/data/repositories/package/package_repository.dart';
+import 'package:outfit4rent/features/shop/controllers/product/cart_controller.dart';
 import 'package:outfit4rent/features/shop/controllers/category_controller.dart';
 import 'package:outfit4rent/features/shop/models/category_package_model.dart';
 import 'package:outfit4rent/features/shop/models/package_model.dart';
@@ -30,6 +31,7 @@ class TPackageItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final categoryController = Get.put(CategoryController());
+    final cartController = CartController.instance;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
@@ -122,7 +124,9 @@ class TPackageItem extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: onPressed,
+                    onPressed: () {
+                      cartController.addPackageToCart(package);
+                    },
                     child: const Text('Get Started'),
                   ),
                 ),
