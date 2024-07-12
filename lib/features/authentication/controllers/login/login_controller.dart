@@ -58,6 +58,7 @@ class LoginController extends GetxController {
       final response = await AuthenticationRepository.instance.verifyToken(token!);
 
       await TLocalStorage.instance().saveData('currentUser', response);
+      await userController.fetchUserRecord();
 
       //Todo: Remove loading
       TFullScreenLoader.stopLoading();

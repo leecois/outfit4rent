@@ -4,6 +4,7 @@ import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/data/repositories/user/user_repository.dart';
 import 'package:outfit4rent/features/authentication/screens/signup/verify_email_screen.dart';
+import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/features/personalization/models/user_model.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/helpers/network_manager.dart';
@@ -14,6 +15,7 @@ class SignupController extends GetxController {
   static SignupController get instance => Get.find();
 
   //? Variables
+  final userController = Get.put(UserController());
   final hidePassword = true.obs;
   final privacyPolicy = true.obs;
   final email = TextEditingController();
@@ -58,6 +60,7 @@ class SignupController extends GetxController {
       final response = await AuthenticationRepository.instance.verifyToken(token!);
 
       await TLocalStorage.instance().saveData('currentUser', response);
+      await userController.fetchUserRecord();
 
       //Todo: Save User Record
       final newUser = UserModel(
