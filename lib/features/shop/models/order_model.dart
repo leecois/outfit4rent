@@ -1,3 +1,5 @@
+import 'package:outfit4rent/utils/constants/enums.dart';
+
 class OrderModel {
   final int id;
   final int customerId;
@@ -9,7 +11,7 @@ class OrderModel {
   final String receiverName;
   final String receiverPhone;
   final String receiverAddress;
-  final int status;
+  final OrderStatus status;
   final int transactionId;
   final int quantityOfItems;
   final int totalDeposit;
@@ -38,19 +40,17 @@ class OrderModel {
         customerId: json['customerId'],
         packageId: json['packageId'],
         packageName: json['packageName'],
-        dateFrom: DateTime.parse(json['dateFrom']),
-        dateTo: DateTime.parse(json['dateTo']),
-        price: json['price'],
+        dateFrom: json['dateFrom'] != null ? DateTime.parse(json['dateFrom']) : DateTime.now(),
+        dateTo: json['dateTo'] != null ? DateTime.parse(json['dateTo']) : DateTime.now(),
+        price: (json['price'] as num).toInt(),
         receiverName: json['receiverName'],
         receiverPhone: json['receiverPhone'],
         receiverAddress: json['receiverAddress'],
-        status: json['status'],
+        status: OrderStatusExtension.fromInt(json['status']),
         transactionId: json['transactionId'],
         quantityOfItems: json['quantityOfItems'],
-        totalDeposit: json['totalDeposit'],
-        itemInUsers: (json['itemInUsers'] as List)
-            .map((e) => ItemInUserModel.fromJson(e))
-            .toList(),
+        totalDeposit: (json['totalDeposit'] as num).toInt(),
+        itemInUsers: (json['itemInUsers'] as List).map((e) => ItemInUserModel.fromJson(e)).toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,7 +64,7 @@ class OrderModel {
         'receiverName': receiverName,
         'receiverPhone': receiverPhone,
         'receiverAddress': receiverAddress,
-        'status': status,
+        'status': status.index - 1, // Convert enum back to int (-1 for canceled)
         'transactionId': transactionId,
         'quantityOfItems': quantityOfItems,
         'totalDeposit': totalDeposit,
@@ -97,13 +97,13 @@ class ItemInUserModel {
 
   factory ItemInUserModel.fromJson(Map<String, dynamic> json) => ItemInUserModel(
         id: json['id'],
-        deposit: json['deposit'],
+        deposit: (json['deposit'] as num).toInt(),
         status: json['status'],
         productId: json['productId'],
         userPackageId: json['userPackageId'],
-        dateGive: DateTime.parse(json['dateGive']),
-        dateReceive: DateTime.parse(json['dateReceive']),
-        tornMoney: json['tornMoney'],
+        dateGive: json['dateGive'] != null ? DateTime.parse(json['dateGive']) : DateTime.now(),
+        dateReceive: json['dateReceive'] != null ? DateTime.parse(json['dateReceive']) : DateTime.now(),
+        tornMoney: (json['tornMoney'] as num).toInt(),
         quantity: json['quantity'],
       );
 

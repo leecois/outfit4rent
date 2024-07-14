@@ -11,7 +11,8 @@ import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/features/personalization/screens/address/address_screen.dart';
-import 'package:outfit4rent/features/personalization/screens/my_wardrobe/my_wardrobe_screen.dart';
+import 'package:outfit4rent/features/personalization/screens/profile/my_wardrobe_screen.dart';
+import 'package:outfit4rent/features/personalization/screens/profile/order_status_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/profile_screen.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
@@ -25,55 +26,46 @@ class SettingScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            //Todo: Header
             TPrimaryHeaderContainer(
               child: Column(
                 children: [
-                  //Todo: Appbar
                   TAppBar(title: Text('Account', style: Theme.of(context).textTheme.headlineMedium!.apply(color: Theme.of(context).colorScheme.primary))),
-
-                  //Todo: User Profile Card
                   TUserProfileTitle(onTap: () => Get.to(() => const ProfileScreen())),
                   const SizedBox(height: TSizes.spaceBtwSections),
-                  //Todo: Profile Card
                 ],
               ),
             ),
-            //Todo: Body
             Padding(
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
-                  TSettingMenuTitle(icon: Iconsax.ghost_outline, title: "My Wardrobe", subtitle: "Manage your wardrobe", onTap: () => Get.to(() => const MyWardrobeScreen())),
                   TSettingMenuTitle(
-                      icon: Iconsax.wallet_2_outline, title: "Wallet", subtitle: "\$${controller.user.value.moneyInWallet}", onTap: () => Get.to(() => const UserAddressScreen())),
+                      icon: Iconsax.ghost_outline, title: "My Wardrobe", subtitle: "Manage your rented and owned items", onTap: () => Get.to(() => const MyWardrobeScreen())),
+                  Obx(
+                    () => TSettingMenuTitle(
+                      icon: Iconsax.wallet_3_outline,
+                      title: "Wallet",
+                      subtitle: "Balance: \$${controller.user.value.moneyInWallet ?? 0}",
+                      onTap: () => Get.to(() => const UserAddressScreen()),
+                    ),
+                  ),
                   const SizedBox(height: TSizes.spaceBtwItems),
-
-                  //Todo: My Orders
                   const TSectionHeading(title: 'My Orders', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-
                   TSettingMenuTitle(
-                      icon: Iconsax.empty_wallet_remove_outline, title: "Unpaid", subtitle: "Manage your delivery addresses", onTap: () => Get.to(() => const UserAddressScreen())),
-                  TSettingMenuTitle(icon: Iconsax.wallet_2_outline, title: "Processing", subtitle: "View your balance and transactions", onTap: () {}),
-
-                  TSettingMenuTitle(icon: Iconsax.notification_bing_outline, title: "Review", subtitle: "Manage your notification preferences", onTap: () {}),
-                  TSettingMenuTitle(icon: Iconsax.lock_1_outline, title: "Returns", subtitle: "Manage your privacy settings", onTap: () {}),
-
-                  // Todo: Account Settings
+                      icon: Iconsax.close_circle_outline, title: "Canceled", subtitle: "View your canceled orders", onTap: () => Get.to(() => const OrderStatusScreen())),
+                  TSettingMenuTitle(
+                      icon: Iconsax.timer_1_outline, title: "Processing", subtitle: "Track your ongoing orders", onTap: () => Get.to(() => const OrderStatusScreen())),
+                  TSettingMenuTitle(icon: Iconsax.clock_outline, title: "Expired", subtitle: "View your expired rentals", onTap: () => Get.to(() => const OrderStatusScreen())),
+                  TSettingMenuTitle(icon: Iconsax.repeat_outline, title: "Returns", subtitle: "Manage your item returns", onTap: () {}),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   const TSectionHeading(title: 'Account Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  TSettingMenuTitle(
-                      icon: Iconsax.safe_home_outline, title: "My Addresses", subtitle: "Manage your delivery addresses", onTap: () => Get.to(() => const UserAddressScreen())),
-                  TSettingMenuTitle(icon: Iconsax.notification_bing_outline, title: "Notifications", subtitle: "Manage your notification preferences", onTap: () {}),
-                  TSettingMenuTitle(icon: Iconsax.lock_1_outline, title: "Account Privacy", subtitle: "Manage your privacy settings", onTap: () {}),
-
-                  // Todo: App Settings
+                  TSettingMenuTitle(icon: Iconsax.notification_outline, title: "Notifications", subtitle: "Manage your notification preferences", onTap: () {}),
+                  TSettingMenuTitle(icon: Iconsax.security_outline, title: "Account Privacy", subtitle: "Manage your privacy settings", onTap: () {}),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   const TSectionHeading(title: 'App Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  //Todo: Dark mode Setting
                   GridView.count(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -97,8 +89,6 @@ class SettingScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  //Todo: Logout Button
-
                   const SizedBox(height: TSizes.spaceBtwSections),
                   SizedBox(
                     width: double.infinity,

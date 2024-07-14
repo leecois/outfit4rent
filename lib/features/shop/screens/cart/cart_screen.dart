@@ -17,12 +17,36 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = CartController.instance;
     return Scaffold(
-      appBar: TAppBar(showBackArrow: true, title: Text('Cart', style: Theme.of(context).textTheme.headlineSmall)),
+      appBar: TAppBar(
+        showBackArrow: true,
+        title: Text('Cart', style: Theme.of(context).textTheme.headlineSmall),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_outline),
+            onPressed: () {
+              Get.defaultDialog(
+                contentPadding: const EdgeInsets.all(TSizes.md),
+                title: 'Clear Cart',
+                middleText: 'Are you sure you want to clear your cart?',
+                confirm: ElevatedButton(
+                  onPressed: () async => {controller.clearCart(), Get.back()},
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red, side: const BorderSide(color: Colors.red)),
+                  child: const Padding(padding: EdgeInsets.symmetric(horizontal: TSizes.lg), child: Text('Delete')),
+                ),
+                cancel: ElevatedButton(
+                  onPressed: () => Navigator.of(Get.overlayContext!).pop(),
+                  child: const Text('Cancel'),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
       body: Obx(() {
         final emptyWidget = TAnimationLoaderWidget(
           text: 'Whoops! Your cart is empty',
           animation: TImages.animation7,
-          showAction: false,
+          showAction: true,
           actionText: 'Let\'s shop',
           onActionPressed: () => Get.off(() => const NavigationMenu()),
         );
@@ -34,24 +58,25 @@ class CartScreen extends StatelessWidget {
             children: [
               const TCartPackageSection(),
               const SizedBox(height: TSizes.spaceBtwSections),
-              if (controller.cartItems.isEmpty) emptyWidget else const Expanded(child: TCartItems()),
+              if (controller.cartItems.isEmpty) Expanded(child: emptyWidget) else const Expanded(child: TCartItems()),
             ],
           ),
         );
       }),
-      bottomNavigationBar: controller.cartItems.isEmpty
-          ? null
-          : Padding(
-              padding: const EdgeInsets.all(TSizes.defaultSpace),
-              child: Obx(() {
-                final totalPrice = controller.totalCartPrice.value;
-                final canCheckout = controller.selectedPackage.value != null && controller.cartItems.isNotEmpty;
-                return ElevatedButton(
-                  onPressed: canCheckout ? () => Get.to(() => const CheckoutScreen()) : null,
-                  child: Text('Checkout \$$totalPrice'),
-                );
-              }),
-            ),
+      bottomNavigationBar: Obx(() {
+        if (controller.cartItems.isEmpty) {
+          return const SizedBox.shrink();
+        }
+        final totalPrice = controller.totalCartPrice.value;
+        final canCheckout = controller.selectedPackage.value != null && controller.cartItems.isNotEmpty;
+        return Padding(
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
+          child: ElevatedButton(
+            onPressed: canCheckout ? () => Get.to(() => const CheckoutScreen()) : null,
+            child: Text('Checkout \$$totalPrice'),
+          ),
+        );
+      }),
     );
   }
 }

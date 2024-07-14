@@ -12,7 +12,7 @@ class TBrandTitleWithVerifiedIcon extends StatelessWidget {
     this.maxLines = 1,
     this.textColor,
     this.iconColor = TColors.primary,
-    this.textAlign = TextAlign.center,
+    this.textAlign = TextAlign.start,
     this.brandTextSize = TextSizes.small,
   });
 
@@ -27,12 +27,14 @@ class TBrandTitleWithVerifiedIcon extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        TBrandTitleText(
-          title: title,
-          color: textColor,
-          maxLines: maxLines,
-          textAlign: textAlign,
-          brandTextSize: brandTextSize,
+        Expanded(
+          child: TBrandTitleText(
+            title: title,
+            color: textColor,
+            maxLines: maxLines,
+            textAlign: textAlign,
+            brandTextSize: brandTextSize,
+          ),
         ),
         const SizedBox(width: TSizes.xs),
         const Icon(Iconsax.verify_outline, color: TColors.info, size: TSizes.iconXs),

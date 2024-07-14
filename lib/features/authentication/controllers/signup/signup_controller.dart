@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
@@ -77,6 +78,12 @@ class SignupController extends GetxController {
       //Todo: Save User Record
       final userRepository = Get.put(UserRepository());
       await userRepository.updateUserDetail(newUser);
+
+      // Fetch and save device token
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await userController.saveDeviceToken(fcmToken);
+      }
 
       TFullScreenLoader.stopLoading();
 

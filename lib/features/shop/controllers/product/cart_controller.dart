@@ -6,6 +6,7 @@ import 'package:outfit4rent/features/shop/models/category_package_model.dart';
 import 'package:outfit4rent/features/shop/models/package_model.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/features/shop/screens/package/package_screen.dart';
+import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 
@@ -20,7 +21,7 @@ class CartController extends GetxController {
   final RxInt productQuantityInCart = 0.obs;
   final RxList<CartItemModel> cartItems = <CartItemModel>[].obs;
   final RxBool isLoading = false.obs;
-  final Rx<CartItemModel?> selectedPackage = Rx<CartItemModel?>(CartItemModel.empty());
+  final Rx<CartItemModel?> selectedPackage = Rx<CartItemModel?>(null);
   final RxMap<int, int> categoryLimits = <int, int>{}.obs;
 
   CartController() {
@@ -117,12 +118,38 @@ class CartController extends GetxController {
     });
   }
 
+  bool isNewPackage(PackageModel package) {
+    return selectedPackage.value == null || selectedPackage.value!.packageId != package.id.toString();
+  }
+
   // Add to cart for package
   void addPackageToCart(PackageModel package) {
-    // Remove any existing package in the cart
-    selectedPackage.value = convertToCartItemFromPackage(package);
+    final isDarkMode = THelperFunctions.isDarkMode(Get.context!);
+    if (isNewPackage(package)) {
+      Get.defaultDialog(
+        title: 'Change Package',
+        middleText: 'Changing the package will remove all products from your cart. Do you want to continue?',
+        textConfirm: 'Yes',
+        textCancel: 'No',
+        confirmTextColor: isDarkMode ? Colors.black : Colors.white,
+        cancelTextColor: isDarkMode ? Colors.white : Colors.black,
+        buttonColor: isDarkMode ? TColors.white : TColors.primary,
+        onConfirm: () {
+          _addNewPackage(package);
+          Get.back();
+        },
+      );
+    } else {
+      _addNewPackage(package);
+    }
+  }
 
-    // Update cart summary
+  void _addNewPackage(PackageModel package) {
+    clearAllProducts();
+    cartItems.removeWhere((item) => item.packageId.isNotEmpty);
+    selectedPackage.value = convertToCartItemFromPackage(package);
+    cartItems.add(selectedPackage.value!);
+    productQuantityInCart.value = 0;
     updateCart();
     TLoaders.customToast(message: 'Package Added to Cart');
   }
@@ -233,23 +260,49 @@ class CartController extends GetxController {
     updateCart();
   }
 
+  void clearAllProducts() {
+    cartItems.removeWhere((item) => item.packageId.isEmpty);
+    updateCart();
+  }
+
   void addOneToCart(CartItemModel item) {
     int index = cartItems.indexOf(item);
-    if (index != -1) {
-      cartItems[index] = cartItems[index].copyWith(
+    if (index != -1 && item.createItems.isNotEmpty) {
+      CartItemModel updatedItem = cartItems[index].copyWith(
         createItems: cartItems[index].createItems.map((createItem) {
-          int currentTotalQuantity = getTotalProductQuantity() - createItem.quantity;
-          int packageLimit = selectedPackage.value!.numOfProduct;
-          if (currentTotalQuantity + createItem.quantity + 1 > packageLimit) {
-            TLoaders.customToast(message: 'Package limit exceeded');
-            return createItem;
-          }
           if (createItem.productId == item.createItems.first.productId) {
+            // Check category limit
+            CategoryPackageModel? categoryPackage =
+                selectedPackage.value?.categoryPackages.firstWhere((cp) => cp.categoryId == createItem.idCategory, orElse: () => CategoryPackageModel.empty());
+
+            if (categoryPackage != null) {
+              int currentCategoryQuantity = getCurrentCategoryQuantity(createItem.idCategory, excludeProductId: createItem.productId);
+              int newTotalQuantity = currentCategoryQuantity + createItem.quantity + 1;
+
+              if (newTotalQuantity > categoryPackage.maxAvailableQuantity) {
+                TLoaders.warningSnackBar(
+                  title: 'Category Limit Exceeded',
+                  message: 'You can only add up to ${categoryPackage.maxAvailableQuantity} items from this category.',
+                );
+                return createItem;
+              }
+            }
+
+            // Check package limit
+            int currentTotalQuantity = getTotalProductQuantity();
+            int packageLimit = selectedPackage.value!.numOfProduct;
+            if (currentTotalQuantity + 1 > packageLimit) {
+              TLoaders.customToast(message: 'Package limit exceeded');
+              return createItem;
+            }
+
             return createItem.copyWith(quantity: createItem.quantity + 1);
           }
           return createItem;
         }).toList(),
       );
+
+      cartItems[index] = updatedItem;
       updateCart();
     }
   }
@@ -287,7 +340,6 @@ class CartController extends GetxController {
       ),
       backgroundColor: isDarkMode ? Colors.grey[800] : Colors.white,
       onConfirm: () {
-        // Double-check the index before removing the item
         if (index >= 0 && index < cartItems.length) {
           cartItems[index] = cartItems[index].copyWith(
             createItems: cartItems[index].createItems.where((createItem) => createItem.productId != item.createItems.first.productId).toList(),
@@ -303,7 +355,7 @@ class CartController extends GetxController {
       onCancel: () {},
       confirmTextColor: isDarkMode ? Colors.black : Colors.white,
       cancelTextColor: isDarkMode ? Colors.white : Colors.black,
-      buttonColor: isDarkMode ? Colors.tealAccent : Colors.teal,
+      buttonColor: isDarkMode ? TColors.white : TColors.primary,
       textConfirm: 'Remove',
       textCancel: 'Cancel',
       radius: 10,

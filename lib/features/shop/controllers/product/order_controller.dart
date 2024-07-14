@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
 import 'package:outfit4rent/common/widgets/success/success_screen.dart';
 import 'package:outfit4rent/data/repositories/orders/order_repository.dart';
+import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/features/shop/controllers/product/cart_controller.dart';
 import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
 import 'package:outfit4rent/features/shop/models/order_model.dart';
@@ -16,6 +17,7 @@ class OrderController extends GetxController {
   static OrderController get instance => Get.find();
 
   final cartController = CartController.instance;
+  final userController = Get.put(UserController());
   final orderRepository = Get.put(OrderRepository());
   final productController = Get.put(ProductController());
 
@@ -39,19 +41,10 @@ class OrderController extends GetxController {
       }
       final orders = await orderRepository.fetchUserOrders(customerId);
       userOrders.assignAll(orders);
-      await _fetchProductDetails();
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Error', message: 'Failed to fetch orders: $e');
     } finally {
       isLoading.value = false;
-    }
-  }
-
-  Future<void> _fetchProductDetails() async {
-    for (var order in userOrders) {
-      for (var item in order.itemInUsers) {
-        await productController.fetchProductDetail(item.productId);
-      }
     }
   }
 
@@ -74,9 +67,21 @@ class OrderController extends GetxController {
       final order = _createOrderRequestModel(dateFrom, receiverName, receiverPhone, receiverAddress, walletId);
 
       await orderRepository.saveOrder(customerId, packageId, order);
+      await _updateUserWalletBalance(customerId);
       _handleOrderSuccess();
     } catch (e) {
       _handleError('Failed to place order', e);
+    }
+  }
+
+  Future<void> _updateUserWalletBalance(int customerId) async {
+    try {
+      await userController.fetchUserRecord();
+    } catch (e) {
+      TLoaders.warningSnackBar(
+        title: 'Wallet Update',
+        message: 'Your wallet balance may not be up to date. Please refresh the app.',
+      );
     }
   }
 
@@ -143,6 +148,6 @@ class OrderController extends GetxController {
 
   void _handleError(String message, dynamic error) {
     TLoaders.errorSnackBar(title: message, message: error.toString());
-    throw Exception('$message: $error');
+    TFullScreenLoader.stopLoading();
   }
 }

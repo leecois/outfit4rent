@@ -27,7 +27,7 @@ class TBillingPaymentSection extends StatelessWidget {
               : Row(
                   children: [
                     TRoundedContainer(
-                      width: 60,
+                      width: 40,
                       height: 35,
                       backgroundColor: dark ? TColors.light : TColors.white,
                       padding: const EdgeInsets.all(TSizes.sm),
@@ -37,9 +37,24 @@ class TBillingPaymentSection extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: TSizes.spaceBtwItems / 2),
-                    Text(
-                      controller.selectedPaymentMethod.value.walletName,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            controller.selectedPaymentMethod.value.walletName,
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          ),
+                          if (controller.selectedPaymentMethod.value.walletName == "Outfit4rent")
+                            Obx(() => Text(
+                                  'Balance: \$${controller.userController.user.value.moneyInWallet ?? 0}',
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        color: TColors.primary,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                )),
+                        ],
+                      ),
                     ),
                   ],
                 ),

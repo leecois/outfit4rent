@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
@@ -58,10 +59,16 @@ class LoginController extends GetxController {
       final currentUserID = await AuthenticationRepository.instance.verifyToken(token!);
 
       // Save currentUser ID to TLocalStorage and initialize
-      await TLocalStorage.init(currentUserID.toString());
+
       await TLocalStorage.instance().saveData('currentUser', currentUserID);
 
       await userController.fetchUserRecord();
+
+      // Fetch and save device token
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await userController.saveDeviceToken(fcmToken);
+      }
 
       // Remove loading
       TFullScreenLoader.stopLoading();
@@ -95,11 +102,17 @@ class LoginController extends GetxController {
       final currentUserID = await AuthenticationRepository.instance.verifyToken(token!);
 
       // Save currentUser ID to TLocalStorage and initialize
-      await TLocalStorage.init(currentUserID.toString());
+
       await TLocalStorage.instance().saveData('currentUser', currentUserID);
 
       // Save user record
       await userController.saveUserRecord(userCredentials);
+
+      // Fetch and save device token
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await userController.saveDeviceToken(fcmToken);
+      }
 
       // Remove loading
       TFullScreenLoader.stopLoading();
@@ -133,11 +146,17 @@ class LoginController extends GetxController {
       final currentUserID = await AuthenticationRepository.instance.verifyToken(token!);
 
       // Save currentUser ID to TLocalStorage and initialize
-      await TLocalStorage.init(currentUserID.toString());
+
       await TLocalStorage.instance().saveData('currentUser', currentUserID);
 
       // Save user record
       await userController.saveUserRecord(userCredentials);
+
+      // Fetch and save device token
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken != null) {
+        await userController.saveDeviceToken(fcmToken);
+      }
 
       // Remove loading
       TFullScreenLoader.stopLoading();

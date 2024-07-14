@@ -4,6 +4,7 @@ import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/brands/brand_card.dart';
 import 'package:outfit4rent/common/widgets/layouts/grid_layout.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/features/shop/controllers/brand_controller.dart';
 import 'package:outfit4rent/features/shop/screens/brand/brand_products_screen.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
@@ -12,6 +13,7 @@ class AllBrandsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final brandController = BrandController.instance;
     return Scaffold(
       appBar: const TAppBar(title: Text('Brand'), showBackArrow: true),
       body: SingleChildScrollView(
@@ -25,11 +27,12 @@ class AllBrandsScreen extends StatelessWidget {
 
               //Todo: Brands List
               TGridLayout(
-                itemCount: 10,
+                itemCount: brandController.allBrands.length,
                 mainAxisExtent: 80,
                 itemBuilder: (context, index) => TBrandCard(
                   showBorder: true,
-                  onTap: () => Get.to(() => const BrandProductsScreen()),
+                  onTap: () => Get.to(() => BrandProductsScreen(brand: brandController.allBrands[index])),
+                  brand: brandController.allBrands[index],
                 ),
               ),
             ],

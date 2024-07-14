@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:outfit4rent/common/widgets/brands/brand_card.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
+import 'package:outfit4rent/features/shop/models/brand_model.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/helpers/helper_functions.dart';
@@ -23,7 +24,10 @@ class TBrandShowcase extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
       child: Column(
         children: [
-          const TBrandCard(showBorder: false),
+          TBrandCard(
+            showBorder: false,
+            brand: BrandModel.empty(),
+          ),
           const SizedBox(height: TSizes.spaceBtwItems),
           Row(
             children: images.map((image) => brandTopProductImageWidget(image, context)).toList(),

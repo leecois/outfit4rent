@@ -5,7 +5,7 @@ class UserModel {
   String phone;
   String picture;
   String? address;
-  final int? moneyInWallet;
+  int? moneyInWallet;
   final int status;
 
   UserModel({
@@ -15,7 +15,7 @@ class UserModel {
     required this.phone,
     required this.picture,
     this.address,
-    this.moneyInWallet,
+    this.moneyInWallet = 0,
     required this.status,
   });
 

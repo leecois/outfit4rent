@@ -31,7 +31,7 @@ class TCartItems extends StatelessWidget {
             children: [
               TCartItem(cartItem: item),
               if (showAddRemoveButton) const SizedBox(height: TSizes.spaceBtwItems),
-              if (showAddRemoveButton)
+              if (showAddRemoveButton && item.createItems.isNotEmpty)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

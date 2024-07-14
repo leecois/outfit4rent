@@ -6,6 +6,7 @@ import 'package:outfit4rent/features/personalization/controllers/user_controller
 import 'package:outfit4rent/features/personalization/screens/profile/profile_screen.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/helpers/network_manager.dart';
+import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
 
 class UpdateNameController extends GetxController {
@@ -13,7 +14,7 @@ class UpdateNameController extends GetxController {
 
   final fullName = TextEditingController();
   final userController = UserController.instance;
-  final userRepository = Get.put(UserRepository());
+  final _userRepository = Get.put(UserRepository());
   GlobalKey<FormState> updateUserNameFormKey = GlobalKey<FormState>();
 
   @override
@@ -45,7 +46,8 @@ class UpdateNameController extends GetxController {
 
       //Todo: Update Full Name
       Map<String, dynamic> name = {'FullName': fullName.text.trim()};
-      await userRepository.updateSingleField(name);
+      final userId = TLocalStorage.instance().readData<int>('currentUser');
+      await _userRepository.updateUserName(userId!, name['FullName']);
 
       //Todo: Update Rx value
       userController.user.value.name = fullName.text.trim();

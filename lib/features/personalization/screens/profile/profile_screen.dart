@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/images/circular_image.dart';
 import 'package:outfit4rent/common/widgets/shimmer/shimmer_effect.dart';
@@ -58,7 +57,6 @@ class ProfileScreen extends StatelessWidget {
                 return Column(
                   children: [
                     TProfileMenu(title: 'Name', value: controller.user.value.name, onPressed: () => Get.to(() => const ChangeName())),
-                    TProfileMenu(title: 'Username', value: controller.user.value.name, onPressed: () {}),
                   ],
                 );
               }),
@@ -74,7 +72,6 @@ class ProfileScreen extends StatelessWidget {
               Obx(() {
                 return Column(
                   children: [
-                    TProfileMenu(title: 'User ID', value: controller.user.value.id.toString(), icon: Iconsax.copy_outline, onPressed: () {}),
                     TProfileMenu(title: 'Email', value: controller.user.value.email, onPressed: () {}),
                     TProfileMenu(title: 'Phone', value: controller.user.value.phone, onPressed: () {}),
                     TProfileMenu(title: 'Gender', value: 'Female', onPressed: () {}),
@@ -86,13 +83,6 @@ class ProfileScreen extends StatelessWidget {
 
               const Divider(),
               const SizedBox(height: TSizes.spaceBtwItems),
-
-              Center(
-                child: TextButton(
-                  onPressed: () => controller.deleteAccountWarningPopup(),
-                  child: const Text('Close Account', style: TextStyle(color: Colors.red)),
-                ),
-              )
             ],
           ),
         ),

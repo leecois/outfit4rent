@@ -33,7 +33,7 @@ class THomeCategories extends StatelessWidget {
               image: category.url,
               title: category.name,
               textColor: dark ? Colors.white : Colors.black,
-              onTap: () => Get.to(() => const SubCategoriesScreen()),
+              onTap: () => Get.to(() => SubCategoriesScreen(category: category)),
             );
           },
         ),

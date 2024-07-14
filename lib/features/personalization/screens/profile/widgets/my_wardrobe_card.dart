@@ -78,18 +78,7 @@ class MyWardrobeCard extends StatelessWidget {
     );
   }
 
-  String _getStatusString(int status) {
-    switch (status) {
-      case 0:
-        return 'Pending';
-      case 1:
-        return 'Confirmed';
-      case 2:
-        return 'In Progress';
-      case 3:
-        return 'Completed';
-      default:
-        return 'Unknown';
-    }
+  String _getStatusString(OrderStatus status) {
+    return status.name;
   }
 }

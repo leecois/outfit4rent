@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,9 +8,7 @@ import 'package:outfit4rent/data/repositories/authentication/authentication_repo
 import 'package:outfit4rent/data/repositories/user/user_repository.dart';
 import 'package:outfit4rent/features/authentication/screens/login/login_screen.dart';
 import 'package:outfit4rent/features/personalization/models/user_model.dart';
-import 'package:outfit4rent/features/personalization/screens/profile/widgets/re_authenticate_user_login_form.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
-import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/helpers/network_manager.dart';
 import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
@@ -31,6 +30,7 @@ class UserController extends GetxController {
   void onInit() {
     super.onInit();
     fetchUserRecord();
+    TLocalStorage.instance().readData<int>('currentUser');
   }
 
   // Fetch user record
@@ -38,15 +38,27 @@ class UserController extends GetxController {
     try {
       profileLoading.value = true;
       final userId = TLocalStorage.instance().readData<int>('currentUser');
-      if (userId != null) {
-        final userDetail = await _userRepository.fetchUserDetail(userId);
-        user.value = userDetail;
-        user.refresh(); // Ensure the UI updates
+
+      final userDetail = await _userRepository.fetchUserDetail(userId!);
+      if (kDebugMode) {
+        print('User Details: $userDetail');
       }
+      user.value = userDetail;
+      user.refresh();
     } catch (e) {
       user(UserModel.empty());
     } finally {
       profileLoading.value = false;
+    }
+  }
+
+  // Save device token
+  Future<void> saveDeviceToken(String token) async {
+    final userId = TLocalStorage.instance().readData<int>('currentUser');
+    if (userId != null) {
+      await _userRepository.saveDeviceToken(userId, token);
+    } else {
+      throw Exception('User ID not found');
     }
   }
 
@@ -84,58 +96,6 @@ class UserController extends GetxController {
     }
   }
 
-  // Delete Account warning
-  void deleteAccountWarningPopup() {
-    Get.defaultDialog(
-      contentPadding: const EdgeInsets.all(TSizes.md),
-      title: 'Delete Account',
-      middleText: 'Are you sure you want to delete your account?',
-      confirm: ElevatedButton(
-        onPressed: () async => deleteUserAccount(),
-        style: ElevatedButton.styleFrom(backgroundColor: Colors.red, side: const BorderSide(color: Colors.red)),
-        child: const Padding(padding: EdgeInsets.symmetric(horizontal: TSizes.lg), child: Text('Delete')),
-      ),
-      cancel: ElevatedButton(
-        onPressed: () => Navigator.of(Get.overlayContext!).pop(),
-        child: const Text('Cancel'),
-      ),
-    );
-  }
-
-  // Delete Account
-  void deleteUserAccount() async {
-    try {
-      TFullScreenLoader.openLoadingDialog('Processing', TImages.animation5);
-
-      // First re-authenticate user
-      final auth = AuthenticationRepository.instance;
-      final provider = auth.authUser!.providerData.map((e) => e.providerId).first;
-      if (provider.isNotEmpty) {
-        // Re-authenticate user
-        if (provider == 'google.com') {
-          await auth.signInWithGoogle();
-          await auth.deleteAccount();
-          TFullScreenLoader.stopLoading();
-          Get.offAll(() => const LoginScreen());
-        } else if (provider == 'facebook.com') {
-          await auth.signInWithFacebook();
-          await auth.deleteAccount();
-          TFullScreenLoader.stopLoading();
-          Get.offAll(() => const LoginScreen());
-        } else if (provider == 'password') {
-          TFullScreenLoader.stopLoading();
-          Get.to(() => const ReAuthenticateUserLoginForm());
-        }
-      }
-    } catch (e) {
-      TFullScreenLoader.stopLoading();
-      TLoaders.warningSnackBar(
-        title: 'Account not deleted',
-        message: 'An error occurred. Please try again later.',
-      );
-    }
-  }
-
   // Re-authenticate user
   Future<void> reAuthenticateEmailAndPasswordUser() async {
     try {
@@ -155,7 +115,6 @@ class UserController extends GetxController {
       }
 
       await AuthenticationRepository.instance.reAuthenticateWithEmailAndPassword(verifyEmail.text.trim(), verifyPassword.text.trim());
-      await AuthenticationRepository.instance.deleteAccount();
       TFullScreenLoader.stopLoading();
       Get.offAll(() => const LoginScreen());
     } catch (e) {
@@ -175,10 +134,14 @@ class UserController extends GetxController {
         imageUploading.value = true;
         // Upload image
         final imageUrl = await _userRepository.uploadImage('Users/Images/Profile/', image);
+        if (kDebugMode) {
+          print('User Picture: $imageUrl');
+        }
         // Update user profile picture
         user.update((val) {
           val?.picture = imageUrl;
         });
+        await _userRepository.updateUserPicture(user.value.id, imageUrl);
         TLoaders.successSnackBar(title: 'Profile Picture Updated', message: 'Your profile picture has been updated successfully');
       }
     } catch (e) {
