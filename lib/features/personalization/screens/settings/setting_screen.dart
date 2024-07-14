@@ -56,8 +56,8 @@ class SettingScreen extends StatelessWidget {
                       icon: Iconsax.close_circle_outline, title: "Canceled", subtitle: "View your canceled orders", onTap: () => Get.to(() => const OrderStatusScreen())),
                   TSettingMenuTitle(
                       icon: Iconsax.timer_1_outline, title: "Processing", subtitle: "Track your ongoing orders", onTap: () => Get.to(() => const OrderStatusScreen())),
+                  TSettingMenuTitle(icon: Iconsax.receipt_text_outline, title: "Renting", subtitle: "View your renting", onTap: () => Get.to(() => const OrderStatusScreen())),
                   TSettingMenuTitle(icon: Iconsax.clock_outline, title: "Expired", subtitle: "View your expired rentals", onTap: () => Get.to(() => const OrderStatusScreen())),
-                  TSettingMenuTitle(icon: Iconsax.repeat_outline, title: "Returns", subtitle: "Manage your item returns", onTap: () {}),
                   const SizedBox(height: TSizes.spaceBtwSections),
                   const TSectionHeading(title: 'Account Settings', showActionButton: false),
                   const SizedBox(height: TSizes.spaceBtwItems),

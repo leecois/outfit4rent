@@ -8,6 +8,7 @@ import 'package:outfit4rent/features/shop/controllers/product/order_controller.d
 import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
 import 'package:outfit4rent/features/shop/screens/package/package_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
+import 'package:outfit4rent/utils/constants/enums.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class MyWardrobeScreen extends StatelessWidget {
@@ -38,7 +39,8 @@ class MyWardrobeScreen extends StatelessWidget {
         if (orderController.isLoading.value || productController.isLoading.value) {
           return const TMyWardrobeShimmer();
         }
-        if (orderController.userOrders.isEmpty) {
+        final rentingOrders = orderController.userOrders.where((order) => order.status == OrderStatus.renting).toList();
+        if (rentingOrders.isEmpty) {
           return Center(
             child: Text(
               'No Data Found!',
@@ -48,9 +50,9 @@ class MyWardrobeScreen extends StatelessWidget {
         }
         return ListView.builder(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
-          itemCount: orderController.userOrders.length,
+          itemCount: rentingOrders.length,
           itemBuilder: (context, index) {
-            final order = orderController.userOrders[index];
+            final order = rentingOrders[index];
             return TMyWardrobeCardItem(order: order);
           },
         );

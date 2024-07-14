@@ -3,6 +3,9 @@
       They cannot be created inside a class.
 -- */
 
+import 'package:flutter/material.dart';
+import 'package:outfit4rent/utils/constants/colors.dart';
+
 /// Switch of Custom Brand-Text-Size Widget
 enum TextSizes { small, medium, large }
 
@@ -36,6 +39,21 @@ extension OrderStatusExtension on OrderStatus {
         return "Expired";
       default:
         return "";
+    }
+  }
+
+  Color get color {
+    switch (this) {
+      case OrderStatus.canceled:
+        return TColors.error;
+      case OrderStatus.processing:
+        return TColors.warning;
+      case OrderStatus.renting:
+        return TColors.info;
+      case OrderStatus.expired:
+        return TColors.primary;
+      default:
+        return TColors.black;
     }
   }
 }

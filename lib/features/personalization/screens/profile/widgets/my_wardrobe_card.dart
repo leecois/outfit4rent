@@ -37,7 +37,7 @@ class MyWardrobeCard extends StatelessWidget {
             Flexible(
               child: TCircularImage(
                 isNetworkImage: false,
-                image: TImages.jeweleryIcon,
+                image: TImages.lightAppLogo,
                 backgroundColor: Colors.transparent,
                 overlayColor: dark ? TColors.white : TColors.black,
               ),
@@ -65,9 +65,9 @@ class MyWardrobeCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                   Text(
-                    'Status: ${_getStatusString(order.status)}',
+                    'Status: ${order.status.name}',
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.labelMedium,
+                    style: Theme.of(context).textTheme.labelMedium!.apply(color: order.status.color),
                   ),
                 ],
               ),
@@ -76,9 +76,5 @@ class MyWardrobeCard extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _getStatusString(OrderStatus status) {
-    return status.name;
   }
 }

@@ -13,7 +13,7 @@ jobs:
   flutter_job:
     # The machine, we can also use windows-latest or ubuntu-latest
     # We are choosing macos-latest because we will be also building for iOS
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       # Clones the project on the machine
@@ -42,24 +42,24 @@ jobs:
       - name: Build Android APK
         run: flutter build apk
 
-      - name: Update CocoaPods
-        run: pod repo update
-        working-directory: ios
+      # - name: Update CocoaPods
+      #   run: pod repo update
+      #   working-directory: ios
 
-      - name: Build iOS IPA
-        run: flutter build ios --release --no-codesign
+      # - name: Build iOS IPA
+      #   run: flutter build ios --release --no-codesign
 
-      - name: Create Payload directory
-        run: mkdir Payload
-        working-directory: build/ios/iphoneos
+      # - name: Create Payload directory
+      #   run: mkdir Payload
+      #   working-directory: build/ios/iphoneos
 
-      - name: Move Runner.app to Payload
-        run: mv Runner.app/ Payload
-        working-directory: build/ios/iphoneos
+      # - name: Move Runner.app to Payload
+      #   run: mv Runner.app/ Payload
+      #   working-directory: build/ios/iphoneos
 
-      - name: Zip iOS output
-        run: zip -qq -r -9 outfit4rent.ipa Payload
-        working-directory: build/ios/iphoneos
+      # - name: Zip iOS output
+      #   run: zip -qq -r -9 outfit4rent.ipa Payload
+      #   working-directory: build/ios/iphoneos
 
       # Upload apk to Firebase distribution
       - name: Upload apk to Firebase distribution
@@ -83,6 +83,6 @@ jobs:
         uses: ncipollo/release-action@v1.14.0
         with:
           artifacts: "build/app/outputs/apk/release/*,build/ios/iphoneos/outfit4rent.ipa"
-          tag: v1.0.2
+          tag: v1.0.3
           token: ${{ secrets.TOKEN }}
           allowUpdates: true
