@@ -10,7 +10,7 @@ import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
 
 class LoginController extends GetxController {
   static LoginController get instance => Get.find();
-  //? Variables
+  // Variables
   final rememberMe = false.obs;
   final hidePassword = true.obs;
 
@@ -27,25 +27,25 @@ class LoginController extends GetxController {
     super.onInit();
   }
 
-  //Todo: Email and Password Sign In
+  // Email and Password Sign In
   Future<void> emailAndPasswordSignIn() async {
     try {
-      //start loading
+      // Start loading
       TFullScreenLoader.openLoadingDialog('Logging you in...', TImages.animation5);
 
-      //Todo: Check internet connection
+      // Check internet connection
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TFullScreenLoader.stopLoading();
         return;
       }
-      //Todo: Validate form
+      // Validate form
       if (!loginFormKey.currentState!.validate()) {
         TFullScreenLoader.stopLoading();
         return;
       }
 
-      //Todo: Save data if remember me is checked
+      // Save data if remember me is checked
       if (rememberMe.value) {
         TLocalStorage.instance().saveData('REMEMBER_ME_EMAIL', email.text.trim());
         TLocalStorage.instance().saveData('REMEMBER_ME_PASSWORD', password.text.trim());
@@ -53,17 +53,20 @@ class LoginController extends GetxController {
 
       final userCredential = await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
 
-      //Todo: Verify token with REST API
+      // Verify token with REST API
       final token = await userCredential.user?.getIdToken();
-      final response = await AuthenticationRepository.instance.verifyToken(token!);
+      final currentUserID = await AuthenticationRepository.instance.verifyToken(token!);
 
-      await TLocalStorage.instance().saveData('currentUser', response);
+      // Save currentUser ID to TLocalStorage and initialize
+      await TLocalStorage.init(currentUserID.toString());
+      await TLocalStorage.instance().saveData('currentUser', currentUserID);
+
       await userController.fetchUserRecord();
 
-      //Todo: Remove loading
+      // Remove loading
       TFullScreenLoader.stopLoading();
 
-      //Todo: Redirect
+      // Redirect
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
       TFullScreenLoader.stopLoading();
@@ -71,35 +74,37 @@ class LoginController extends GetxController {
     }
   }
 
-  //Todo: Google Sign In
+  // Google Sign In
   Future<void> googleSignIn() async {
     try {
-      //start loading
+      // Start loading
       TFullScreenLoader.openLoadingDialog('Logging you in...', TImages.animation5);
 
-      //Todo: Check internet connection
+      // Check internet connection
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TFullScreenLoader.stopLoading();
         return;
       }
 
-      //Todo: Sign in with google
+      // Sign in with google
       final userCredentials = await AuthenticationRepository.instance.signInWithGoogle();
 
-      //Todo: Verify token with REST API
+      // Verify token with REST API
       final token = await userCredentials?.user?.getIdToken();
-      final response = await AuthenticationRepository.instance.verifyToken(token!);
+      final currentUserID = await AuthenticationRepository.instance.verifyToken(token!);
 
-      await TLocalStorage.instance().saveData('currentUser', response);
+      // Save currentUser ID to TLocalStorage and initialize
+      await TLocalStorage.init(currentUserID.toString());
+      await TLocalStorage.instance().saveData('currentUser', currentUserID);
 
-      //Todo: Save user record
+      // Save user record
       await userController.saveUserRecord(userCredentials);
 
-      //Todo: Remove loading
+      // Remove loading
       TFullScreenLoader.stopLoading();
 
-      //Todo: Redirect
+      // Redirect
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
       TFullScreenLoader.stopLoading();
@@ -107,35 +112,37 @@ class LoginController extends GetxController {
     }
   }
 
-  //Todo: Facebook Sign In
+  // Facebook Sign In
   Future<void> facebookSignIn() async {
     try {
-      //start loading
+      // Start loading
       TFullScreenLoader.openLoadingDialog('Logging you in...', TImages.animation5);
 
-      //Todo: Check internet connection
+      // Check internet connection
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TFullScreenLoader.stopLoading();
         return;
       }
 
-      //Todo: Sign in with facebook
+      // Sign in with facebook
       final userCredentials = await AuthenticationRepository.instance.signInWithFacebook();
 
-      //Todo: Verify token with REST API
+      // Verify token with REST API
       final token = await userCredentials?.user?.getIdToken();
-      final response = await AuthenticationRepository.instance.verifyToken(token!);
+      final currentUserID = await AuthenticationRepository.instance.verifyToken(token!);
 
-      await TLocalStorage.instance().saveData('currentUser', response);
+      // Save currentUser ID to TLocalStorage and initialize
+      await TLocalStorage.init(currentUserID.toString());
+      await TLocalStorage.instance().saveData('currentUser', currentUserID);
 
-      //Todo: Save user record
+      // Save user record
       await userController.saveUserRecord(userCredentials);
 
-      //Todo: Remove loading
+      // Remove loading
       TFullScreenLoader.stopLoading();
 
-      //Todo: Redirect
+      // Redirect
       AuthenticationRepository.instance.screenRedirect();
     } catch (e) {
       TFullScreenLoader.stopLoading();

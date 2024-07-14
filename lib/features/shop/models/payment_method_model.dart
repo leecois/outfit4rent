@@ -1,3 +1,5 @@
+import 'package:outfit4rent/utils/constants/image_strings.dart';
+
 class PaymentMethodModel {
   final int? id;
   final String image;
@@ -31,7 +33,7 @@ class PaymentMethodModel {
       walletCode: json['walletCode'],
       walletName: json['walletName'],
       status: json['status'],
-      image: json['image'],
+      image: TImages.logoIconDark,
       customerId: json['customerId'],
     );
   }

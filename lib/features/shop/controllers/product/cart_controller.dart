@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/loaders/loaders.dart';
 import 'package:outfit4rent/features/shop/models/cart_item_model.dart';
+import 'package:outfit4rent/features/shop/models/category_package_model.dart';
 import 'package:outfit4rent/features/shop/models/package_model.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
+import 'package:outfit4rent/features/shop/screens/package/package_screen.dart';
 import 'package:outfit4rent/utils/helpers/helper_functions.dart';
 import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 
@@ -18,7 +20,8 @@ class CartController extends GetxController {
   final RxInt productQuantityInCart = 0.obs;
   final RxList<CartItemModel> cartItems = <CartItemModel>[].obs;
   final RxBool isLoading = false.obs;
-  final Rx<CartItemModel?> selectedPackage = Rx<CartItemModel?>(null);
+  final Rx<CartItemModel?> selectedPackage = Rx<CartItemModel?>(CartItemModel.empty());
+  final RxMap<int, int> categoryLimits = <int, int>{}.obs;
 
   CartController() {
     loadCartItems();
@@ -27,7 +30,14 @@ class CartController extends GetxController {
   // Add to cart for product
   void addToCart(ProductModel product) {
     if (selectedPackage.value == null) {
-      TLoaders.warningSnackBar(title: 'Warning', message: 'Please select a package first');
+      TLoaders.navigateSnackBar(
+        title: 'Package Required',
+        message: 'Please select a package before adding products to your cart.',
+        buttonText: 'Select Package',
+        onButtonPressed: () {
+          Get.to(() => const PackageScreen());
+        },
+      );
       return;
     }
 
@@ -41,6 +51,24 @@ class CartController extends GetxController {
     if (product.quantity < 1) {
       TLoaders.warningSnackBar(title: 'Warning', message: 'Product Out of Stock');
       return;
+    }
+
+    // Check category limit
+    CategoryPackageModel? categoryPackage =
+        selectedPackage.value?.categoryPackages.firstWhere((cp) => cp.categoryId == product.idCategory, orElse: () => CategoryPackageModel.empty());
+
+    if (categoryPackage != null) {
+      int currentCategoryQuantity = getCurrentCategoryQuantity(product.idCategory, excludeProductId: product.id);
+
+      int newTotalQuantity = currentCategoryQuantity + productQuantityInCart.value;
+
+      if (newTotalQuantity > categoryPackage.maxAvailableQuantity) {
+        TLoaders.warningSnackBar(
+          title: 'Category Limit Exceeded',
+          message: 'You can only add up to ${categoryPackage.maxAvailableQuantity} items from the ${categoryPackage.category.name} category.',
+        );
+        return;
+      }
     }
 
     // Check if adding the product exceeds the package limit
@@ -74,6 +102,21 @@ class CartController extends GetxController {
     TLoaders.customToast(message: 'Product Added to Cart');
   }
 
+  int getCurrentCategoryQuantity(int categoryId, {int? excludeProductId, int excludeQuantity = 0}) {
+    return cartItems.fold(0, (sum, item) {
+      return sum +
+          item.createItems.where((createItem) {
+            if (createItem.idCategory == categoryId) {
+              if (excludeProductId != null && createItem.productId == excludeProductId) {
+                return false; // Exclude this product from the count
+              }
+              return true;
+            }
+            return false;
+          }).fold(0, (itemSum, createItem) => itemSum + createItem.quantity);
+    });
+  }
+
   // Add to cart for package
   void addPackageToCart(PackageModel package) {
     // Remove any existing package in the cart
@@ -102,8 +145,10 @@ class CartController extends GetxController {
           price: product.price,
           quantity: quantity,
           imageUrl: imageUrl,
+          idCategory: product.idCategory,
         )
       ],
+      categoryPackages: [],
     );
   }
 
@@ -114,8 +159,9 @@ class CartController extends GetxController {
       availableRentDays: package.availableRentDays,
       name: package.name,
       description: package.description,
-      numOfProduct: package.numOfProduct, // Set the package limit
-      createItems: [], // Packages may have their own logic for items
+      numOfProduct: package.numOfProduct,
+      createItems: [],
+      categoryPackages: package.categoryPackages ?? [],
     );
   }
 
@@ -155,7 +201,14 @@ class CartController extends GetxController {
   void loadCartItems() {
     final cartItemStrings = TLocalStorage.instance().readData<List<dynamic>>('cartItems');
     if (cartItemStrings != null) {
-      cartItems.assignAll(cartItemStrings.map((item) => CartItemModel.fromJson(item as Map<String, dynamic>)));
+      cartItems.assignAll(cartItemStrings.map((item) {
+        try {
+          return CartItemModel.fromJson(item as Map<String, dynamic>);
+        } catch (e) {
+          TLoaders.customToast(message: 'Error loading cart items');
+          return CartItemModel.empty();
+        }
+      }));
       updateCartTotals();
     }
   }
@@ -278,6 +331,7 @@ extension CartItemModelCopyWith on CartItemModel {
     String? description,
     int? numOfProduct,
     List<CreateItem>? createItems,
+    List<CategoryPackageModel>? categoryPackages,
   }) {
     return CartItemModel(
       packageId: packageId ?? this.packageId,
@@ -287,6 +341,7 @@ extension CartItemModelCopyWith on CartItemModel {
       description: description ?? this.description,
       numOfProduct: numOfProduct ?? this.numOfProduct,
       createItems: createItems ?? this.createItems,
+      categoryPackages: categoryPackages ?? this.categoryPackages,
     );
   }
 }
@@ -300,6 +355,7 @@ extension CreateItemCopyWith on CreateItem {
     int? price,
     int? quantity,
     String? imageUrl,
+    int? idCategory,
   }) {
     return CreateItem(
       productId: productId ?? this.productId,
@@ -309,6 +365,7 @@ extension CreateItemCopyWith on CreateItem {
       price: price ?? this.price,
       quantity: quantity ?? this.quantity,
       imageUrl: imageUrl ?? this.imageUrl,
+      idCategory: idCategory ?? this.idCategory,
     );
   }
 }

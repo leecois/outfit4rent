@@ -24,7 +24,6 @@ class TProductCardVertical extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
 
-    // Move this logic outside of the build method
     final networkImage = (product.images.isNotEmpty && product.images[0].url.isNotEmpty) ? product.images[0].url : '';
     final image = networkImage.isNotEmpty ? networkImage : TImages.productImage1;
 

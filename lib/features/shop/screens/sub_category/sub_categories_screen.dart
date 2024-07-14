@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/images/rounded_image.dart';
 import 'package:outfit4rent/common/widgets/products/product_cards/product_card_horizontal.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
@@ -11,6 +13,7 @@ class SubCategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final productController = Get.put(ProductController());
     return Scaffold(
       appBar: const TAppBar(title: Text('Gucci Shirts'), showBackArrow: true),
       body: SingleChildScrollView(
@@ -37,9 +40,11 @@ class SubCategoriesScreen extends StatelessWidget {
                       itemCount: 4,
                       scrollDirection: Axis.horizontal,
                       separatorBuilder: (context, index) => const SizedBox(width: TSizes.spaceBtwItems),
-                      itemBuilder: (context, index) => const SizedBox(
+                      itemBuilder: (context, index) => SizedBox(
                         width: 310, // Ensure the child has a constrained width
-                        child: TProductCardHorizontal(),
+                        child: TProductCardHorizontal(
+                          product: productController.allProducts[index],
+                        ),
                       ),
                     ),
                   ),

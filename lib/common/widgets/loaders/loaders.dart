@@ -68,4 +68,52 @@ class TLoaders {
       icon: const Icon(MingCute.close_line, color: TColors.white),
     );
   }
+
+  static void navigateSnackBar({
+    required String title,
+    required String message,
+    required String buttonText,
+    required VoidCallback onButtonPressed,
+    Duration duration = const Duration(seconds: 3),
+    Color backgroundColor = TColors.primary,
+    Color textColor = Colors.white,
+    IconData icon = MingCute.information_line,
+  }) {
+    Get.snackbar(
+      '',
+      '',
+      titleText: Text(
+        title,
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
+      ),
+      messageText: Row(
+        children: [
+          Expanded(
+            child: Text(
+              message,
+              style: TextStyle(fontSize: 14, color: textColor),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.closeCurrentSnackbar();
+              onButtonPressed();
+            },
+            child: Text(
+              buttonText,
+              style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+      isDismissible: true,
+      shouldIconPulse: true,
+      colorText: textColor,
+      backgroundColor: backgroundColor,
+      snackPosition: SnackPosition.BOTTOM,
+      duration: duration,
+      margin: const EdgeInsets.all(10),
+      icon: Icon(icon, color: textColor),
+    );
+  }
 }

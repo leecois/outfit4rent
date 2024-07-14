@@ -9,7 +9,8 @@ class OrderRepository extends GetxController {
   Future<List<OrderModel>> fetchUserOrders(int customerId) async {
     try {
       final response = await THttpHelper.get('orders/customers/$customerId');
-      return (response as List).map((e) => OrderModel.fromJson(e)).toList();
+      final List<dynamic> data = response['data'] as List<dynamic>;
+      return data.map((json) => OrderModel.fromJson(json)).toList();
     } catch (e) {
       throw Exception('Failed to fetch user orders: $e');
     }

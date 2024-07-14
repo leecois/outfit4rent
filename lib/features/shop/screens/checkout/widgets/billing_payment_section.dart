@@ -12,26 +12,37 @@ class TBillingPaymentSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CheckoutController());
+    final controller = CheckoutController.instance;
     final dark = THelperFunctions.isDarkMode(context);
     return Column(
       children: [
-        TSectionHeading(title: 'Payment Method', onPressed: () => controller.selectPaymentMethod(context)),
+        TSectionHeading(
+          title: 'Payment Method',
+          onPressed: () => controller.selectPaymentMethod(context),
+        ),
         const SizedBox(height: TSizes.spaceBtwItems / 2),
         Obx(
-          () => Row(
-            children: [
-              TRoundedContainer(
-                width: 60,
-                height: 35,
-                backgroundColor: dark ? TColors.light : TColors.white,
-                padding: const EdgeInsets.all(TSizes.sm),
-                child: Image(image: AssetImage(controller.selectedPaymentMethod.value.image), fit: BoxFit.contain),
-              ),
-              const SizedBox(width: TSizes.spaceBtwItems / 2),
-              Text(controller.selectedPaymentMethod.value.walletName, style: Theme.of(context).textTheme.bodyLarge),
-            ],
-          ),
+          () => controller.wallets.isEmpty
+              ? const Text('No payment methods available')
+              : Row(
+                  children: [
+                    TRoundedContainer(
+                      width: 60,
+                      height: 35,
+                      backgroundColor: dark ? TColors.light : TColors.white,
+                      padding: const EdgeInsets.all(TSizes.sm),
+                      child: Image(
+                        image: AssetImage(controller.selectedPaymentMethod.value.image),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    const SizedBox(width: TSizes.spaceBtwItems / 2),
+                    Text(
+                      controller.selectedPaymentMethod.value.walletName,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
         ),
       ],
     );

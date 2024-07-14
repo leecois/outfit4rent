@@ -19,7 +19,7 @@ class TPaymentTitle extends StatelessWidget {
     return ListTile(
       contentPadding: const EdgeInsets.all(0),
       onTap: () {
-        controller.selectedPaymentMethod.value = paymentMethod;
+        controller.updateSelectedPaymentMethod(paymentMethod);
         Get.back();
       },
       leading: TRoundedContainer(
@@ -27,7 +27,7 @@ class TPaymentTitle extends StatelessWidget {
         height: 40,
         backgroundColor: THelperFunctions.isDarkMode(context) ? TColors.light : TColors.white,
         padding: const EdgeInsets.all(TSizes.sm),
-        child: Image(image: AssetImage(paymentMethod.image), fit: BoxFit.contain),
+        child: paymentMethod.image.isNotEmpty ? Image(image: AssetImage(paymentMethod.image), fit: BoxFit.contain) : const Icon(Icons.wallet, color: TColors.primary),
       ),
       title: Text(paymentMethod.walletName),
       trailing: const Icon(Iconsax.arrow_right_2_outline),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:outfit4rent/common/widgets/images/circular_image.dart';
 import 'package:outfit4rent/common/widgets/texts/package_title_with_icon.dart';
+import 'package:outfit4rent/features/shop/models/order_model.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/enums.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
@@ -13,10 +15,12 @@ class MyWardrobeCard extends StatelessWidget {
     super.key,
     this.onTap,
     required this.showBorder,
+    required this.order,
   });
 
   final bool showBorder;
   final void Function()? onTap;
+  final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,7 @@ class MyWardrobeCard extends StatelessWidget {
         backgroundColor: Colors.transparent,
         child: Row(
           children: [
-            //Todo: Package Icons
+            // Package Icons
             Flexible(
               child: TCircularImage(
                 isNetworkImage: false,
@@ -40,18 +44,28 @@ class MyWardrobeCard extends StatelessWidget {
             ),
             const SizedBox(width: TSizes.spaceBtwItems / 2),
 
-            //Todo: Text
+            // Text
             Expanded(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TPackageTitleWithIcon(
-                    title: 'Vip Package',
+                  TPackageTitleWithIcon(
+                    title: order.packageName,
                     packageTextSize: TextSizes.large,
                   ),
                   Text(
-                    'Expiration: 12/12/2024',
+                    'From: ${DateFormat('dd/MM/yyyy').format(order.dateFrom)}',
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Text(
+                    'To: ${DateFormat('dd/MM/yyyy').format(order.dateTo)}',
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                  Text(
+                    'Status: ${_getStatusString(order.status)}',
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
@@ -62,5 +76,20 @@ class MyWardrobeCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getStatusString(int status) {
+    switch (status) {
+      case 0:
+        return 'Pending';
+      case 1:
+        return 'Confirmed';
+      case 2:
+        return 'In Progress';
+      case 3:
+        return 'Completed';
+      default:
+        return 'Unknown';
+    }
   }
 }

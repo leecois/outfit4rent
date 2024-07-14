@@ -9,6 +9,7 @@ import 'package:outfit4rent/common/widgets/list_title/setting_menu_title.dart';
 import 'package:outfit4rent/common/widgets/list_title/user_profile_title.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
+import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/features/personalization/screens/address/address_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/my_wardrobe/my_wardrobe_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/profile_screen.dart';
@@ -19,6 +20,7 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -43,7 +45,8 @@ class SettingScreen extends StatelessWidget {
               child: Column(
                 children: [
                   TSettingMenuTitle(icon: Iconsax.ghost_outline, title: "My Wardrobe", subtitle: "Manage your wardrobe", onTap: () => Get.to(() => const MyWardrobeScreen())),
-                  TSettingMenuTitle(icon: Iconsax.wallet_2_outline, title: "Wallet", subtitle: "\$999.00", onTap: () => Get.to(() => const UserAddressScreen())),
+                  TSettingMenuTitle(
+                      icon: Iconsax.wallet_2_outline, title: "Wallet", subtitle: "\$${controller.user.value.moneyInWallet}", onTap: () => Get.to(() => const UserAddressScreen())),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
                   //Todo: My Orders

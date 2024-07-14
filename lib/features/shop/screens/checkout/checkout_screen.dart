@@ -77,7 +77,7 @@ class CheckoutScreen extends StatelessWidget {
                   final receiverName = checkoutController.receiverName.text;
                   final receiverPhone = checkoutController.receiverPhone.text;
                   final receiverAddress = checkoutController.receiverAddress.text;
-                  const walletId = 1; // Replace with actual wallet ID logic
+                  final walletId = int.tryParse(checkoutController.walletId.text) ?? 0;
 
                   if (receiverName.isEmpty || receiverPhone.isEmpty || receiverAddress.isEmpty || walletId == 0) {
                     TLoaders.warningSnackBar(title: 'Incomplete Information', message: 'Please fill in all the required fields');

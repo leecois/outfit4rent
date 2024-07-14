@@ -39,11 +39,12 @@ class AuthenticationRepository extends GetxController {
   //? Redirects to the appropriate screen
   void screenRedirect() async {
     final user = _auth.currentUser;
+    final currentUserID = TLocalStorage.instance().readData<int>('currentUser');
 
     if (user != null) {
       if (user.emailVerified) {
         // Init user-specific storage
-        await TLocalStorage.init(user.uid);
+        await TLocalStorage.init(currentUserID.toString());
         // If user is logged in and email verified, redirect to navigation menu
         Get.offAll(() => const NavigationMenu());
       } else {
@@ -228,6 +229,7 @@ class AuthenticationRepository extends GetxController {
   Future<void> signOut() async {
     try {
       await _auth.signOut();
+      await TLocalStorage.instance().clearAll();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
