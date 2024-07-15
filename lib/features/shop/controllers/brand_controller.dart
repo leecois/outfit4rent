@@ -34,7 +34,7 @@ class BrandController extends GetxController {
     }
   }
 
-  // Get category name by ID
+  // Get brand name by ID
   String getBrandNameById(int id) {
     final brand = allBrands.firstWhere((brand) => brand.id == id, orElse: () => BrandModel.empty());
     return brand.name;

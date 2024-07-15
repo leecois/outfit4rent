@@ -10,12 +10,14 @@ class MyWardrobeController extends GetxController {
   final FavoriteRepository _favoriteRepository = Get.put(FavoriteRepository());
   final RxMap<int, bool> favorites = <int, bool>{}.obs;
   final RxList<ProductModel> favoriteProductsList = <ProductModel>[].obs;
+  final localStorage = TLocalStorage.instance;
 
-  final int? customerId = TLocalStorage.instance().readData<int>('currentUser');
+  int? customerId;
 
   @override
   void onInit() {
     super.onInit();
+    customerId = localStorage.readData<int>('currentUser');
     if (customerId != null) {
       initFavorites();
       loadFavoriteProducts();

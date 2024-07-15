@@ -23,6 +23,7 @@ class AuthenticationRepository extends GetxController {
   //? Variables
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
+  final localStorage = TLocalStorage.instance;
 
   //Todo: Get Authenticated User Data
   User? get authUser => _auth.currentUser;
@@ -227,7 +228,7 @@ class AuthenticationRepository extends GetxController {
   Future<void> signOut() async {
     try {
       await _auth.signOut();
-      await TLocalStorage.instance().clearAll();
+      await localStorage.clearAll();
       Get.offAll(() => const LoginScreen());
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;

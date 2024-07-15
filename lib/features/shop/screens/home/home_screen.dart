@@ -21,32 +21,33 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productController = Get.put(ProductController());
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            //!Header
+            // Header
             TPrimaryHeaderContainer(
               child: Column(
                 children: [
-                  //!AppBar
+                  // AppBar
                   const THomeAppBar(),
                   const SizedBox(height: TSizes.spaceBtwSections),
 
-                  //!Search
+                  // Search
                   TSearchContainer(
                     text: 'Search in Wardrobe',
                     onTap: () {},
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
 
-                  //!Categories
+                  // Categories
                   Padding(
                     padding: const EdgeInsets.only(left: TSizes.defaultSpace),
                     child: Column(
                       children: [
-                        //!Heading
+                        // Heading
                         TSectionHeading(
                           title: 'Popular Categories',
                           showActionButton: false,
@@ -54,7 +55,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: TSizes.spaceBtwItems),
 
-                        //!Categories
+                        // Categories
                         const THomeCategories()
                       ],
                     ),
@@ -63,18 +64,18 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            //!Body
+            // Body
             Padding(
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               child: Column(
                 children: [
                   TSectionHeading(title: 'Featured Packages', onPressed: () => Get.to(() => const PackageScreen())),
                   const SizedBox(height: TSizes.spaceBtwItems),
-                  //!Promo Slider
+                  // Promo Slider
                   const TPromoSlider(banners: [TImages.promoBanner1, TImages.promoBanner2, TImages.promoBanner1]),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
-                  //!Heading
+                  // Heading
                   TSectionHeading(
                     title: 'Popular Products',
                     onPressed: () => Get.to(
@@ -86,7 +87,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),
 
-                  //!Popular products
+                  // Popular products
                   Obx(() {
                     if (productController.isLoading.value) return const TVerticalProductShimmer();
                     if (productController.featuredProducts.isEmpty) {

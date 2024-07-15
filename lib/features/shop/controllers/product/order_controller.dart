@@ -10,6 +10,7 @@ import 'package:outfit4rent/features/shop/models/order_model.dart';
 import 'package:outfit4rent/features/shop/models/order_request_model.dart';
 import 'package:outfit4rent/navigation_menu.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
+import 'package:outfit4rent/utils/helpers/network_manager.dart';
 import 'package:outfit4rent/utils/local_storage/storage_utility.dart';
 import 'package:outfit4rent/utils/popups/full_screen_loader.dart';
 
@@ -20,6 +21,7 @@ class OrderController extends GetxController {
   final userController = Get.put(UserController());
   final orderRepository = Get.put(OrderRepository());
   final productController = Get.put(ProductController());
+  final localStorage = TLocalStorage.instance;
 
   RxList<OrderModel> userOrders = <OrderModel>[].obs;
   RxBool isLoading = false.obs;
@@ -62,6 +64,12 @@ class OrderController extends GetxController {
       _validateOrderInputs(dateFrom, receiverName, receiverPhone, receiverAddress, walletId);
 
       TFullScreenLoader.openLoadingDialog('Processing your order...', TImages.animation7);
+      //Todo: Check internet connection
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        TFullScreenLoader.stopLoading();
+        return;
+      }
 
       final packageId = _getSelectedPackageId();
       final order = _createOrderRequestModel(dateFrom, receiverName, receiverPhone, receiverAddress, walletId);
@@ -86,7 +94,7 @@ class OrderController extends GetxController {
   }
 
   int? _getCustomerId() {
-    return TLocalStorage.instance().readData<int>('currentUser');
+    return localStorage.readData<int>('currentUser');
   }
 
   int _getSelectedPackageId() {

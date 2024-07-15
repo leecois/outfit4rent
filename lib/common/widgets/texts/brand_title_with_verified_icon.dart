@@ -27,7 +27,7 @@ class TBrandTitleWithVerifiedIcon extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Expanded(
+        Flexible(
           child: TBrandTitleText(
             title: title,
             color: textColor,

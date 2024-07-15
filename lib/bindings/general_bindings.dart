@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/features/shop/controllers/product/cart_controller.dart';
 import 'package:outfit4rent/features/shop/controllers/product/checkout_controller.dart';
 import 'package:outfit4rent/features/shop/controllers/product/order_controller.dart';
@@ -8,6 +9,7 @@ class GeneralBindings extends Bindings {
   @override
   void dependencies() {
     Get.put(NetworkManager());
+    Get.put(UserController());
     Get.put(CheckoutController());
     Get.put(CartController());
     Get.put(OrderController());

@@ -17,6 +17,7 @@ class SignupController extends GetxController {
 
   //? Variables
   final userController = Get.put(UserController());
+  final localStorage = TLocalStorage.instance;
   final hidePassword = true.obs;
   final privacyPolicy = true.obs;
   final email = TextEditingController();
@@ -60,7 +61,7 @@ class SignupController extends GetxController {
       final token = await userCredential.user?.getIdToken();
       final response = await AuthenticationRepository.instance.verifyToken(token!);
 
-      await TLocalStorage.instance().saveData('currentUser', response);
+      await localStorage.saveData('currentUser', response);
       await userController.fetchUserRecord();
 
       //Todo: Save User Record

@@ -14,6 +14,7 @@ class UpdateNameController extends GetxController {
 
   final fullName = TextEditingController();
   final userController = UserController.instance;
+  final localStorage = TLocalStorage.instance;
   final _userRepository = Get.put(UserRepository());
   GlobalKey<FormState> updateUserNameFormKey = GlobalKey<FormState>();
 
@@ -46,7 +47,7 @@ class UpdateNameController extends GetxController {
 
       //Todo: Update Full Name
       Map<String, dynamic> name = {'FullName': fullName.text.trim()};
-      final userId = TLocalStorage.instance().readData<int>('currentUser');
+      final userId = localStorage.readData<int>('currentUser');
       await _userRepository.updateUserName(userId!, name['FullName']);
 
       //Todo: Update Rx value

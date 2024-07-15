@@ -19,6 +19,7 @@ class UserController extends GetxController {
   final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
 
+final localStorage = TLocalStorage.instance;
   final imageUploading = false.obs;
   final hidePassword = false.obs;
   final verifyEmail = TextEditingController();
@@ -30,14 +31,14 @@ class UserController extends GetxController {
   void onInit() {
     super.onInit();
     fetchUserRecord();
-    TLocalStorage.instance().readData<int>('currentUser');
+    localStorage.readData<int>('currentUser');
   }
 
   // Fetch user record
   Future<void> fetchUserRecord() async {
     try {
       profileLoading.value = true;
-      final userId = TLocalStorage.instance().readData<int>('currentUser');
+      final userId = localStorage.readData<int>('currentUser');
 
       final userDetail = await _userRepository.fetchUserDetail(userId!);
       if (kDebugMode) {
@@ -54,7 +55,7 @@ class UserController extends GetxController {
 
   // Save device token
   Future<void> saveDeviceToken(String token) async {
-    final userId = TLocalStorage.instance().readData<int>('currentUser');
+    final userId = localStorage.readData<int>('currentUser');
     if (userId != null) {
       await _userRepository.saveDeviceToken(userId, token);
     } else {
@@ -64,7 +65,7 @@ class UserController extends GetxController {
 
   // Save user Record from any registration provider
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
-    final userId = TLocalStorage.instance().readData<int>('currentUser');
+    final userId = localStorage.readData<int>('currentUser');
     try {
       // Refresher user record
       await fetchUserRecord();

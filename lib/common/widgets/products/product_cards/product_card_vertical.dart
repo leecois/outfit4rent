@@ -8,6 +8,7 @@ import 'package:outfit4rent/common/widgets/products/product_cards/product_card_a
 import 'package:outfit4rent/common/widgets/texts/brand_title_with_verified_icon.dart';
 import 'package:outfit4rent/common/widgets/texts/product_price_text.dart';
 import 'package:outfit4rent/common/widgets/texts/product_title_text.dart';
+import 'package:outfit4rent/features/shop/controllers/brand_controller.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/features/shop/screens/product_details/product_detail_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
@@ -23,6 +24,7 @@ class TProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = THelperFunctions.isDarkMode(context);
+    final brandController = Get.put(BrandController());
 
     final networkImage = (product.images.isNotEmpty && product.images[0].url.isNotEmpty) ? product.images[0].url : '';
     final image = networkImage.isNotEmpty ? networkImage : TImages.productImage1;
@@ -41,7 +43,7 @@ class TProductCardVertical extends StatelessWidget {
         ),
         child: Column(
           children: [
-            //!Thumbnail
+            // Thumbnail
             TRoundedContainer(
               height: 180,
               width: 180,
@@ -56,7 +58,7 @@ class TProductCardVertical extends StatelessWidget {
                     applyImageRadius: true,
                     isNetworkImage: networkImage.isNotEmpty,
                   ),
-                  //!isUsed Tag
+                  // isUsed Tag
                   Positioned(
                     top: 12,
                     child: TRoundedContainer(
@@ -69,8 +71,7 @@ class TProductCardVertical extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  //!Favorite Icon Button
+                  // Favorite Icon Button
                   Positioned(
                     top: 0,
                     right: 0,
@@ -83,7 +84,7 @@ class TProductCardVertical extends StatelessWidget {
             ),
             const SizedBox(height: TSizes.spaceBtwItems / 2),
 
-            //!Details
+            // Details
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: TSizes.sm),
               child: SizedBox(
@@ -93,14 +94,15 @@ class TProductCardVertical extends StatelessWidget {
                   children: [
                     TProductTitleText(title: product.name, smallSize: true),
                     const SizedBox(height: TSizes.spaceBtwItems / 2),
-                    TBrandTitleWithVerifiedIcon(title: product.idBrand.toString()),
+                    // Get the brand name using the brand ID
+                    TBrandTitleWithVerifiedIcon(title: brandController.getBrandNameById(product.idBrand)),
                   ],
                 ),
               ),
             ),
 
             const Spacer(),
-            //!Price
+            // Price
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -114,7 +116,7 @@ class TProductCardVertical extends StatelessWidget {
                     ],
                   ),
                 ),
-                //Add to cart
+                // Add to cart
                 ProductCardAddToCartButton(product: product)
               ],
             )

@@ -6,8 +6,9 @@ import 'package:outfit4rent/features/shop/models/product_model.dart';
 class ProductController extends GetxController {
   static ProductController get instance => Get.find();
 
-  RxBool isLoading = false.obs;
-  final _productRepository = Get.put(ProductRepository());
+  final RxBool isLoading = false.obs;
+
+  final ProductRepository _productRepository = Get.put(ProductRepository());
   RxList<ProductModel> allProducts = <ProductModel>[].obs;
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
   Rx<ProductModel?> productDetail = Rx<ProductModel?>(null);
@@ -20,15 +21,16 @@ class ProductController extends GetxController {
 
   Future<void> fetchAllProducts() async {
     try {
+      // Show loading indicator
       isLoading.value = true;
       final products = await _productRepository.getAllProducts();
 
       allProducts.assignAll(products);
 
       // Filter featured products
-      featuredProducts.assignAll(products.where((product) => product.isFeatured));
+      featuredProducts.assignAll(products.where((product) => product.isFeatured == true).toList());
     } catch (e) {
-      TLoaders.errorSnackBar(title: 'Oops', message: e.toString());
+      allProducts.value = [ProductModel.empty()];
     } finally {
       isLoading.value = false;
     }

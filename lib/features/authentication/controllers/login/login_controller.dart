@@ -18,13 +18,14 @@ class LoginController extends GetxController {
   final email = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
+  final localStorage = TLocalStorage.instance;
 
   final userController = Get.put(UserController());
 
   @override
   void onInit() {
-    email.text = TLocalStorage.instance().readData('REMEMBER_ME_EMAIL') ?? '';
-    password.text = TLocalStorage.instance().readData('REMEMBER_ME_PASSWORD') ?? '';
+    email.text = localStorage.readData('REMEMBER_ME_EMAIL') ?? '';
+    password.text = localStorage.readData('REMEMBER_ME_PASSWORD') ?? '';
     super.onInit();
   }
 
@@ -48,8 +49,8 @@ class LoginController extends GetxController {
 
       // Save data if remember me is checked
       if (rememberMe.value) {
-        TLocalStorage.instance().saveData('REMEMBER_ME_EMAIL', email.text.trim());
-        TLocalStorage.instance().saveData('REMEMBER_ME_PASSWORD', password.text.trim());
+        localStorage.saveData('REMEMBER_ME_EMAIL', email.text.trim());
+        localStorage.saveData('REMEMBER_ME_PASSWORD', password.text.trim());
       }
 
       final userCredential = await AuthenticationRepository.instance.loginWithEmailAndPassword(email.text.trim(), password.text.trim());
@@ -60,7 +61,7 @@ class LoginController extends GetxController {
 
       // Save currentUser ID to TLocalStorage and initialize
 
-      await TLocalStorage.instance().saveData('currentUser', currentUserID);
+      await localStorage.saveData('currentUser', currentUserID);
 
       await userController.fetchUserRecord();
 
@@ -103,7 +104,7 @@ class LoginController extends GetxController {
 
       // Save currentUser ID to TLocalStorage and initialize
 
-      await TLocalStorage.instance().saveData('currentUser', currentUserID);
+      await localStorage.saveData('currentUser', currentUserID);
 
       // Save user record
       await userController.saveUserRecord(userCredentials);
@@ -147,7 +148,7 @@ class LoginController extends GetxController {
 
       // Save currentUser ID to TLocalStorage and initialize
 
-      await TLocalStorage.instance().saveData('currentUser', currentUserID);
+      await localStorage.saveData('currentUser', currentUserID);
 
       // Save user record
       await userController.saveUserRecord(userCredentials);

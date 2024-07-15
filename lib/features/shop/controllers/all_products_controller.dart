@@ -6,7 +6,7 @@ import 'package:outfit4rent/features/shop/models/product_model.dart';
 class AllProductController extends GetxController {
   static AllProductController get instance => Get.find();
 
-  final repository = ProductRepository();
+  final ProductRepository repository = Get.put(ProductRepository());
   final RxString selectedSortOption = 'Name'.obs;
   final RxList<ProductModel> products = <ProductModel>[].obs;
 

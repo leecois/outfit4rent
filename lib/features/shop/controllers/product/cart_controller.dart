@@ -23,6 +23,7 @@ class CartController extends GetxController {
   final RxBool isLoading = false.obs;
   final Rx<CartItemModel?> selectedPackage = Rx<CartItemModel?>(null);
   final RxMap<int, int> categoryLimits = <int, int>{}.obs;
+  final localStorage = TLocalStorage.instance;
 
   CartController() {
     loadCartItems();
@@ -222,11 +223,11 @@ class CartController extends GetxController {
 
   void saveCartItems() {
     final cartItemStrings = cartItems.map((item) => item.toJson()).toList();
-    TLocalStorage.instance().saveData('cartItems', cartItemStrings);
+    localStorage.saveData('cartItems', cartItemStrings);
   }
 
   void loadCartItems() {
-    final cartItemStrings = TLocalStorage.instance().readData<List<dynamic>>('cartItems');
+    final cartItemStrings = localStorage.readData<List<dynamic>>('cartItems');
     if (cartItemStrings != null) {
       cartItems.assignAll(cartItemStrings.map((item) {
         try {

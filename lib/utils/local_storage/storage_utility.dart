@@ -3,20 +3,24 @@ import 'package:get_storage/get_storage.dart';
 class TLocalStorage {
   late final GetStorage _storage;
 
-  //Singleton instance
   static TLocalStorage? _instance;
 
   TLocalStorage._internal();
 
-  factory TLocalStorage.instance() {
-    _instance ??= TLocalStorage._internal();
+  static Future<TLocalStorage> init(String bucketName) async {
+    if (_instance == null) {
+      await GetStorage.init(bucketName);
+      _instance = TLocalStorage._internal();
+      _instance!._storage = GetStorage(bucketName);
+    }
     return _instance!;
   }
 
-  static Future<void> init(String bucketName) async {
-    await GetStorage.init(bucketName);
-    _instance = TLocalStorage._internal();
-    _instance!._storage = GetStorage(bucketName);
+  static TLocalStorage get instance {
+    if (_instance == null) {
+      throw StateError('TLocalStorage has not been initialized. Call TLocalStorage.init() first.');
+    }
+    return _instance!;
   }
 
   // Generic method to save data

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:outfit4rent/features/shop/models/product_model.dart';
 import 'package:outfit4rent/utils/exceptions/platform_exceptions.dart';
@@ -26,6 +27,9 @@ class ProductRepository extends GetxController {
   Future<List<ProductModel>> getAllProducts() async {
     try {
       final response = await THttpHelper.get('customers/products');
+      if (kDebugMode) {
+        print(response);
+      }
       final List<dynamic> data = response['data'] as List<dynamic>;
       return data.map((json) => ProductModel.fromJson(json)).toList();
     } catch (e) {
