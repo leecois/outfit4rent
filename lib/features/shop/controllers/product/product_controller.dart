@@ -8,7 +8,7 @@ class ProductController extends GetxController {
 
   final RxBool isLoading = false.obs;
 
-  final ProductRepository _productRepository = Get.put(ProductRepository());
+  final ProductRepository productRepository = Get.put(ProductRepository());
   RxList<ProductModel> allProducts = <ProductModel>[].obs;
   RxList<ProductModel> featuredProducts = <ProductModel>[].obs;
   Rx<ProductModel?> productDetail = Rx<ProductModel?>(null);
@@ -16,21 +16,31 @@ class ProductController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchFeaturedProducts();
     fetchAllProducts();
   }
 
-  Future<void> fetchAllProducts() async {
+  void fetchFeaturedProducts() async {
     try {
-      // Show loading indicator
       isLoading.value = true;
-      final products = await _productRepository.getAllProducts();
-
-      allProducts.assignAll(products);
-
-      // Filter featured products
-      featuredProducts.assignAll(products.where((product) => product.isFeatured == true).toList());
+      final products = await productRepository.getFeaturedProducts();
+      featuredProducts.assignAll(products);
     } catch (e) {
-      allProducts.value = [ProductModel.empty()];
+      TLoaders.errorSnackBar(title: 'Oops', message: e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<List<ProductModel>> fetchAllProducts() async {
+    try {
+      isLoading.value = true;
+      final products = await productRepository.getAllProducts();
+      allProducts.assignAll(products);
+      return products;
+    } catch (e) {
+      TLoaders.errorSnackBar(title: 'Oops', message: e.toString());
+      return [];
     } finally {
       isLoading.value = false;
     }
@@ -39,7 +49,8 @@ class ProductController extends GetxController {
   Future<ProductModel> fetchProductDetail(int productId) async {
     try {
       isLoading.value = true;
-      final detail = await _productRepository.getProductDetails(productId);
+      final detail = await productRepository.getProductDetails(productId);
+      productDetail.value = detail;
       return detail;
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Oops', message: e.toString());

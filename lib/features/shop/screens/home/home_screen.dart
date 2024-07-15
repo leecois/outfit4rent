@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () => Get.to(
                       () => AllProductsScreen(
                         title: 'Popular Products',
-                        futureMethod: Future.value(productController.featuredProducts),
+                        futureMethod: productController.fetchAllProducts(),
                       ),
                     ),
                   ),
@@ -89,7 +89,9 @@ class HomeScreen extends StatelessWidget {
 
                   // Popular products
                   Obx(() {
-                    if (productController.isLoading.value) return const TVerticalProductShimmer();
+                    if (productController.isLoading.value) {
+                      return const TVerticalProductShimmer();
+                    }
                     if (productController.featuredProducts.isEmpty) {
                       return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium));
                     }

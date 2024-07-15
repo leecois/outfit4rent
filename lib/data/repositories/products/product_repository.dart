@@ -7,12 +7,14 @@ import 'package:outfit4rent/utils/http/http_client.dart';
 class ProductRepository extends GetxController {
   static ProductRepository get instance => Get.find();
 
-  // Get featured products limit 4
   Future<List<ProductModel>> getFeaturedProducts() async {
     try {
       final response = await THttpHelper.get('customers/products', queryParameters: {
         'is_featured': 'true',
       });
+      if (kDebugMode) {
+        print(response);
+      }
       final List<dynamic> data = response['data'] as List<dynamic>;
       return data.map((json) => ProductModel.fromJson(json)).toList();
     } catch (e) {
@@ -23,7 +25,6 @@ class ProductRepository extends GetxController {
     }
   }
 
-  // Get all products
   Future<List<ProductModel>> getAllProducts() async {
     try {
       final response = await THttpHelper.get('customers/products');
@@ -40,7 +41,6 @@ class ProductRepository extends GetxController {
     }
   }
 
-  // Get details of a product
   Future<ProductModel> getProductDetails(int productId) async {
     try {
       final response = await THttpHelper.get('products/$productId');
@@ -54,7 +54,6 @@ class ProductRepository extends GetxController {
     }
   }
 
-  // Fetch products with query parameters
   Future<List<ProductModel>> fetchProductsByQuery(Map<String, dynamic> query) async {
     try {
       final response = await THttpHelper.get('customers/products', queryParameters: query);
@@ -68,7 +67,6 @@ class ProductRepository extends GetxController {
     }
   }
 
-  // Fetch products with query parameters
   Future<List<ProductModel>> getFavoriteProducts(List<String> productIds) async {
     try {
       final response = await THttpHelper.get('customers/products', queryParameters: {'id': productIds});
