@@ -17,7 +17,6 @@ class ProductController extends GetxController {
   void onInit() {
     super.onInit();
     fetchFeaturedProducts();
-    fetchAllProducts();
   }
 
   void fetchFeaturedProducts() async {
@@ -32,7 +31,7 @@ class ProductController extends GetxController {
     }
   }
 
-  Future<List<ProductModel>> fetchAllProducts() async {
+  Future<List<ProductModel>> fetchAllFeaturedProducts() async {
     try {
       isLoading.value = true;
       final products = await productRepository.getAllProducts();

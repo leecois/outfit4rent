@@ -30,7 +30,7 @@ void main() async {
   // Todo: Getx Local Storage
   await GetStorage.init();
 
-  await TLocalStorage.init('default_bucket');
+  await TLocalStorage.init('outfit4rent');
 
   // Todo: Await Native Splash
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);

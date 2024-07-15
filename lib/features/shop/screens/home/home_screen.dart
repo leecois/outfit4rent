@@ -81,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () => Get.to(
                       () => AllProductsScreen(
                         title: 'Popular Products',
-                        futureMethod: productController.fetchAllProducts(),
+                        futureMethod: Future.value(productController.featuredProducts),
                       ),
                     ),
                   ),

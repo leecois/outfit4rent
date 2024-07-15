@@ -18,17 +18,17 @@ class THomeCategories extends StatelessWidget {
     return Obx(() {
       if (categoryController.isLoading.value) return const TCategoryShimmer();
 
-      if (categoryController.featuredCategories.isEmpty) {
+      if (categoryController.allCategories.isEmpty) {
         return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium));
       }
       return SizedBox(
         height: 80,
         child: ListView.builder(
           shrinkWrap: true,
-          itemCount: categoryController.featuredCategories.length,
+          itemCount: categoryController.allCategories.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (_, index) {
-            final category = categoryController.featuredCategories[index];
+            final category = categoryController.allCategories[index];
             return TVerticalImageText(
               image: category.url,
               title: category.name,

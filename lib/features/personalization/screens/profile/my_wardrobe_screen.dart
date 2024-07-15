@@ -22,7 +22,7 @@ class MyWardrobeScreen extends StatelessWidget {
     // Fetch all products when the widget is built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       orderController.fetchUserOrders();
-      productController.fetchAllProducts();
+      productController.fetchAllFeaturedProducts();
     });
 
     return Scaffold(
