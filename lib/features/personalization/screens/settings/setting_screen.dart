@@ -10,10 +10,10 @@ import 'package:outfit4rent/common/widgets/list_title/user_profile_title.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
 import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
-import 'package:outfit4rent/features/personalization/screens/address/address_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/my_wardrobe_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/order_status_screen.dart';
 import 'package:outfit4rent/features/personalization/screens/profile/profile_screen.dart';
+import 'package:outfit4rent/features/personalization/screens/wallet/wallet_screen.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -46,7 +46,7 @@ class SettingScreen extends StatelessWidget {
                       icon: Iconsax.wallet_3_outline,
                       title: "Wallet",
                       subtitle: "Balance: \$${controller.user.value.moneyInWallet ?? 0}",
-                      onTap: () => Get.to(() => const UserAddressScreen()),
+                      onTap: () => Get.to(() => const UserWalletScreen()),
                     ),
                   ),
                   const SizedBox(height: TSizes.spaceBtwItems),

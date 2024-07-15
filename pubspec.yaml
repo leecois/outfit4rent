@@ -48,7 +48,7 @@ dependencies:
   intl: ^0.19.0
   logger: ^2.3.0
   lottie: ^3.1.2
-  url_launcher: ^6.2.4
+  url_launcher: ^6.3.0
   connectivity_plus: ^6.0.3
   smooth_page_indicator: ^1.1.0
   flutter_native_splash: ^2.4.0
@@ -71,6 +71,7 @@ dependencies:
   firebase_messaging: ^14.9.4
   flutter_local_notifications: ^17.1.2
   firebase_analytics: ^10.10.7
+  app_links: ^6.1.4
 
 dev_dependencies:
   flutter_test:

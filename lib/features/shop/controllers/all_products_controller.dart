@@ -6,6 +6,7 @@ import 'package:outfit4rent/features/shop/models/product_model.dart';
 class AllProductController extends GetxController {
   static AllProductController get instance => Get.find();
 
+  final RxBool isLoading = false.obs;
   final ProductRepository repository = Get.put(ProductRepository());
   final RxString selectedSortOption = 'Name'.obs;
   final RxList<ProductModel> products = <ProductModel>[].obs;
@@ -18,10 +19,14 @@ class AllProductController extends GetxController {
 
   Future<void> fetchAllProducts() async {
     try {
+      isLoading.value = true;
       final productList = await repository.getAllProducts();
+
       assignProducts(productList);
     } catch (e) {
       TLoaders.errorSnackBar(title: 'Oh no!', message: e.toString());
+    } finally {
+      isLoading.value = false;
     }
   }
 

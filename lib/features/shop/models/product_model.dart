@@ -78,11 +78,11 @@ class ProductModel {
       );
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json["id"],
+        id: json["id"] ?? 0,
         name: json["name"] ?? '',
         price: json["price"] ?? 0,
         size: json["size"] ?? '',
-        deposit: json["deposit"] ?? 0,
+        deposit: (json["deposit"] as num?)?.toDouble() ?? 0.0,
         description: json["description"] ?? '',
         status: json["status"] ?? 0,
         isUsed: json["isUsed"] ?? '',
@@ -92,7 +92,7 @@ class ProductModel {
         idBrand: json["idBrand"] ?? 0,
         type: json["type"] ?? '',
         isFeatured: json["isFeatured"] ?? false,
-        images: (json["images"] as List).map((e) => ImageModel.fromJson(e)).toList(),
+        images: (json["images"] as List<dynamic>).map((image) => ImageModel.fromJson(image as Map<String, dynamic>)).toList(),
       );
 
   Map<String, dynamic> toJson() => {

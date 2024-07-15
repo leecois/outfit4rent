@@ -33,15 +33,11 @@ class ProductController extends GetxController {
 
   Future<List<ProductModel>> fetchAllFeaturedProducts() async {
     try {
-      isLoading.value = true;
       final products = await productRepository.getAllProducts();
       allProducts.assignAll(products);
       return products;
     } catch (e) {
-      TLoaders.errorSnackBar(title: 'Oops', message: e.toString());
       return [];
-    } finally {
-      isLoading.value = false;
     }
   }
 

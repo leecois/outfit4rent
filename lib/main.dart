@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:outfit4rent/app.dart';
 import 'package:outfit4rent/data/repositories/authentication/authentication_repository.dart';
+import 'package:outfit4rent/data/services/app_links_service.dart';
 import 'package:outfit4rent/data/services/notification_service.dart';
 import 'package:outfit4rent/features/authentication/screens/on_boarding/onboarding.dart';
 import 'package:outfit4rent/firebase_options.dart';
@@ -30,7 +31,7 @@ void main() async {
   // Todo: Getx Local Storage
   await GetStorage.init();
 
-  await TLocalStorage.init('outfit4rent');
+  await TLocalStorage.init('default_bucket');
 
   // Todo: Await Native Splash
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -55,6 +56,8 @@ void main() async {
       PushNotifications.showSimpleNotification(title: message.notification!.title!, body: message.notification!.body!, payload: payloadData);
     }
   });
+
+  await appLinksService.initDeepLinks();
   final RemoteMessage? message = await FirebaseMessaging.instance.getInitialMessage();
 
   if (message != null) {

@@ -25,12 +25,22 @@ class ProductRepository extends GetxController {
     }
   }
 
-  Future<List<ProductModel>> getAllProducts() async {
+  Future<List<ProductModel>> getAllProducts({int page = 1, int limit = 50}) async {
     try {
-      final response = await THttpHelper.get('customers/products');
+      final response = await THttpHelper.get(
+        'customers/products',
+        queryParameters: {
+          'page_index': page.toString(),
+          'page_size': limit.toString(),
+        },
+      );
 
-      final List<dynamic> data = response['data'] as List<dynamic>;
-      return data.map((json) => ProductModel.fromJson(json)).toList();
+      if (response.containsKey('data')) {
+        final List<dynamic> data = response['data'] as List<dynamic>;
+        return data.map((json) => ProductModel.fromJson(json)).toList();
+      } else {
+        throw Exception('Invalid API response format');
+      }
     } catch (e) {
       if (e is TPlatformException) {
         throw TPlatformException(e.code).message;

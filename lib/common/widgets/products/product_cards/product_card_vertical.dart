@@ -92,7 +92,11 @@ class TProductCardVertical extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    TProductTitleText(title: product.name, smallSize: true),
+                    TProductTitleText(
+                      title: product.name,
+                      smallSize: true,
+                      maxLines: 1,
+                    ),
                     const SizedBox(height: TSizes.spaceBtwItems / 2),
                     // Get the brand name using the brand ID
                     TBrandTitleWithVerifiedIcon(title: brandController.getBrandNameById(product.idBrand)),
