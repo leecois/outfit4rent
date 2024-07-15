@@ -24,9 +24,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           distribution: "zulu"
-          java-version: "17"
-          cache: "gradle"
-          check-latest: true
+          java-version: "11"
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -62,13 +60,13 @@ jobs:
       #   working-directory: build/ios/iphoneos
 
       # Upload apk to Firebase distribution
-      - name: Upload apk to Firebase distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
-        with:
-          appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
-          serviceCredentialsFileContent: ${{ secrets.SERVICE_CREDENTIALS_FILE_CONTENT }}
-          groups: outfit4rent
-          file: build/app/outputs/apk/release/outfit4rent-release.apk
+      # - name: Upload apk to Firebase distribution
+      #   uses: wzieba/Firebase-Distribution-Github-Action@v1.7.0
+      #   with:
+      #     appId: ${{ secrets.FIREBASE_APP_ID_ANDROID }}
+      #     serviceCredentialsFileContent: ${{ secrets.SERVICE_CREDENTIALS_FILE_CONTENT }}
+      #     groups: outfit4rent
+      #     file: build/app/outputs/apk/release/outfit4rent-release.apk
 
       # Upload ipa to Firebase distribution
       # - name: Upload ipa to Firebase distribution
@@ -79,10 +77,11 @@ jobs:
       #     groups: outfit4rent
       #     file: build/ios/iphoneos/outfit4rent.ipa
 
-      - name: Create Release
-        uses: ncipollo/release-action@v1.14.0
+      - name: Push APK to Releases
+        uses: svenstaro/upload-release-action@v2
         with:
-          artifacts: "build/app/outputs/apk/release/*"
-          tag: v1.0.3
-          token: ${{ secrets.TOKEN }}
-          allowUpdates: true
+          file: build/app/outputs/apk/release/outfit4rent.apk
+          tag: ${{ github.ref }}
+          repo_token: ${{ secrets.TOKEN }}
+          release_name: v1.0.4
+          overwrite: true
