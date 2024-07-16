@@ -45,7 +45,7 @@ class TCartItems extends StatelessWidget {
                         ),
                       ],
                     ),
-                    TProductPriceText(price: (item.price * item.createItems.fold(0, (sum, createItem) => sum + createItem.quantity)).toStringAsFixed(2)),
+                    TProductPriceText(price: item.getTotalPrice().toStringAsFixed(2)),
                   ],
                 ),
             ],

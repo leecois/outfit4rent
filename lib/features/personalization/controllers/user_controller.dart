@@ -19,7 +19,7 @@ class UserController extends GetxController {
   final profileLoading = false.obs;
   Rx<UserModel> user = UserModel.empty().obs;
 
-final localStorage = TLocalStorage.instance;
+  final localStorage = TLocalStorage.instance;
   final imageUploading = false.obs;
   final hidePassword = false.obs;
   final verifyEmail = TextEditingController();
@@ -67,7 +67,7 @@ final localStorage = TLocalStorage.instance;
   Future<void> saveUserRecord(UserCredential? userCredentials) async {
     final userId = localStorage.readData<int>('currentUser');
     try {
-      // Refresher user record
+      // Refresh user record
       await fetchUserRecord();
       if (user.value.name.isEmpty) {
         if (userCredentials != null) {

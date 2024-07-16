@@ -19,6 +19,8 @@ class UserWalletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = UserController.instance;
+    controller.fetchUserRecord();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -32,29 +34,29 @@ class UserWalletScreen extends StatelessWidget {
                     borderColor: TColors.darkGrey,
                     padding: const EdgeInsets.all(TSizes.md),
                     margin: const EdgeInsets.only(bottom: TSizes.spaceBtwItems),
-                    child: ListTile(
-                      leading: const TCircularImage(
-                        image: TImages.lightAppLogo,
-                        width: 50,
-                        height: 50,
-                        backgroundColor: TColors.white,
-                        padding: 0,
-                      ),
-                      title: Text(
-                        "OUTFIT4RENT",
-                        style: Theme.of(context).textTheme.headlineSmall!.apply(
+                    child: Obx(() => ListTile(
+                          leading: const TCircularImage(
+                            image: TImages.lightAppLogo,
+                            width: 50,
+                            height: 50,
+                            backgroundColor: TColors.white,
+                            padding: 0,
+                          ),
+                          title: Text(
+                            "OUTFIT4RENT",
+                            style: Theme.of(context).textTheme.headlineSmall!.apply(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                          ),
+                          subtitle: TProductPriceText(price: controller.user.value.moneyInWallet.toString()),
+                          trailing: IconButton(
+                            onPressed: () => Get.to(() => const AddMoneyScreen()),
+                            icon: Icon(
+                              Iconsax.add_circle_bold,
                               color: Theme.of(context).colorScheme.primary,
                             ),
-                      ),
-                      subtitle: TProductPriceText(price: controller.user.value.moneyInWallet.toString()),
-                      trailing: IconButton(
-                        onPressed: () => Get.to(() => const AddMoneyScreen()),
-                        icon: Icon(
-                          Iconsax.add_circle_bold,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
+                          ),
+                        )),
                   ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                 ],

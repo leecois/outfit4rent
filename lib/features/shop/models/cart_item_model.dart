@@ -32,6 +32,14 @@ class CartItemModel {
         createItems: [],
       );
 
+  double getTotalPrice() {
+    return createItems.fold(0, (sum, item) {
+      final itemDeposit = item.deposit ?? 0;
+      final itemPrice = item.price ?? 0;
+      return sum + (itemDeposit * itemPrice * item.quantity);
+    });
+  }
+
   factory CartItemModel.fromJson(Map<String, dynamic> json) => CartItemModel(
         packageId: json["packageId"] ?? '',
         price: json["price"] ?? 0,
