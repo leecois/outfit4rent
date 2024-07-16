@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.outfit4rent.app",
+      "sha256_cert_fingerprints": [
+        "40:90:96:17:26:ea:98:86:0f:2c:ff:4e:b0:4d:e6:29:fd:e5:37:c1:2c:9b:59:4d:45:b7:f7:57:cf:58:cf:0f"
+      ]
+    }
+  }
+]

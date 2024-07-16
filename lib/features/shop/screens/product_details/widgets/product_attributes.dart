@@ -42,7 +42,10 @@ class TProductAttributes extends StatelessWidget {
                       Row(
                         children: [
                           const TProductTitleText(title: 'Deposit: ', smallSize: true),
-                          TProductPriceText(price: product.deposit.toString()),
+                          TProductPriceText(
+                            price: (product.deposit * 100).toString(),
+                            currencySign: '%',
+                          ),
                         ],
                       ),
                       Row(

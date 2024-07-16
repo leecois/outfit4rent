@@ -11,6 +11,30 @@ class THttpHelper {
     return _request('GET', endpoint, queryParameters: queryParameters);
   }
 
+  static Future<String> getRaw(String endpoint, {Map<String, dynamic>? queryParameters}) async {
+    try {
+      final token = await _getToken();
+      final headers = _buildHeaders(token);
+      final url = Uri.parse('$baseUrl/$endpoint').replace(queryParameters: queryParameters);
+
+      final response = await http.get(url, headers: headers);
+
+      if (response.statusCode == 200) {
+        return response.body;
+      } else if (response.statusCode == 401) {
+        throw Exception('Token expired or invalid.');
+      } else {
+        throw Exception('Failed to load data: ${response.statusCode}');
+      }
+    } catch (e, stacktrace) {
+      if (kDebugMode) {
+        print('GET Request Error: $e');
+        print('Stacktrace: $stacktrace');
+      }
+      rethrow;
+    }
+  }
+
   static Future<dynamic> post(String endpoint, dynamic data) async {
     return _request('POST', endpoint, data: data);
   }

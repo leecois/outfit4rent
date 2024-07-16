@@ -1,1 +1,30 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"outfit4rent-c7575","appId":"1:767742131819:android:d4745038ee114d393abb2e","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"outfit4rent-c7575","configurations":{"android":"1:767742131819:android:d4745038ee114d393abb2e","ios":"1:767742131819:ios:d9d5e82b3ab6b3b53abb2e"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "outfit4rent-c7575",
+          "appId": "1:767742131819:android:d4745038ee114d393abb2e",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "outfit4rent-c7575",
+          "configurations": {
+            "android": "1:767742131819:android:d4745038ee114d393abb2e",
+            "ios": "1:767742131819:ios:d9d5e82b3ab6b3b53abb2e"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/appbar/appbar.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/primary_header_container.dart';
@@ -6,6 +7,8 @@ import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_conta
 import 'package:outfit4rent/common/widgets/images/circular_image.dart';
 import 'package:outfit4rent/common/widgets/texts/product_price_text.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
+import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
+import 'package:outfit4rent/features/personalization/screens/wallet/add_money_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
@@ -15,6 +18,7 @@ class UserWalletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -42,9 +46,9 @@ class UserWalletScreen extends StatelessWidget {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                       ),
-                      subtitle: const TProductPriceText(price: '20000'),
+                      subtitle: TProductPriceText(price: controller.user.value.moneyInWallet.toString()),
                       trailing: IconButton(
-                        onPressed: () {},
+                        onPressed: () => Get.to(() => const AddMoneyScreen()),
                         icon: Icon(
                           Iconsax.add_circle_bold,
                           color: Theme.of(context).colorScheme.primary,

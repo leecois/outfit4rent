@@ -217,7 +217,7 @@ class CartController extends GetxController {
     }
 
     // Sum up total deposit and package price
-    totalCartPrice.value = calculatedTotalDeposit + calculatedPackagePrice;
+    totalCartPrice.value = (calculatedTotalDeposit * calculatedPackagePrice) + calculatedPackagePrice;
     noOfCartItems.value = calculatedNoOfItems;
   }
 

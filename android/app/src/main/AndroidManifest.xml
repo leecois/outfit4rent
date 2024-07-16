@@ -35,15 +35,25 @@
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
                  to determine the Window background behind the Flutter UI. -->
-            <meta-data 
-                android:name="flutter_deeplinking_enabled" 
-                android:value="true"
-                />
+            <!-- App Link sample -->
             <intent-filter android:autoVerify="true">
-              <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="sample" android:host="sandbox.vnpayment.vn" android:pathPrefix="/paymentv2/Ncb/Transaction/api.outft4rent.online" />
+                <data android:scheme="https" android:host="outfit4rent-c7575.firebaseapp.com" />
+                <data android:scheme="https" android:host="outfit4rent-c7575.web.app" />
+            </intent-filter>
+
+            <!-- Deep Link sample -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Add optional android:host to distinguish your app
+                      from others in case of conflicting scheme name -->
+                <data android:scheme="sample" android:host="outfit4rent-c7575.web.app" />
+
+                <!-- <data android:scheme="sample" /> -->
             </intent-filter>
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
@@ -71,6 +81,9 @@
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>
+        </intent>
+        <intent>
+            <action android:name="android.support.customtabs.action.CustomTabsService" />
         </intent>
     </queries>
 </manifest>

@@ -115,7 +115,10 @@ class TProductCardVertical extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: TSizes.sm),
-                        child: TProductPriceText(price: product.deposit.toString()),
+                        child: TProductPriceText(
+                          price: (product.deposit * 100).toString(),
+                          currencySign: '%',
+                        ),
                       ),
                     ],
                   ),
