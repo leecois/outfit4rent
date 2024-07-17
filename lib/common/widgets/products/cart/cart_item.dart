@@ -25,7 +25,7 @@ class TCartItem extends StatelessWidget {
             children: [
               // Image
               TRoundedImage(
-                imageUrl: createItem.imageUrl ?? '', // Replace with actual image URL if available
+                imageUrl: createItem.imageUrl ?? '',
                 isNetworkImage: true,
                 width: 60,
                 height: 60,
@@ -43,7 +43,7 @@ class TCartItem extends StatelessWidget {
                     TBrandTitleWithVerifiedIcon(title: cartItem.name),
                     Flexible(
                       child: TProductTitleText(
-                        title: createItem.name ?? 'Product Name', // Replace with actual product name if available
+                        title: createItem.name ?? 'Product Name',
                         maxLines: 1,
                       ),
                     ),

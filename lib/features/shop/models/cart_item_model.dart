@@ -35,8 +35,8 @@ class CartItemModel {
   double getTotalPrice() {
     return createItems.fold(0, (sum, item) {
       final itemDeposit = item.deposit ?? 0;
-      final itemPrice = item.price ?? 0;
-      return sum + (itemDeposit * itemPrice * item.quantity);
+
+      return sum + (itemDeposit * item.quantity);
     });
   }
 

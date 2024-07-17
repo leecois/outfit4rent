@@ -1,12 +1,12 @@
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 
 class TRatingBarIndicator extends StatelessWidget {
   const TRatingBarIndicator({
     super.key,
-    required this.rating,
+    this.rating = 0.0,
   });
 
   final double rating;
@@ -17,7 +17,7 @@ class TRatingBarIndicator extends StatelessWidget {
       rating: rating,
       itemSize: 20,
       unratedColor: TColors.grey,
-      itemBuilder: (_, __) => const Icon(Iconsax.stellar_xlm_outline, color: TColors.primary),
+      itemBuilder: (_, __) => const Icon(FluentIcons.star_24_filled, color: Colors.amber),
     );
   }
 }

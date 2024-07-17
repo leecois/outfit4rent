@@ -34,6 +34,7 @@ class PackageScreen extends StatelessWidget {
               padding: const EdgeInsets.all(TSizes.defaultSpace),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
+                  childCount: packageController.allPackages.length,
                   (context, index) {
                     final package = packageController.allPackages[index];
                     return TPackageItem(
@@ -43,9 +44,10 @@ class PackageScreen extends StatelessWidget {
                       darkMode: dark,
                     );
                   },
-                  childCount: packageController.allPackages.length,
                 ),
+                
               ),
+              
             ),
           ],
         );

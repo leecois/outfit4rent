@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:outfit4rent/common/widgets/shimmer/shimmer_effect.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
@@ -7,6 +9,7 @@ import 'package:outfit4rent/features/shop/controllers/product/cart_controller.da
 import 'package:outfit4rent/features/shop/models/category_package_model.dart';
 import 'package:outfit4rent/features/shop/models/package_model.dart';
 import 'package:outfit4rent/features/shop/screens/package/widgets/package_category.dart';
+import 'package:outfit4rent/features/shop/screens/package_reviews/package_reviews_screen.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/helpers/cloud_helper_functions.dart';
@@ -72,8 +75,22 @@ class TPackageItem extends StatelessWidget {
                         style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.pink),
                       ),
                       TextSpan(
-                        text: ' / month *',
+                        text: ' / ${package.availableRentDays} days',
                         style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                    ],
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Max Qty: ',
+                        style: Theme.of(context).textTheme.headlineSmall,
+                      ),
+                      TextSpan(
+                        text: package.numOfProduct.toString(),
+                        style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.pink),
                       ),
                     ],
                   ),
@@ -139,6 +156,22 @@ class TPackageItem extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                //Todo: Review
+                const Divider(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    TSectionHeading(
+                      title: 'Review',
+                      onPressed: () {},
+                      showActionButton: false,
+                    ),
+                    IconButton(
+                      onPressed: () => Get.to(() => PackageReviewsScreen(package: package)),
+                      icon: const Icon(Iconsax.arrow_right_1_bold, size: 18),
+                    )
+                  ],
                 ),
               ],
             ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/features/shop/controllers/product/images_controller.dart';
 import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
@@ -10,7 +9,6 @@ import 'package:outfit4rent/features/shop/screens/product_details/widgets/produc
 import 'package:outfit4rent/features/shop/screens/product_details/widgets/product_image_slider.dart';
 import 'package:outfit4rent/features/shop/screens/product_details/widgets/product_meta_data.dart';
 import 'package:outfit4rent/features/shop/screens/product_details/widgets/rating_share_widget.dart';
-import 'package:outfit4rent/features/shop/screens/product_reviews/product_reviews_screen.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:readmore/readmore.dart';
 
@@ -67,23 +65,6 @@ class ProductDetailScreen extends StatelessWidget {
                     lessStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                   ),
 
-                  //Todo: Review
-                  const Divider(),
-                  const SizedBox(height: TSizes.spaceBtwItems),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      TSectionHeading(
-                        title: 'Review(1203)',
-                        onPressed: () {},
-                        showActionButton: false,
-                      ),
-                      IconButton(
-                        onPressed: () => Get.to(() => const ProductReviewsScreen()),
-                        icon: const Icon(Iconsax.arrow_right_1_bold, size: 18),
-                      )
-                    ],
-                  ),
                   const SizedBox(height: TSizes.spaceBtwSections),
                 ],
               ),

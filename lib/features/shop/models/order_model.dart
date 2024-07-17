@@ -78,8 +78,6 @@ class ItemInUserModel {
   final int status;
   final int productId;
   final int userPackageId;
-  final DateTime dateGive;
-  final DateTime dateReceive;
   final int tornMoney;
   final int quantity;
 
@@ -89,8 +87,6 @@ class ItemInUserModel {
     required this.status,
     required this.productId,
     required this.userPackageId,
-    required this.dateGive,
-    required this.dateReceive,
     required this.tornMoney,
     required this.quantity,
   });
@@ -101,8 +97,6 @@ class ItemInUserModel {
         status: json['status'],
         productId: json['productId'],
         userPackageId: json['userPackageId'],
-        dateGive: json['dateGive'] != null ? DateTime.parse(json['dateGive']) : DateTime.now(),
-        dateReceive: json['dateReceive'] != null ? DateTime.parse(json['dateReceive']) : DateTime.now(),
         tornMoney: (json['tornMoney'] as num).toInt(),
         quantity: json['quantity'],
       );
@@ -113,8 +107,6 @@ class ItemInUserModel {
         'status': status,
         'productId': productId,
         'userPackageId': userPackageId,
-        'dateGive': dateGive.toIso8601String(),
-        'dateReceive': dateReceive.toIso8601String(),
         'tornMoney': tornMoney,
         'quantity': quantity,
       };

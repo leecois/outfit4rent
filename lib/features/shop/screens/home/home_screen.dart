@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productController = ProductController.instance;
+    final productController = Get.put(ProductController());
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,

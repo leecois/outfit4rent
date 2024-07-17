@@ -27,4 +27,9 @@ class PackageController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  String getPackageNameById(int id) {
+    final package = allPackages.firstWhere((package) => package.id == id, orElse: () => PackageModel.empty());
+    return package.name;
+  }
 }

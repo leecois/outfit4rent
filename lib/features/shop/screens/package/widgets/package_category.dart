@@ -33,7 +33,7 @@ class TPackageCategory extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: '${categoryPackageModel.maxAvailableQuantity}',
-                      style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.pink),
+                      style: Theme.of(context).textTheme.headlineSmall!.copyWith(color: Colors.pink),
                     ),
                     TextSpan(
                       text: ' / month *',

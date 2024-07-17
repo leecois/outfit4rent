@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class TRoundedImage extends StatelessWidget {
@@ -15,6 +16,7 @@ class TRoundedImage extends StatelessWidget {
     this.fit = BoxFit.contain,
     this.isNetworkImage = false,
     this.borderRadius = TSizes.md,
+    this.onDelete,
   });
 
   final double? width, height;
@@ -27,28 +29,67 @@ class TRoundedImage extends StatelessWidget {
   final bool isNetworkImage;
   final VoidCallback? onPressed;
   final double borderRadius;
+  final VoidCallback? onDelete; // Add callback for delete action
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        width: width,
-        height: height,
-        padding: padding,
-        decoration: BoxDecoration(
-          border: border,
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(borderRadius),
-        ),
-        child: ClipRRect(
-          borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
-          child: Image(
-            fit: fit,
-            image: isNetworkImage ? NetworkImage(imageUrl) : AssetImage(imageUrl) as ImageProvider,
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: onPressed,
+          child: Container(
+            width: width,
+            height: height,
+            padding: padding,
+            decoration: BoxDecoration(
+              border: border,
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            child: ClipRRect(
+              borderRadius: applyImageRadius ? BorderRadius.circular(borderRadius) : BorderRadius.zero,
+              child: isNetworkImage
+                  ? Image.network(
+                      imageUrl,
+                      fit: fit,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          TImages.lightAppLogo,
+                          fit: fit,
+                        );
+                      },
+                    )
+                  : Image.asset(
+                      imageUrl,
+                      fit: fit,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Image.asset(
+                          TImages.lightAppLogo,
+                          fit: fit,
+                        );
+                      },
+                    ),
+            ),
           ),
         ),
-      ),
+        if (onDelete != null)
+          Positioned(
+            top: 8,
+            right: 8,
+            child: GestureDetector(
+              onTap: onDelete,
+              child: const CircleAvatar(
+                backgroundColor: Colors.red,
+                radius: 12,
+                child: Icon(
+                  Icons.close,
+                  size: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

@@ -37,7 +37,7 @@ class TCartItems extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const SizedBox(width: 70), // Extra Space
+                        const SizedBox(width: 70),
                         TProductQuantityWithAddRemoveButton(
                           quantity: item.createItems.first.quantity,
                           add: () => cartController.addOneToCart(item),
@@ -45,7 +45,7 @@ class TCartItems extends StatelessWidget {
                         ),
                       ],
                     ),
-                    TProductPriceText(price: item.getTotalPrice().toStringAsFixed(2)),
+                    TProductPriceText(price: (item.getTotalPrice()).toStringAsFixed(2)),
                   ],
                 ),
             ],

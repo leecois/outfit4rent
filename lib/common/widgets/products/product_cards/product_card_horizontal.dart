@@ -25,7 +25,7 @@ class TProductCardHorizontal extends StatelessWidget {
     final brandController = Get.put(BrandController());
     final dark = THelperFunctions.isDarkMode(context);
     final networkImage = (product.images.isNotEmpty && product.images[0].url.isNotEmpty) ? product.images[0].url : '';
-    final image = networkImage.isNotEmpty ? networkImage : TImages.productImage1;
+    final image = networkImage.isNotEmpty ? networkImage : TImages.lightAppLogo;
     return GestureDetector(
       onTap: () {
         Get.to(() => ProductDetailScreen(product: product));

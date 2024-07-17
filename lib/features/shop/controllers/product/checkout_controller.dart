@@ -33,7 +33,7 @@ class CheckoutController extends GetxController {
   //Todo: Initialize Info
   Future<void> initializeInfo() async {
     await loadUserData();
-    ever(userController.user, (_) => refreshWalletData());
+    refreshWalletData();
   }
 
   Future<void> refreshWalletData() async {
@@ -65,7 +65,9 @@ class CheckoutController extends GetxController {
   }
 
   //Todo: Select Payment Method
-  Future<dynamic> selectPaymentMethod(BuildContext context) {
+  Future<dynamic> selectPaymentMethod(BuildContext context) async {
+    await loadUserData();
+    if (!context.mounted) return;
     return showModalBottomSheet(
       context: context,
       builder: (_) => SingleChildScrollView(
@@ -97,7 +99,7 @@ class CheckoutController extends GetxController {
 
   //Todo: Show Update Address Modal
   Future<void> showUpdateAddressModal(BuildContext context) async {
-    await loadUserData(); // Load user data before showing the modal
+    await loadUserData();
     if (!context.mounted) return; // Check if the context is still valid
 
     return showDialog(

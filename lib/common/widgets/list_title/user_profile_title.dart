@@ -9,9 +9,11 @@ class TUserProfileTitle extends StatelessWidget {
   const TUserProfileTitle({
     super.key,
     required this.onTap,
+    this.showActionButton = true,
   });
 
   final VoidCallback onTap;
+  final bool showActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +43,15 @@ class TUserProfileTitle extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
             ),
       ),
-      trailing: IconButton(
-        onPressed: onTap,
-        icon: Icon(
-          Iconsax.user_edit_outline,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      ),
+      trailing: showActionButton
+          ? IconButton(
+              onPressed: onTap,
+              icon: Icon(
+                Iconsax.user_edit_outline,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            )
+          : null,
     );
   }
 }

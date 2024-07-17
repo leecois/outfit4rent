@@ -4,9 +4,8 @@ import 'package:outfit4rent/common/widgets/layouts/grid_layout.dart';
 import 'package:outfit4rent/common/widgets/products/product_cards/product_card_vertical.dart';
 import 'package:outfit4rent/common/widgets/shimmer/vertical_product_shimmer.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
-import 'package:outfit4rent/features/shop/controllers/product/product_controller.dart';
+import 'package:outfit4rent/features/shop/controllers/all_products_controller.dart';
 import 'package:outfit4rent/features/shop/models/category_model.dart';
-import 'package:outfit4rent/features/shop/screens/store/widgets/category_brands.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 
 class TCategoryTab extends StatelessWidget {
@@ -19,10 +18,10 @@ class TCategoryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productController = Get.put(ProductController());
+    final allProductController = Get.put(AllProductController());
 
     // Filter products by category
-    final filteredProducts = productController.allProducts.where((product) => product.idCategory == category.id).toList();
+    final filteredProducts = allProductController.products.where((product) => product.idCategory == category.id).toList();
 
     return ListView(
       shrinkWrap: true,
@@ -31,17 +30,16 @@ class TCategoryTab extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(children: [
-            // Brand showcase
-            CategoryBrands(category: category),
-
-            const SizedBox(height: TSizes.spaceBtwItems),
-
             // Product Grid
-            TSectionHeading(title: 'You might like', onPressed: () {}),
+            TSectionHeading(
+              title: 'You might like',
+              onPressed: () {},
+              showActionButton: false,
+            ),
             const SizedBox(height: TSizes.spaceBtwItems),
 
             Obx(() {
-              if (productController.isLoading.value) return const TVerticalProductShimmer();
+              if (allProductController.isLoading.value) return const TVerticalProductShimmer();
               if (filteredProducts.isEmpty) {
                 return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium));
               }

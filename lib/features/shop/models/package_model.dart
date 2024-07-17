@@ -25,6 +25,19 @@ class PackageModel {
     this.categoryPackages,
   });
 
+  static PackageModel empty() => PackageModel(
+        id: 0,
+        price: 0,
+        imageUrl: '',
+        availableRentDays: 0,
+        name: '',
+        description: '',
+        status: 0,
+        numOfProduct: 0,
+        isFeatured: false,
+        categoryPackages: [],
+      );
+
   factory PackageModel.fromJson(Map<String, dynamic> json) => PackageModel(
         id: json["id"],
         price: json["price"],
