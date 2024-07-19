@@ -158,12 +158,12 @@ class CartController extends GetxController {
   CartItemModel convertToCartItem(ProductModel product, int quantity) {
     String imageUrl = product.images.isNotEmpty ? product.images.first.url : '';
     return CartItemModel(
-      packageId: '', // No package ID for individual products
-      price: product.price,
-      availableRentDays: 0, // Default or calculate as needed
+      packageId: selectedPackage.value?.packageId ?? '', // Use the selected package ID
+      price: selectedPackage.value?.price ?? 0, // Use the selected package price
+      availableRentDays: selectedPackage.value?.availableRentDays ?? 0,
       name: product.name,
       description: product.description,
-      numOfProduct: 1, // Each product item is added individually
+      numOfProduct: selectedPackage.value?.numOfProduct ?? 1,
       createItems: [
         CreateItem(
           productId: product.id,
@@ -176,7 +176,7 @@ class CartController extends GetxController {
           idCategory: product.idCategory,
         )
       ],
-      categoryPackages: [],
+      categoryPackages: selectedPackage.value?.categoryPackages ?? [],
     );
   }
 
@@ -206,18 +206,16 @@ class CartController extends GetxController {
 
     for (var item in cartItems) {
       // Calculate total deposit for products
-      calculatedTotalDeposit += item.createItems.fold(0.0, (sum, createItem) => sum + (createItem.deposit! * createItem.quantity));
+      calculatedTotalDeposit += item.createItems.fold(0.0, (sum, createItem) => sum + (createItem.deposit! * createItem.quantity * calculatedPackagePrice));
 
-      // Add package price if it's a package item
-      if (item.packageId.isNotEmpty) {
-        calculatedPackagePrice += item.price;
-      }
+      // Use the package price associated with each item
+      calculatedPackagePrice = item.price.toDouble();
 
       calculatedNoOfItems += item.createItems.fold(0, (sum, createItem) => sum + createItem.quantity);
     }
 
-    // Sum up total deposit and package price
-    totalCartPrice.value = (calculatedTotalDeposit * calculatedPackagePrice) + calculatedPackagePrice;
+    // Calculate total cart price
+    totalCartPrice.value = calculatedTotalDeposit + calculatedPackagePrice;
     noOfCartItems.value = calculatedNoOfItems;
   }
 

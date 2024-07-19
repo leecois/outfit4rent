@@ -21,6 +21,11 @@ class CartItemModel {
     required this.createItems,
   });
 
+  double getTotalPrice() {
+    double totalDeposit = createItems.fold(0, (sum, item) => sum + (item.deposit ?? 0) * item.quantity);
+    return totalDeposit * price;
+  }
+
   static CartItemModel empty() => CartItemModel(
         packageId: '',
         price: 0,
@@ -31,15 +36,6 @@ class CartItemModel {
         categoryPackages: [],
         createItems: [],
       );
-
-  double getTotalPrice() {
-    return createItems.fold(0, (sum, item) {
-      final itemDeposit = item.deposit ?? 0;
-
-      return sum + (itemDeposit * item.quantity);
-    });
-  }
-
   factory CartItemModel.fromJson(Map<String, dynamic> json) => CartItemModel(
         packageId: json["packageId"] ?? '',
         price: json["price"] ?? 0,
