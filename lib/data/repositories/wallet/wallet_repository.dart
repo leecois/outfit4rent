@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:outfit4rent/features/personalization/models/transaction_model.dart';
 import 'package:outfit4rent/features/shop/models/payment_method_model.dart';
 import 'package:outfit4rent/utils/exceptions/firebase_exceptions.dart';
 import 'package:outfit4rent/utils/exceptions/platform_exceptions.dart';
@@ -60,6 +61,18 @@ class WalletRepository extends GetxController {
     } catch (e) {
       debugPrint('Error: $e');
       throw 'An error occurred. Please try again later.';
+    }
+  }
+
+  //Todo: Fetch history of wallet transactions
+  Future<List<TransactionModel>> getTransactionHistory(int customerId) async {
+    try {
+      final response = await THttpHelper.get('transactions/customers/$customerId');
+      final List<dynamic> data = response['data'] as List<dynamic>;
+      return data.map((json) => TransactionModel.fromJson(json)).toList();
+    } catch (e) {
+      debugPrint('Error: $e');
+      throw 'An error occurred while fetching transaction history.';
     }
   }
 }

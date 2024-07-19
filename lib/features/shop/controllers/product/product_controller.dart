@@ -17,6 +17,7 @@ class ProductController extends GetxController {
   void onInit() {
     super.onInit();
     fetchFeaturedProducts();
+    fetchAllFeaturedProducts();
   }
 
   void fetchFeaturedProducts() async {

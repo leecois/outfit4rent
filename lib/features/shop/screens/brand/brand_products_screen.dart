@@ -16,7 +16,7 @@ class BrandProductsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final allProductController = AllProductController.instance;
+    final allProductController = Get.put(AllProductController());
 
     // Filter products by category
     final filteredProducts = allProductController.products.where((product) => product.idBrand == brand.id).toList();

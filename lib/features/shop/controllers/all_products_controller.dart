@@ -9,7 +9,7 @@ class AllProductController extends GetxController {
   final RxBool isLoading = false.obs;
   final ProductRepository repository = Get.put(ProductRepository());
   final RxString selectedSortOption = 'Name'.obs;
-  final RxList<ProductModel> products = <ProductModel>[].obs;
+  RxList<ProductModel> products = <ProductModel>[].obs;
 
   @override
   void onInit() {

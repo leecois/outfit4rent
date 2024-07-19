@@ -38,9 +38,11 @@ class OutfitOfTheDayScreen extends StatelessWidget {
                       return Center(child: Text('No Data Found!', style: Theme.of(context).textTheme.bodyMedium));
                     }
                     return TGridLayout(
-                      itemCount: reviewController.allReviews.length,
-                      itemBuilder: (_, index) => TReviewCardVertical(review: reviewController.allReviews[index]),
-                    );
+                        itemCount: reviewController.allReviews.length,
+                        itemBuilder: (_, index) {
+                          final reversedReviews = reviewController.allReviews.reversed.toList();
+                          return TReviewCardVertical(review: reversedReviews[index]);
+                        });
                   })
                 ],
               ),

@@ -23,17 +23,6 @@ class TMyWardrobeCardItem extends StatelessWidget {
         return const Center(child: CircularProgressIndicator());
       }
 
-      final filteredOrders = order.itemInUsers;
-
-      if (filteredOrders.isEmpty) {
-        return Center(
-          child: Text(
-            'No Data Found!',
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        );
-      }
-
       return TRoundedContainer(
         showBorder: true,
         borderColor: TColors.darkGrey,

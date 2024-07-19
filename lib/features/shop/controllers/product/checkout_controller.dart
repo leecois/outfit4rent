@@ -8,6 +8,7 @@ import 'package:outfit4rent/data/repositories/user/user_repository.dart';
 import 'package:outfit4rent/data/repositories/wallet/wallet_repository.dart';
 import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/features/shop/models/payment_method_model.dart';
+import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
 import 'package:outfit4rent/utils/validators/validation.dart';
 
@@ -27,13 +28,8 @@ class CheckoutController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    initializeInfo();
-  }
-
-  //Todo: Initialize Info
-  Future<void> initializeInfo() async {
-    await loadUserData();
-    refreshWalletData();
+    selectedPaymentMethod.value = PaymentMethodModel(walletName: 'Outfit4rent', image: TImages.logoIconDark);
+    ever(userController.user, (_) => refreshWalletData());
   }
 
   Future<void> refreshWalletData() async {
@@ -65,9 +61,7 @@ class CheckoutController extends GetxController {
   }
 
   //Todo: Select Payment Method
-  Future<dynamic> selectPaymentMethod(BuildContext context) async {
-    await loadUserData();
-    if (!context.mounted) return;
+  Future<dynamic> selectPaymentMethod(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       builder: (_) => SingleChildScrollView(

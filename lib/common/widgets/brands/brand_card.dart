@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:outfit4rent/common/widgets/custom_shapes/container/rounded_container.dart';
 import 'package:outfit4rent/common/widgets/images/circular_image.dart';
 import 'package:outfit4rent/common/widgets/texts/brand_title_with_verified_icon.dart';
@@ -21,7 +22,7 @@ class TBrandCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productController = ProductController.instance;
+    final productController = Get.find<ProductController>();
 
     // Filter products by category
     final filteredProducts = productController.allProducts.where((product) => product.idBrand == brand.id).toList();

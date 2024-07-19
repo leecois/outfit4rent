@@ -9,6 +9,7 @@ import 'package:outfit4rent/common/widgets/texts/product_price_text.dart';
 import 'package:outfit4rent/common/widgets/texts/section_heading.dart';
 import 'package:outfit4rent/features/personalization/controllers/user_controller.dart';
 import 'package:outfit4rent/features/personalization/screens/wallet/add_money_screen.dart';
+import 'package:outfit4rent/features/personalization/screens/wallet/transaction_history_widget.dart';
 import 'package:outfit4rent/utils/constants/colors.dart';
 import 'package:outfit4rent/utils/constants/image_strings.dart';
 import 'package:outfit4rent/utils/constants/sizes.dart';
@@ -22,10 +23,10 @@ class UserWalletScreen extends StatelessWidget {
     controller.fetchUserRecord();
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            TPrimaryHeaderContainer(
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: TPrimaryHeaderContainer(
               child: Column(
                 children: [
                   TAppBar(showBackArrow: true, title: Text('My Wallet', style: Theme.of(context).textTheme.headlineSmall!.apply(color: Theme.of(context).colorScheme.primary))),
@@ -62,17 +63,22 @@ class UserWalletScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(TSizes.defaultSpace),
+          ),
+          const SliverPadding(
+            padding: EdgeInsets.all(TSizes.defaultSpace),
+            sliver: SliverToBoxAdapter(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: TSizes.spaceBtwItems),
                   TSectionHeading(title: 'History', showActionButton: false),
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+          SliverFillRemaining(
+            child: TransactionHistoryWidget(customerId: controller.user.value.id),
+          ),
+        ],
       ),
     );
   }

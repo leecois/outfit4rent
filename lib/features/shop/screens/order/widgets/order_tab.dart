@@ -22,20 +22,19 @@ class TOrderTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderController = Get.put(OrderController());
     final productController = Get.put(ProductController());
-
+    final filteredOrders = orderController.userOrders.where((order) => order.status == orderStatus).toList();
     return CustomScrollView(
       slivers: [
         SliverPadding(
           padding: const EdgeInsets.all(TSizes.defaultSpace),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
+              childCount: filteredOrders.length,
               (context, index) {
                 return Obx(() {
                   if (productController.isLoading.value || orderController.isLoading.value) {
                     return const TMyWardrobeShimmer();
                   }
-
-                  final filteredOrders = orderController.userOrders.where((order) => order.status == orderStatus).toList();
 
                   if (filteredOrders.isEmpty) {
                     return TAnimationLoaderWidget(
@@ -49,7 +48,6 @@ class TOrderTab extends StatelessWidget {
                   return TMyWardrobeCardItem(order: filteredOrders[index]);
                 });
               },
-              childCount: 1, // Set childCount to 1 to handle loading and empty state properly
             ),
           ),
         ),

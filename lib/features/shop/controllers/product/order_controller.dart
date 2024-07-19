@@ -155,7 +155,7 @@ class OrderController extends GetxController {
   }
 
   void _handleError(String message, dynamic error) {
-    TLoaders.errorSnackBar(title: message, message: error.toString());
+    TLoaders.errorSnackBar(title: message, message: 'You do not have enough balance to place this order');
     TFullScreenLoader.stopLoading();
   }
 }
